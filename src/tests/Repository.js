@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import sqlite from "sqlite3";
-import Table from "../Table";
+import Repository from "../Repository";
 
 const createDatabaseAsync = (db) => {
     return new Promise((resolve, reject) => {
@@ -20,15 +20,15 @@ const createDatabaseAsync = (db) => {
     });
 }
 
-exports["Table: addAsync"] = function () {
+exports["Repository: addAsync"] = function () {
     const db = new sqlite.Database(":memory:");
-    const table = new Table({
+    const repository = new Repository({
         db,
         name: "test"
     });
 
     return createDatabaseAsync(db).then(()=>{
-        return table.addAsync({data: "blah"});
+        return repository.addAsync({data: "blah"});
     }).then(()=>{
         db.close();
     }).catch((error)=>{
@@ -37,22 +37,22 @@ exports["Table: addAsync"] = function () {
     }) 
 };
 
-exports["Table: updateAsync"] = function () {
+exports["Repository: updateAsync"] = function () {
     const db = new sqlite.Database(":memory:");
-    const table = new Table({
+    const repository = new Repository({
         db,
         name: "test"
     });
 
     return createDatabaseAsync(db).then(()=>{
-        return table.addAsync({data: "blah"});
+        return repository.addAsync({data: "blah"});
     }).then((id)=>{
-        return table.updateAsync({
+        return repository.updateAsync({
             id: id,
             data: "blah2"
         });
     }).then(()=>{
-        return table.where().column("data").isEqualTo("blah2").toArrayAsync();
+        return repository.where().column("data").isEqualTo("blah2").toArrayAsync();
     }).then((results)=>{
         assert.equal(results.length, 1);
         db.close();
@@ -62,21 +62,21 @@ exports["Table: updateAsync"] = function () {
     }) 
 };
 
-exports["Table: removeAsync"] = function () {
+exports["Repository: removeAsync"] = function () {
     const db = new sqlite.Database(":memory:");
-    const table = new Table({
+    const repository = new Repository({
         db,
         name: "test"
     });
 
     return createDatabaseAsync(db).then(()=>{
-        return table.addAsync({data: "blah"});
+        return repository.addAsync({data: "blah"});
     }).then((id)=>{
-        return table.removeAsync({
+        return repository.removeAsync({
             id: id
         });
     }).then(()=>{
-        return table.where().column("data").isEqualTo("blah").toArrayAsync();
+        return repository.where().column("data").isEqualTo("blah").toArrayAsync();
     }).then((results)=>{
         assert.equal(results.length, 0);
         db.close();

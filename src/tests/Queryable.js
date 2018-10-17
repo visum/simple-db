@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import sqlite from "sqlite3";
-import Table from "../Table";
+import Repository from "../Repository";
 
 const createDatabaseAsync = (db) => {
     return new Promise((resolve, reject) => {
@@ -37,7 +37,7 @@ const fillDatabaseAsync = (table) => {
 exports["Queryable"] = function () {
     const db = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(db);
-    const table = new Table({
+    const table = new Repository({
         db,
         name: "test"
     });
@@ -77,7 +77,7 @@ exports["Queryable"] = function () {
 exports["Queryable: removeAsync"] = function () {
     const db = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(db);
-    const table = new Table({
+    const table = new Repository({
         db,
         name: "test"
     });
@@ -103,7 +103,7 @@ exports["Queryable: removeAsync"] = function () {
 exports["Queryable: updateAsync"] = function () {
     const db = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(db);
-    const table = new Table({
+    const table = new Repository({
         db,
         name: "test"
     });
@@ -135,7 +135,7 @@ exports["Queryable: updateAsync"] = function () {
 exports["Queryable: getCountAsync"] = function () {
     const db = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(db);
-    const table = new Table({
+    const table = new Repository({
         db,
         name: "test"
     });
