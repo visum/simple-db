@@ -11,45 +11,11 @@ export default class Provider {
         this.db = db;
     }
 
-    executeAsync(queryable) {
-        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
-        const {sql}  = queryableToSqlFactory.createWhereStatement();
-
-        return new Promise((resolve, reject) => {
-            this.db.all(sql, (err, results) => {
-                if (err != null) {
-                    reject(err);
-                } else {
-                    resolve(results);
-                }
-            });
-        });
-
-    };
-
-    getCountAsync(queryable) {
-        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
-        const { sql } = queryableToSqlFactory.createCountStatement();
-
-        return new Promise((resolve, reject) => {
-            this.db.all(sql, (err, results) => {
-                if (err != null) {
-                    reject(err);
-                } else {
-                    resolve(results[0]["count(*)"]);
-                }
-            });
-        });
-    }
-
-    removeAsync(queryable) {
-        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
-        const { sql } = queryableToSqlFactory.createDeleteStatement();
-
-        return new Promise((resolve, reject) => {
-            this.db.run(sql, (err, result) => {
-                if (err != null) {
-                    reject(err);
+    allAsync(sql, values){
+        return new Promise((resolve, reject)=>{
+            return this.db.all(sql, values, (error, result)=>{
+                if (error != null){
+                    reject(error);
                 } else {
                     resolve(result);
                 }
@@ -57,23 +23,47 @@ export default class Provider {
         });
     }
 
+    runAsync(sql, values){
+        return new Promise((resolve, reject)=>{
+            return this.db.run(sql, values, (error, result)=>{
+                if (error != null){
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    executeAsync(queryable) {
+        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
+        const { sql } = queryableToSqlFactory.createWhereStatement();
+
+        return this.allAsync(sql);
+    };
+
+    getCountAsync(queryable) {
+        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
+        const { sql } = queryableToSqlFactory.createCountStatement();
+
+        return this.allAsync(sql).then((results) => {
+            return results[0]["count(*)"];
+        });
+
+    }
+
+    removeAsync(queryable) {
+        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
+        const { sql } = queryableToSqlFactory.createDeleteStatement();
+
+        return this.allAsync(sql);
+    }
+
     updateAsync(queryable, entity) {
         const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
         const statement = queryableToSqlFactory.createUpdateStatement(entity);
 
-        return new Promise((resolve, reject) => {
-            this.db.run(
-                statement.sql,
-                statement.values,
-                (err, result) => {
-                    if (err != null) {
-                        reject(err)
-                    } else {
-                        resolve(result);
-                    }
-                }
-            );
-        });
+        return this.runAsync(statement.sql, statement.values);
 
     }
 

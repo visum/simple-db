@@ -1,10 +1,44 @@
 export default class EntityToSqlFactory {
     constructor({
         entity,
-        tableName
+        tableName,
+        primaryKeys
     }) {
+        if (!Array.isArray(primaryKeys) || primaryKeys.length === 0) {
+            throw new Error("Invalid Argument Exception:'primaryKeys' needs to be an array of length greater than 0. ");
+        }
+
         this.tableName = tableName;
         this.entity = entity;
+        this.primaryKeys = primaryKeys;
+    }
+
+    validateEntityPrimaryKeys(entity) {
+        if (this.primaryKeys.length === 1) {
+            return entity[this.primaryKeys[0]] != null;
+        } else if (this.primaryKeys.length > 1) {
+            return this.primaryKeys.every((key) => {
+                return typeof entity[key] !== "undefined";
+            })
+        } else {
+            return false;
+        }
+    }
+
+    sqlizeValue(value) {
+        if (typeof value === "string") {
+            return `'${value.replace(/\'/, "''")}'`;
+        } else {
+            return value.toString();
+        }
+    }
+
+    createWhereStatement(entity) {
+        const columns = this.primaryKeys.map((key) => {
+            return `"${key}" = ${this.sqlizeValue(entity[key])}`;
+        }).join(", ");
+
+        return `WHERE ${columns}`;
     }
 
     createInsertStatement() {
@@ -25,14 +59,14 @@ export default class EntityToSqlFactory {
 
     createUpdateStatement() {
         const entity = this.entity;
+        const keys = Object.keys(entity);
 
-        if (entity.id == null) {
-            throw new Error("The entity needs to have an id.");
+        if (!this.validateEntityPrimaryKeys(entity)) {
+            throw new Error("Cannot update entity: Invalid primary key(s).");
         }
 
-        const keys = Object.keys(entity);
         const sqliteData = keys.reduce((accumulator, key) => {
-            if (key === "id") {
+            if (this.primaryKeys.includes(key)) {
                 return accumulator;
             }
 
@@ -41,8 +75,10 @@ export default class EntityToSqlFactory {
             return accumulator;
         }, { placeHolderValues: [], values: [] });
 
+        const whereStatement = this.createWhereStatement(entity);
+
         return {
-            sql: `UPDATE ${this.tableName} SET ${sqliteData.placeHolderValues.join(", ")} WHERE id = ${entity.id}`,
+            sql: `UPDATE ${this.tableName} SET ${sqliteData.placeHolderValues.join(", ")} ${whereStatement}`,
             values: sqliteData.values
         }
     }
@@ -50,13 +86,15 @@ export default class EntityToSqlFactory {
     createDeleteStatement() {
         const entity = this.entity;
 
-        if (entity.id == null) {
-            throw new Error("The entity needs to have an id.");
+        if (!this.validateEntityPrimaryKeys(entity)) {
+            throw new Error("Cannot delete entity: Invalid primary key(s).");
         }
 
+        const whereStatement = this.createWhereStatement(entity);
+
         return {
-            sql: `DELETE FROM ${this.tableName} WHERE id = ?`,
-            values: [entity.id]
+            sql: `DELETE FROM ${this.tableName} ${whereStatement}`,
+            values: []
         }
     }
 }

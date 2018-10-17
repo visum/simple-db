@@ -3,26 +3,23 @@ import Queryable from "./Queryable";
 import EntityToSqlFactory from "./factory/EntityToSqlFactory";
 
 export default class Table {
-    constructor({ db, name }) {
+    constructor({ db, name, primaryKeys = ["id"] }) {
         this.db = db;
         this.name = name;
+        this.primaryKeys = primaryKeys;
     }
 
     runAsync(sql, values) {
         return new Promise((resolve, reject) => {
-            this.db.run(
-                sql,
-                values,
-                (err, result) => {
+            return this.db.run(sql, values, function (error) {
+                if (error != null) {
+                    reject(error);
+                } else {
+                    const lastID = this.lastID || null;
 
-                    if (err != null) {
-                        reject(err)
-                    } else {
-                        resolve(result);
-                    }
-
+                    resolve(lastID);
                 }
-            );
+            });
         });
     }
 
@@ -30,7 +27,8 @@ export default class Table {
 
         const entityToSqlFactory = new EntityToSqlFactory({
             tableName: this.name,
-            entity
+            entity,
+            primaryKeys: this.primaryKeys
         });
 
         const { sql, values } = entityToSqlFactory.createInsertStatement();
@@ -42,7 +40,8 @@ export default class Table {
     removeAsync(entity) {
         const entityToSqlFactory = new EntityToSqlFactory({
             tableName: this.name,
-            entity
+            entity,
+            primaryKeys: this.primaryKeys
         });
 
         const { sql, values } = entityToSqlFactory.createDeleteStatement();
@@ -54,12 +53,13 @@ export default class Table {
 
         const entityToSqlFactory = new EntityToSqlFactory({
             tableName: this.name,
-            entity
+            entity,
+            primaryKeys: this.primaryKeys
         });
 
         const { sql, values } = entityToSqlFactory.createUpdateStatement();
 
-        this.runAsync(sql, values);
+        return this.runAsync(sql, values);
 
     }
 

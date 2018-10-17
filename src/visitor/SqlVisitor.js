@@ -6,7 +6,7 @@ class SqlString {
     }
 
     toString(){
-        return this.value;
+        return `'${this.value}'`;
     }
 
     toEndsWithString(){
