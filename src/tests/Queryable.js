@@ -25,7 +25,7 @@ const fillDatabaseAsync = (table) => {
 
     for (let x = 0; x < 300; x++) {
         const testsPromise = table.addAsync({
-            url: `https://core-api.app.lds.org/api/v1/eng/scriptures/bofm/1-ne/${x}.xhtml`
+            url: `//api/${x}.xhtml`
         });
         tests.push(testsPromise);
     }
@@ -50,7 +50,7 @@ exports["Queryable"] = function () {
             .endsWith("/1.xhtml")
             .or()
             .column("url")
-            .startsWith("https://core-api.app.lds.org/api/v1/eng/scriptures/bofm/1-ne/2.x")
+            .startsWith("//api/2.x")
             .or()
             .column("url")
             .contains("/3.xhtm")
