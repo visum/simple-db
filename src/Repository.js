@@ -1,26 +1,14 @@
 import Provider from "./Provider";
 import Queryable from "./Queryable";
 import EntityToSqlFactory from "./factory/EntityToSqlFactory";
+import SqliteDatabase from "./SqliteDatabase";
 
-export default class Table {
-    constructor({ db, name, primaryKeys = ["id"] }) {
-        this.db = db;
+export default class Repository {
+    constructor({ database, name, primaryKeys = ["id"] }) {
         this.name = name;
+        this.database = database;
+        this.sqliteDatabase = new SqliteDatabase(this.database);
         this.primaryKeys = primaryKeys;
-    }
-
-    runAsync(sql, values) {
-        return new Promise((resolve, reject) => {
-            return this.db.run(sql, values, function (error) {
-                if (error != null) {
-                    reject(error);
-                } else {
-                    const lastID = this.lastID || null;
-
-                    resolve(lastID);
-                }
-            });
-        });
     }
 
     addAsync(entity) {
@@ -33,7 +21,7 @@ export default class Table {
 
         const { sql, values } = entityToSqlFactory.createInsertStatement();
 
-        return this.runAsync(sql, values);
+        return this.sqliteDatabase.runAsync(sql, values);
 
     }
 
@@ -46,7 +34,7 @@ export default class Table {
 
         const { sql, values } = entityToSqlFactory.createDeleteStatement();
 
-        return this.runAsync(sql, values);
+        return this.sqliteDatabase.runAsync(sql, values);
     }
 
     updateAsync(entity) {
@@ -59,13 +47,13 @@ export default class Table {
 
         const { sql, values } = entityToSqlFactory.createUpdateStatement();
 
-        return this.runAsync(sql, values);
+        return this.sqliteDatabase.runAsync(sql, values);
 
     }
 
     getQueryProvider() {
         return new Provider({
-            db: this.db
+            database: this.database
         });
     }
 

@@ -2,9 +2,9 @@ import * as assert from "assert";
 import sqlite from "sqlite3";
 import Repository from "../Repository";
 
-const createDatabaseAsync = (db) => {
+const createDatabaseAsync = (database) => {
     return new Promise((resolve, reject) => {
-        db.run(
+        database.run(
             `CREATE TABLE IF NOT EXISTS test (
                 id integer PRIMARY KEY,
                 url text NOT NULL UNIQUE
@@ -34,11 +34,11 @@ const fillDatabaseAsync = (table) => {
 
 }
 
-exports["Queryable"] = function () {
-    const db = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(db);
+exports["Queryable: toArrayAsync."] = function () {
+    const database = new sqlite.Database(":memory:");
+    const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
-        db,
+        database,
         name: "test"
     });
 
@@ -67,18 +67,42 @@ exports["Queryable"] = function () {
         return table.where().toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 0);
-        db.close();
+        database.close();
     }).catch(() => {
-        db.close();
+        database.close();
+    });
+
+};
+
+exports["Queryable: getFirstAsync"] = function () {
+    const database = new sqlite.Database(":memory:");
+    const createDatabasePromise = createDatabaseAsync(database);
+    const table = new Repository({
+        database,
+        name: "test"
+    });
+
+    return createDatabasePromise.then(() => {
+        return fillDatabaseAsync(table);
+    }).then(() => {
+        return table.where()
+            .column("url")
+            .endsWith("/1.xhtml")
+            .getFirstAsync();
+    }).then((result) => {
+        assert.equal(result != null, true);
+        database.close();
+    }).catch(() => {
+        database.close();
     });
 
 };
 
 exports["Queryable: removeAsync"] = function () {
-    const db = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(db);
+    const database = new sqlite.Database(":memory:");
+    const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
-        db,
+        database,
         name: "test"
     });
 
@@ -93,18 +117,18 @@ exports["Queryable: removeAsync"] = function () {
         return table.where().toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 0);
-        db.close();
+        database.close();
     }).catch(() => {
-        db.close();
+        database.close();
     });
 
 };
 
 exports["Queryable: updateAsync"] = function () {
-    const db = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(db);
+    const database = new sqlite.Database(":memory:");
+    const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
-        db,
+        database,
         name: "test"
     });
 
@@ -124,19 +148,19 @@ exports["Queryable: updateAsync"] = function () {
             .toArrayAsync();
     }).then((results) => {
         assert.equal(results[0].url, "New Value");
-        db.close();
+        database.close();
     }).catch((error) => {
-        db.close();
+        database.close();
         throw error;
     });
 
 };
 
 exports["Queryable: getCountAsync"] = function () {
-    const db = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(db);
+    const database = new sqlite.Database(":memory:");
+    const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
-        db,
+        database,
         name: "test"
     });
 
@@ -150,7 +174,7 @@ exports["Queryable: getCountAsync"] = function () {
     }).then((count) => {
         assert.equal(count, 300);
     }).catch((error) => {
-        db.close();
+        database.close();
         throw error;
     });
 

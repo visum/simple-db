@@ -1,52 +1,36 @@
 import QueryableToSqlFactory from "./factory/QueryableToSqlFactory";
+import SqliteDatabase from "./SqliteDatabase";
 
 export default class Provider {
     constructor({
-        db
+        database
     }) {
-        if (db == null) {
-            throw new Error("Null Exception: db cannot be null.");
+        if (database == null) {
+            throw new Error("Null Exception: database cannot be null.");
         }
 
-        this.db = db;
+        this.database = database;
+        this.sqliteDatabase = new SqliteDatabase(this.database);
     }
 
-    allAsync(sql, values){
-        return new Promise((resolve, reject)=>{
-            return this.db.all(sql, values, (error, result)=>{
-                if (error != null){
-                    reject(error);
-                } else {
-                    resolve(result);
-                }
-            });
-        });
-    }
-
-    runAsync(sql, values){
-        return new Promise((resolve, reject)=>{
-            return this.db.run(sql, values, (error, result)=>{
-                if (error != null){
-                    reject(error);
-                } else {
-                    resolve(result);
-                }
-            });
-        });
-    }
-
-    executeAsync(queryable) {
+    toArrayAsync(queryable) {
         const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
         const { sql } = queryableToSqlFactory.createWhereStatement();
 
-        return this.allAsync(sql);
-    };
+        return this.sqliteDatabase.allAsync(sql);
+    }
+
+    getFirstAsync(queryable){
+        return this.toArrayAsync(queryable).then((results)=>{
+            return results[0] || null
+        });
+    }
 
     getCountAsync(queryable) {
         const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
         const { sql } = queryableToSqlFactory.createCountStatement();
 
-        return this.allAsync(sql).then((results) => {
+        return this.sqliteDatabase.allAsync(sql).then((results) => {
             return results[0]["count(*)"];
         });
 
@@ -56,14 +40,14 @@ export default class Provider {
         const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
         const { sql } = queryableToSqlFactory.createDeleteStatement();
 
-        return this.allAsync(sql);
+        return this.sqliteDatabase.allAsync(sql);
     }
 
     updateAsync(queryable, entity) {
         const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
         const statement = queryableToSqlFactory.createUpdateStatement(entity);
 
-        return this.runAsync(statement.sql, statement.values);
+        return this.sqliteDatabase.runAsync(statement.sql, statement.values);
 
     }
 

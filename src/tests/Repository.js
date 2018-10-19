@@ -2,9 +2,9 @@ import * as assert from "assert";
 import sqlite from "sqlite3";
 import Repository from "../Repository";
 
-const createDatabaseAsync = (db) => {
+const createDatabaseAsync = (database) => {
     return new Promise((resolve, reject) => {
-        db.run(
+        database.run(
             `CREATE TABLE IF NOT EXISTS test (
                 id integer PRIMARY KEY,
                 data text NOT NULL UNIQUE
@@ -21,67 +21,67 @@ const createDatabaseAsync = (db) => {
 }
 
 exports["Repository: addAsync"] = function () {
-    const db = new sqlite.Database(":memory:");
+    const database = new sqlite.Database(":memory:");
     const repository = new Repository({
-        db,
+        database,
         name: "test"
     });
 
-    return createDatabaseAsync(db).then(()=>{
-        return repository.addAsync({data: "blah"});
-    }).then(()=>{
-        db.close();
-    }).catch((error)=>{
-        db.close();
+    return createDatabaseAsync(database).then(() => {
+        return repository.addAsync({ data: "blah" });
+    }).then(() => {
+        database.close();
+    }).catch((error) => {
+        database.close();
         throw error;
-    }) 
+    })
 };
 
 exports["Repository: updateAsync"] = function () {
-    const db = new sqlite.Database(":memory:");
+    const database = new sqlite.Database(":memory:");
     const repository = new Repository({
-        db,
+        database,
         name: "test"
     });
 
-    return createDatabaseAsync(db).then(()=>{
-        return repository.addAsync({data: "blah"});
-    }).then((id)=>{
+    return createDatabaseAsync(database).then(() => {
+        return repository.addAsync({ data: "blah" });
+    }).then(({ lastID: id }) => {
         return repository.updateAsync({
             id: id,
             data: "blah2"
         });
-    }).then(()=>{
+    }).then(() => {
         return repository.where().column("data").isEqualTo("blah2").toArrayAsync();
-    }).then((results)=>{
+    }).then((results) => {
         assert.equal(results.length, 1);
-        db.close();
-    }).catch((error)=>{
-        db.close();
+        database.close();
+    }).catch((error) => {
+        database.close();
         throw error;
-    }) 
+    })
 };
 
 exports["Repository: removeAsync"] = function () {
-    const db = new sqlite.Database(":memory:");
+    const database = new sqlite.Database(":memory:");
     const repository = new Repository({
-        db,
+        database,
         name: "test"
     });
 
-    return createDatabaseAsync(db).then(()=>{
-        return repository.addAsync({data: "blah"});
-    }).then((id)=>{
+    return createDatabaseAsync(database).then(() => {
+        return repository.addAsync({ data: "blah" });
+    }).then(({ lastID: id }) => {
         return repository.removeAsync({
             id: id
         });
-    }).then(()=>{
+    }).then(() => {
         return repository.where().column("data").isEqualTo("blah").toArrayAsync();
-    }).then((results)=>{
+    }).then((results) => {
         assert.equal(results.length, 0);
-        db.close();
-    }).catch((error)=>{
-        db.close();
+        database.close();
+    }).catch((error) => {
+        database.close();
         throw error;
-    }) 
+    })
 };
