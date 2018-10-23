@@ -1,5 +1,5 @@
 import QueryableToSqlFactory from "./factory/QueryableToSqlFactory";
-import SqliteDatabase from "./SqliteDatabase";
+import SqliteDatabaseWrapper from "./SqliteDatabaseWrapperWrapper";
 
 export default class Provider {
     constructor({
@@ -10,14 +10,14 @@ export default class Provider {
         }
 
         this.database = database;
-        this.sqliteDatabase = new SqliteDatabase(this.database);
+        this.sqliteDatabaseWrapper = new SqliteDatabaseWrapper(this.database);
     }
 
     toArrayAsync(queryable) {
         const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
         const { sql } = queryableToSqlFactory.createWhereStatement();
 
-        return this.sqliteDatabase.allAsync(sql);
+        return this.sqliteDatabaseWrapper.allAsync(sql);
     }
 
     getFirstAsync(queryable){
@@ -30,7 +30,7 @@ export default class Provider {
         const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
         const { sql } = queryableToSqlFactory.createCountStatement();
 
-        return this.sqliteDatabase.allAsync(sql).then((results) => {
+        return this.sqliteDatabaseWrapper.allAsync(sql).then((results) => {
             return results[0]["count(*)"];
         });
 
@@ -40,14 +40,14 @@ export default class Provider {
         const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
         const { sql } = queryableToSqlFactory.createDeleteStatement();
 
-        return this.sqliteDatabase.allAsync(sql);
+        return this.sqliteDatabaseWrapper.allAsync(sql);
     }
 
     updateAsync(queryable, entity) {
         const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
         const statement = queryableToSqlFactory.createUpdateStatement(entity);
 
-        return this.sqliteDatabase.runAsync(statement.sql, statement.values);
+        return this.sqliteDatabaseWrapper.runAsync(statement.sql, statement.values);
 
     }
 

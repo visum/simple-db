@@ -1,5 +1,5 @@
 import jsonschema from "jsonschema";
-import repositorySchema from "../repositorySchema";
+import repositoryJsonSchema from "../repositoryJsonSchema";
 
 export default class SchemaToSqliteFactory {
     constructor(schema) {
@@ -7,13 +7,13 @@ export default class SchemaToSqliteFactory {
         this.validator = new jsonschema.Validator();
     }
 
-    getTableName(schema) {
+    static getTableName(schema) {
         return `${schema.name}_${schema.version}`;
     }
 
     validateSchema() {
         this.assertHasPrimaryKey();
-        const validationResults = this.validator.validate(this.schema, repositorySchema);
+        const validationResults = this.validator.validate(this.schema, repositoryJsonSchema);
         
         if (validationResults.errors.length > 0){
             const error = new Error("Schema Error");
@@ -63,7 +63,7 @@ export default class SchemaToSqliteFactory {
             return column.foreignKey != null;
         }).map((column) => {
             const columnName = this.sqlizeName(column.name);
-            const source = this.sqlizeName(this.getTableName(column.foreignKey.source));
+            const source = this.sqlizeName(SchemaToSqliteFactory.getTableName(column.foreignKey.source));
             const sourceColumn = this.sqlizeName(column.foreignKey.source.column);
 
             return `FOREIGN KEY (${columnName}) REFERENCES ${source} (${sourceColumn})`;
@@ -79,7 +79,7 @@ export default class SchemaToSqliteFactory {
         expression.push(this.createPrimaryKeysExpression());
         expression.push(this.createForeignKeysExpression());
 
-        const sql = `CREATE TABLE IF NOT EXISTS ${this.sqlizeName(this.getTableName(this.schema))} ( ${expression.join(", \n")} )`;
+        const sql = `CREATE TABLE IF NOT EXISTS ${this.sqlizeName(SchemaToSqliteFactory.getTableName(this.schema))} ( ${expression.join(", \n")} )`;
 
         return {
             sql,
@@ -88,7 +88,7 @@ export default class SchemaToSqliteFactory {
     }
 
     createDropTableStatment() {
-        const sql = `DROP TABLE IF EXISTS ${this.sqlizeName(this.getTableName(this.schema))}`;
+        const sql = `DROP TABLE IF EXISTS ${this.sqlizeName(SchemaToSqliteFactory.getTableName(this.schema))}`;
         
         return {
             sql,

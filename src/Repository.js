@@ -1,13 +1,13 @@
 import Provider from "./Provider";
 import Queryable from "./Queryable";
 import EntityToSqlFactory from "./factory/EntityToSqlFactory";
-import SqliteDatabase from "./SqliteDatabase";
+import SqliteDatabaseWrapper from "./SqliteDatabaseWrapperWrapper";
 
 export default class Repository {
     constructor({ database, name, primaryKeys = ["id"] }) {
         this.name = name;
         this.database = database;
-        this.sqliteDatabase = new SqliteDatabase(this.database);
+        this.sqliteDatabaseWrapper = new SqliteDatabaseWrapper(this.database);
         this.primaryKeys = primaryKeys;
     }
 
@@ -21,7 +21,7 @@ export default class Repository {
 
         const { sql, values } = entityToSqlFactory.createInsertStatement();
 
-        return this.sqliteDatabase.runAsync(sql, values);
+        return this.sqliteDatabaseWrapper.runAsync(sql, values);
 
     }
 
@@ -34,7 +34,7 @@ export default class Repository {
 
         const { sql, values } = entityToSqlFactory.createDeleteStatement();
 
-        return this.sqliteDatabase.runAsync(sql, values);
+        return this.sqliteDatabaseWrapper.runAsync(sql, values);
     }
 
     updateAsync(entity) {
@@ -47,7 +47,7 @@ export default class Repository {
 
         const { sql, values } = entityToSqlFactory.createUpdateStatement();
 
-        return this.sqliteDatabase.runAsync(sql, values);
+        return this.sqliteDatabaseWrapper.runAsync(sql, values);
 
     }
 

@@ -1,4 +1,4 @@
-import SqliteDatabase from "./SqliteDatabase";
+import SqliteDatabaseWrapper from "./SqliteDatabaseWrapperWrapper";
 import SchemaToSqliteFactory from "./factory/SchemaToSqliteFactory";
 
 export default class SchemaToSqlite {
@@ -8,7 +8,7 @@ export default class SchemaToSqlite {
     }){
         this.database = database;
         this.schema = schema;
-        this.sqliteDatabase = new SqliteDatabase(database);
+        this.sqliteDatabaseWrapper = new SqliteDatabaseWrapper(database);
         this.schemaToSqliteFactory = new SchemaToSqliteFactory(schema);
     }
 
@@ -18,7 +18,7 @@ export default class SchemaToSqlite {
             values
         } = this.schemaToSqliteFactory.createTableStatement();
 
-        return this.sqliteDatabase.runAsync(sql, values);
+        return this.sqliteDatabaseWrapper.runAsync(sql, values);
     }
 
     dropRepositoryIfExistsAsync(){
@@ -27,7 +27,7 @@ export default class SchemaToSqlite {
             values
         } = this.schemaToSqliteFactory.createDropTableStatment();
 
-        return this.sqliteDatabase.runAsync(sql, values);
+        return this.sqliteDatabaseWrapper.runAsync(sql, values);
     
     }
 }
