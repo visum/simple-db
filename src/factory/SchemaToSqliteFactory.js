@@ -1,26 +1,25 @@
 import jsonschema from "jsonschema";
 import repositorySchema from "../repositorySchema";
 
-const typeMapping = {
-    string: "TEXT",
-    number: "REAL",
-    boolean: "INTEGER"
-};
-
 export default class SchemaToSqliteFactory {
     constructor(schema) {
         this.schema = schema;
         this.validator = new jsonschema.Validator();
     }
 
+    getTableName(schema) {
+        return `${schema.name}_${schema.version}`;
+    }
+
     validateSchema() {
-        const schema = this.schema;
-
-        if (!Array.isArray(schema.primaryKeys) || schema.primaryKeys.length === 0) {
-            throw new Error("Invalid Schema: no primary key set.");
+        this.assertHasPrimaryKey();
+        const validationResults = this.validator.validate(this.schema, repositorySchema);
+        
+        if (validationResults.errors.length > 0){
+            const error = new Error("Schema Error");
+            error.validationErrors = validationResults.errors;
+            throw error;
         }
-
-        this.validator.validate(this.schema, repositorySchema);
     }
 
     sqlizeValue(value) {
@@ -37,36 +36,50 @@ export default class SchemaToSqliteFactory {
         return `"${value.replace(/\"/, "\"")}"`;
     }
 
-    isColumnRequired(column) {
-        return Array.isArray(this.schema.required) && this.schema.required.includes(column);
+    hasPrimaryKey() {
+        return this.schema.columns.filter((column) => {
+            return column.isPrimaryKey;
+        }).length > 0;
     }
 
-    isColumnUnique(column) {
-        return Array.isArray(this.schema.unique) && this.schema.unique.includes(column);
-    }
-
-    isColumnIndexed(column) {
-        return Array.isArray(this.schema.indexed) && this.schema.indexed.includes(column);
+    assertHasPrimaryKey() {
+        if (!this.hasPrimaryKey()) {
+            throw new Error("Invalid Schema: Schema needs to have at least one primary key.");
+        }
     }
 
     createPrimaryKeysExpression() {
-        const keys = this.schema.primaryKeys.map((key) => {
-            return this.sqlizeName(key);
+        const keys = this.schema.columns.filter((column) => {
+            return column.isPrimaryKey;
+        }).map((column) => {
+            return this.sqlizeName(column.name);
         }).join(", ");
 
         return `PRIMARY KEY(${keys})`;
     }
 
+    createForeignKeysExpression() {
+        return this.schema.columns.filter((column) => {
+            return column.foreignKey != null;
+        }).map((column) => {
+            const columnName = this.sqlizeName(column.name);
+            const source = this.sqlizeName(this.getTableName(column.foreignKey.source));
+            const sourceColumn = this.sqlizeName(column.foreignKey.source.column);
+
+            return `FOREIGN KEY (${columnName}) REFERENCES ${source} (${sourceColumn})`;
+        }).join(", \n");
+    }
+
     createTableStatement() {
         this.validateSchema();
         const expression = [];
-
-        const tableName = this.sqlizeName(this.schema.title);
+        const tableName = this.sqlizeName(this.schema.name);
 
         expression.push(this.createColumnsExpression());
         expression.push(this.createPrimaryKeysExpression());
+        expression.push(this.createForeignKeysExpression());
 
-        const sql = `CREATE TABLE ${tableName} ( ${expression.join(", \n")} )`;
+        const sql = `CREATE TABLE IF NOT EXISTS ${this.sqlizeName(this.getTableName(this.schema))} ( ${expression.join(", \n")} )`;
 
         return {
             sql,
@@ -75,39 +88,45 @@ export default class SchemaToSqliteFactory {
     }
 
     createDropTableStatment() {
-
+        return `DROP TABLE IF EXISTS ${this.sqlizeName(this.getTableName(this.schema))}`;
     }
 
-    createColumnExpression(name, config) {
+    createColumnExpression({
+        name,
+        type,
+        isUnique,
+        isRequired,
+        isIndexed,
+        defaultValue
+    }) {
+
         const expression = [];
         expression.push(`${this.sqlizeName(name)}`);
 
-        expression.push(typeMapping[config.type]);
+        expression.push(type);
 
-        if (this.isColumnRequired(name)) {
+        if (isRequired) {
             expression.push("NOT NULL");
         }
 
-        if (this.isColumnUnique(name)) {
+        if (isUnique) {
             expression.push("UNIQUE");
         }
 
-        if (this.isColumnIndexed(name)) {
+        if (isIndexed) {
             expression.push("INDEXED");
         }
 
-        if (config.default != null) {
-            expression.push(this.sqlizeValue(config.default));
+        if (defaultValue != null) {
+            expression.push(this.sqlizeValue(defaultValue));
         }
 
         return expression.join(" ");
     }
 
     createColumnsExpression() {
-        const properties = this.schema.properties;
-
-        return Object.keys(properties).map((name) => {
-            return this.createColumnExpression(name, properties[name]);
+        return this.schema.columns.map((column) => {
+            return this.createColumnExpression(column);
         }).join(", \n");
     }
 }

@@ -1,6 +1,6 @@
 import SqliteDatabase from "./SqliteDatabase";
 
-export default class JsonSchemaToSqlite {
+export default class SchemaToSqlite {
     constructor({
         database,
         schema
