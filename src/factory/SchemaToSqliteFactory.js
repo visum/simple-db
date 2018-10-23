@@ -88,7 +88,12 @@ export default class SchemaToSqliteFactory {
     }
 
     createDropTableStatment() {
-        return `DROP TABLE IF EXISTS ${this.sqlizeName(this.getTableName(this.schema))}`;
+        const sql = `DROP TABLE IF EXISTS ${this.sqlizeName(this.getTableName(this.schema))}`;
+        
+        return {
+            sql,
+            values: []
+        }
     }
 
     createColumnExpression({

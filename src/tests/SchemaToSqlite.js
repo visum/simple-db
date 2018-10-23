@@ -1,28 +1,6 @@
 import * as assert from "assert";
-import SchemaToSqliteFactory from "../factory/SchemaToSqliteFactory"
+import SchemaToSqlite from "../SchemaToSqlite"
 import sqlite3 from "sqlite3";
-
-const badSchema = {
-    "name": "repository",
-    "label": "Repository",
-    "description": "Some great description.",
-    "version": "1.0.1",
-    "columns": [
-        {
-            "type": "INTEGER",
-            "name": "manyToOne",
-            "label": "Many To One Identifier",
-            "isNullable": false,
-            "foreignKey": {
-                "label": "Source",
-                "source": {
-                    "name": "other_table",
-                    "column": "id"
-                }
-            }
-        }
-    ]
-};
 
 const testSchema = {
     "name": "repository",
@@ -83,28 +61,38 @@ const testSchema = {
     ]
 };
 
-exports["SchemaToSqliteFactory: "] = () => {
-    const schemaToSqliteFactory = new SchemaToSqliteFactory(testSchema);
-    const createTableStatement = schemaToSqliteFactory.createTableStatement();
-
+exports["SchemaToSqlite: createRepositoryIfNotExistsAsync."] = () => {
     const database = new sqlite3.Database(":memory:");
-
-    return new Promise((resolve, reject) => {
-        database.run(createTableStatement.sql, createTableStatement.values, (error, results) => {
-            if (error != null) {
-                reject(error);
-            } else {
-                resolve(results);
-            }
-        });
+    const schemaToSqlite = new SchemaToSqlite({
+        schema: testSchema,
+        database
     });
 
+
+    return schemaToSqlite.createRepositoryIfNotExistsAsync();
 }
 
-exports["SchemaToSqliteFactory: bad repository."] = () => {
-    assert.throws(()=>{
-        const schemaToSqliteFactory = new SchemaToSqliteFactory(badSchema);
-        schemaToSqliteFactory.createTableStatement();
+exports["SchemaToSqlite: createRepositoryIfNotExistsAsync twice."] = () => {
+    const database = new sqlite3.Database(":memory:");
+    const schemaToSqlite = new SchemaToSqlite({
+        schema: testSchema,
+        database
     });
 
+
+    return schemaToSqlite.createRepositoryIfNotExistsAsync().then(()=>{
+        return schemaToSqlite.createRepositoryIfNotExistsAsync();
+    });
+}
+
+exports["SchemaToSqlite: createRepositoryIfNotExistsAsync then Drop"] = () => {
+    const database = new sqlite3.Database(":memory:");
+    const schemaToSqlite = new SchemaToSqlite({
+        schema: testSchema,
+        database
+    });
+
+    return schemaToSqlite.createRepositoryIfNotExistsAsync().then(()=>{
+        return schemaToSqlite.dropRepositoryIfExistsAsync();
+    });
 }
