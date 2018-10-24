@@ -22,7 +22,7 @@ export default class QueryableToSqlFactory {
     }
 
     createSelectSql() {
-        const select = this.queryable.select;
+        const select = this.queryable.query.select;
         let columns = Object.keys(select).map((key) => {
             return `${key} AS ${select[key]}`;
         });

@@ -1,4 +1,4 @@
-import SqliteDatabaseWrapper from "./SqliteDatabaseWrapperWrapper";
+import SqliteDatabaseWrapper from "./SqliteDatabaseWrapper";
 import SchemaToSqliteFactory from "./factory/SchemaToSqliteFactory";
 
 export default class SchemaToSqlite {

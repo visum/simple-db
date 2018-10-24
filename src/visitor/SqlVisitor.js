@@ -1,30 +1,31 @@
 import Visitor from "./Visitor";
+import QueryableToSqlFactory from "../factory/QueryableToSqlFactory";
 
 class SqlString {
-    constructor(value){
+    constructor(value) {
         this.value = `${value.replace("'", "''")}`;
     }
 
-    toString(){
+    toString() {
         return `'${this.value}'`;
     }
 
-    toEndsWithString(){
+    toEndsWithString() {
         return `'%${this.value}'`;
     }
 
-    toContainsString(){
+    toContainsString() {
         return `'%${this.value}%'`;
     }
 
-    toStartsWithString(){
+    toStartsWithString() {
         return `'${this.value}%'`;
     }
 }
 
 export default class SqlVisitor extends Visitor {
     and(...args) {
-        if (args.length === 0){
+        if (args.length === 0) {
             return "";
         }
 
@@ -32,19 +33,19 @@ export default class SqlVisitor extends Visitor {
     }
 
     or(...args) {
-        if (args.length === 0){
+        if (args.length === 0) {
             return "";
         }
 
         return `(${args.join(" OR ")})`;
     }
 
-    endsWith(property, value){
-        return `${property} LIKE ${value.toEndsWithString()}`; 
+    endsWith(property, value) {
+        return `${property} LIKE ${value.toEndsWithString()}`;
     }
 
-    startsWith(property, value){
-        return `${property} LIKE ${value.toStartsWithString()}`; 
+    startsWith(property, value) {
+        return `${property} LIKE ${value.toStartsWithString()}`;
     }
 
     contains(property, value) {
@@ -75,6 +76,20 @@ export default class SqlVisitor extends Visitor {
         return `${property} <= ${value.toString()}`;
     }
 
+    isIn(property, value) {
+        return `${property} IN ${value}`;
+    }
+
+    isNotIn(property, value) {
+        return `${property} NOT IN ${value}`;
+    }
+
+    queryable(value) {
+        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable: value });
+        const { sql } = queryableToSqlFactory.createWhereStatement();
+        return `(${sql})`;
+    }
+
     string(value) {
         return new SqlString(value);
     }
@@ -87,12 +102,20 @@ export default class SqlVisitor extends Visitor {
         return value;
     }
 
-    array() {
-        throw new Error("Not yet Implemented");
-    }
+    array(value) {
+        return value.map((item) => {
 
-    object() {
-        throw new Error("Not yet Implemented");
+            if (typeof item === "string") {
+                return this.string(item).toString();
+            } else if (typeof item === "number") {
+                return this.number(item);
+            } else if (typeof item === "boolean") {
+                return this.boolean(item);
+            } else {
+                throw new Error("Invalid Argument: Unknown primitive type.");
+            }
+
+        }).join(", ");
     }
 
     propertyName(name) {
@@ -109,13 +132,12 @@ export default class SqlVisitor extends Visitor {
     }
 
     createWhereStatement(node) {
-
         const where = this.visit(node);
 
-        if (where == null){
+        if (where == null) {
             return "";
         }
-        
+
         return `WHERE ${where}`;
 
     }

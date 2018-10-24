@@ -74,6 +74,40 @@ exports["Queryable: toArrayAsync."] = function () {
 
 };
 
+exports["Queryable: IsIn with Queryable."] = function () {
+    const database = new sqlite.Database(":memory:");
+    const createDatabasePromise = createDatabaseAsync(database);
+    const table = new Repository({
+        database,
+        name: "test"
+    });
+
+    return createDatabasePromise.then(() => {
+        return fillDatabaseAsync(table);
+    }).then(() => {
+        return table.where()
+            .column("url")
+            .isIn(table.where().select({"url": "url"}).take(1))
+            .toArrayAsync();
+    }).then((results) => {
+        assert.equal(results.length, 1);
+
+        return table.where()
+            .column("url")
+            .contains(".xhtml")
+            .removeAsync();
+    }).then(() => {
+        return table.where().toArrayAsync();
+    }).then((results) => {
+        assert.equal(results.length, 0);
+        database.close();
+    }).catch((error) => {
+        database.close();
+        throw error;
+    });
+
+};
+
 exports["Queryable: getFirstAsync"] = function () {
     const database = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(database);

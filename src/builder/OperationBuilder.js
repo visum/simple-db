@@ -1,4 +1,5 @@
 import QueryFactory from "../factory/QueryFactory";
+import Queryable from "../Queryable";
 
 export default class OperationBuilder {
 
@@ -9,6 +10,46 @@ export default class OperationBuilder {
     }
 
     getQuery() {
+        return this.queryable;
+    }
+
+    isIn(value){
+        if (!Array.isArray(value) && !(value instanceof Queryable) ){
+            throw new Error("Invalid Argument: value needs to be an array or a queryable.");
+        }
+
+        const node = this.factory.createIsInNode();
+        const valueNode = this.factory.createQueryableValueNode(value);
+        const propertyNode = this.factory.createPropertyNode(this.queryable.type, this.propertyName);
+        
+        node.children.push(propertyNode, valueNode);
+
+        if (this.queryable.query.expression && Array.isArray(this.queryable.query.expression.children)) {
+            this.queryable.query.expression.children.push(node);
+        } else {
+            this.queryable.query.expression = node;
+        }
+
+        return this.queryable;
+    }
+
+    isNotIn(value){
+        if (!Array.isArray(value) && !(value instanceof Queryable) ){
+            throw new Error("Invalid Argument: value needs to be an array or a queryable.");
+        }
+
+        const node = this.factory.createIsNotInNode();
+        const valueNode = this.factory.createQueryableValueNode(value);
+        const propertyNode = this.factory.createPropertyNode(this.queryable.type, this.propertyName);
+        
+        node.children.push(propertyNode, valueNode);
+
+        if (this.queryable.query.expression && Array.isArray(this.queryable.query.expression.children)) {
+            this.queryable.query.expression.children.push(node);
+        } else {
+            this.queryable.query.expression = node;
+        }
+
         return this.queryable;
     }
 

@@ -69,7 +69,7 @@ export default class Queryable {
             type: this.type,
             provider: this.provider,
             query: {
-                expression: this.query.expression.clone(),
+                expression: this.query.expression == null ? null : this.query.expression.clone(),
                 select: this.query.select,
                 limit: this.query.limit,
                 offset: this.query.offset,

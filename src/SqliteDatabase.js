@@ -1,6 +1,7 @@
-import SqliteDatabaseWrapper from "./SqliteDatabaseWrapperWrapper";
+import SqliteDatabaseWrapper from "./sqliteDatabaseWrapper";
 import SchemaToSqlite from "./SchemaToSqlite";
 import Repository from "./Repository";
+import SchemaUtils from "./SchemaUtils";
 
 export default class SqliteDatabase {
     constructor({
@@ -57,9 +58,15 @@ export default class SqliteDatabase {
             throw new Error("Unable to find repository.");
         }
 
+        const schemaUtils = new SchemaUtils(schema);
+        const tableName = schemaUtils.getTableName();
+        const primaryKeys = schemaUtils.getPrimaryKeys();
+        const database = this.database;
+
         return new Repository({
-            database: this.database,
-            schema
+            database: database,
+            name: tableName,
+            primaryKeys
         });
 
     }

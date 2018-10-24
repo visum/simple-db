@@ -1,26 +1,27 @@
 import ValueNode from "../composite/ValueNode";
 import CompositeNode from "../composite/CompositeNode";
+import Queryable from "../Queryable";
 
 export default class QueryFactory {
     constructor() { }
 
-    createAndNode(){
+    createAndNode() {
         return new CompositeNode("and");
     }
 
-    createOrNode(){
+    createOrNode() {
         return new CompositeNode("or");
     }
 
-    createContainsNode(){
+    createContainsNode() {
         return new CompositeNode("contains");
     }
 
-    createEndsWithNode(){
+    createEndsWithNode() {
         return new CompositeNode("endsWith");
     }
 
-    createStartsWithNode(){
+    createStartsWithNode() {
         return new CompositeNode("startsWith");
     }
 
@@ -40,6 +41,14 @@ export default class QueryFactory {
         return new CompositeNode("isLessThan");
     }
 
+    createIsInNode() {
+        return new CompositeNode("isIn");
+    }
+
+    createIsNotInNode() {
+        return new CompositeNode("isNotIn");
+    }
+
     createIsGreaterThanOrEqualToNode() {
         return new CompositeNode("isGreaterThanOrEqualTo");
     }
@@ -57,6 +66,14 @@ export default class QueryFactory {
         propertyNode.children.push(typeNode, nameNode);
 
         return propertyNode;
+    }
+
+    createQueryableValueNode(value) {
+        if (!(value instanceof Queryable)) {
+            throw new Error("Invalid Argument: expected a queryable.");
+        }
+
+        return new ValueNode("queryable", value);
     }
 
     createValueNode(value) {

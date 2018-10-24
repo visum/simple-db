@@ -1,5 +1,5 @@
 import QueryableToSqlFactory from "./factory/QueryableToSqlFactory";
-import SqliteDatabaseWrapper from "./SqliteDatabaseWrapperWrapper";
+import SqliteDatabaseWrapper from "./SqliteDatabaseWrapper";
 
 export default class Provider {
     constructor({
