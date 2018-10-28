@@ -70,7 +70,7 @@ export default class Queryable {
             provider: this.provider,
             query: {
                 expression: this.query.expression == null ? null : this.query.expression.clone(),
-                select: this.query.select,
+                select: Object.assign({}, this.query.select),
                 limit: this.query.limit,
                 offset: this.query.offset,
                 orderBy: this.query.orderBy.slice()
@@ -87,9 +87,9 @@ export default class Queryable {
         return builder;
     }
 
-    select(mapping) {
+    select(selectMapping) {
         const queryable = this.clone();
-        queryable.query.select = mapping;
+        queryable.query.select = selectMapping;
 
         return queryable;
     }
