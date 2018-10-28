@@ -25,7 +25,7 @@ const fillDatabaseAsync = (table) => {
 
     for (let x = 0; x < 300; x++) {
         const testsPromise = table.addAsync({
-            url: `//api/${x}.xhtml`
+            url: `/api/${x}.xhtml`
         });
         tests.push(testsPromise);
     }
@@ -91,15 +91,31 @@ exports["Queryable: IsIn with Queryable."] = function () {
             .toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 1);
+        database.close();
+    }).catch((error) => {
+        database.close();
+        throw error;
+    });
 
+};
+
+exports["Queryable: IsIn with Array."] = function () {
+    const database = new sqlite.Database(":memory:");
+    const createDatabasePromise = createDatabaseAsync(database);
+    const table = new Repository({
+        database,
+        name: "test"
+    });
+
+    return createDatabasePromise.then(() => {
+        return fillDatabaseAsync(table);
+    }).then(() => {
         return table.where()
             .column("url")
-            .contains(".xhtml")
-            .removeAsync();
-    }).then(() => {
-        return table.where().toArrayAsync();
+            .isIn([`/api/1.xhtml`])
+            .toArrayAsync();
     }).then((results) => {
-        assert.equal(results.length, 0);
+        assert.equal(results.length, 1);
         database.close();
     }).catch((error) => {
         database.close();

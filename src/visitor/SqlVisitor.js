@@ -103,7 +103,7 @@ export default class SqlVisitor extends Visitor {
     }
 
     array(value) {
-        return value.map((item) => {
+        const series = value.map((item) => {
 
             if (typeof item === "string") {
                 return this.string(item).toString();
@@ -116,6 +116,8 @@ export default class SqlVisitor extends Visitor {
             }
 
         }).join(", ");
+
+        return `(${series})`;
     }
 
     propertyName(name) {
