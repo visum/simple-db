@@ -13,7 +13,7 @@ export default {
                 "name": {
                     "type": "string"
                 },
-                "version":{
+                "version": {
                     "type": "string"
                 },
                 "label": {
@@ -37,6 +37,17 @@ export default {
             },
             "required": ["label", "source"]
         },
+        "unique": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "type": "string"
+                }
+            }
+        },
         "column": {
             "type": "object",
             "properties": {
@@ -52,16 +63,7 @@ export default {
                 "description": {
                     "type": "string"
                 },
-                "foreignKey": {
-                    "$ref": "#/definitions/foreignKey"
-                },
                 "isNullable": {
-                    "type": "boolean"
-                },
-                "isUnique": {
-                    "type": "boolean"
-                },
-                "isPrimaryKey": {
                     "type": "boolean"
                 },
                 "isIndexed": {
@@ -71,7 +73,7 @@ export default {
                     "type": ["string", "number", "boolean", "null"]
                 }
             },
-            "required": ["type", "name", "label"] 
+            "required": ["type", "name", "label"]
         }
     },
     "properties": {
@@ -92,7 +94,24 @@ export default {
             "items": {
                 "$ref": "#/definitions/column"
             }
+        },
+        "primaryKeys": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+                "type": "string"
+            }
+        },
+        "unique": {
+            "$ref": "#/definitions/unique"
+        },
+        "foreignKeys": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/foreignKey"
+            }
         }
     },
-    "required": ["name", "label", "version", "columns"]
+    "required": ["name", "label", "version", "columns", "primaryKeys"]
 }

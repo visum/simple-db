@@ -9,10 +9,9 @@ export default class SchemaToSqliteFactory {
     }
 
     validateSchema() {
-        this.assertHasPrimaryKey();
         const validationResults = this.validator.validate(this.schema, repositoryJsonSchema);
-        
-        if (validationResults.errors.length > 0){
+
+        if (validationResults.errors.length > 0) {
             const error = new Error("Schema Error");
             error.validationErrors = validationResults.errors;
             throw error;
@@ -33,37 +32,37 @@ export default class SchemaToSqliteFactory {
         return `"${value.replace(/\"/, "\"")}"`;
     }
 
-    hasPrimaryKey() {
-        return this.schema.columns.filter((column) => {
-            return column.isPrimaryKey;
-        }).length > 0;
-    }
-
-    assertHasPrimaryKey() {
-        if (!this.hasPrimaryKey()) {
-            throw new Error("Invalid Schema: Schema needs to have at least one primary key.");
-        }
-    }
-
     createPrimaryKeysExpression() {
-        const keys = this.schema.columns.filter((column) => {
-            return column.isPrimaryKey;
-        }).map((column) => {
-            return this.sqlizeName(column.name);
+        const keys = this.schema.primaryKeys.map((column) => {
+            return this.sqlizeName(column);
         }).join(", ");
 
         return `PRIMARY KEY(${keys})`;
     }
 
+    createUniqueColumns() {
+        if (!Array.isArray(this.schema.unique) || this.schema.unique.length === 0) {
+            return "";
+        }
+
+        const columns = this.schema.unique.map((columns) => {
+            return columns.map((column) => {
+                return this.sqlizeName(column);
+            });
+        }).join(", ");
+
+        return `UNIQUE (${columns})`;
+    }
+
     createForeignKeysExpression() {
-        
-        return this.schema.columns.filter((column) => {
-            return column.foreignKey != null;
-        }).map((column) => {
-            const schemaUtils = new SchemaUtils(column.foreignKey.source);
-            const columnName = this.sqlizeName(column.name);
+        const foreignKeys = this.schema.foreignKeys || {};
+
+        return Object.keys(foreignKeys).map((name) => {
+            const column = foreignKeys[name];
+            const schemaUtils = new SchemaUtils(column.source);
+            const columnName = this.sqlizeName(name);
             const source = this.sqlizeName(schemaUtils.getTableName());
-            const sourceColumn = this.sqlizeName(column.foreignKey.source.column);
+            const sourceColumn = this.sqlizeName(column.source.column);
 
             return `FOREIGN KEY (${columnName}) REFERENCES ${source} (${sourceColumn})`;
         }).join(", \n");
@@ -73,10 +72,11 @@ export default class SchemaToSqliteFactory {
         this.validateSchema();
         const expression = [];
         const schemaUtils = new SchemaUtils(this.schema);
-        const tableName = schemaUtils.getTableName(this.schema);
+        const tableName = schemaUtils.getTableName();
 
         expression.push(this.createColumnsExpression());
         expression.push(this.createPrimaryKeysExpression());
+        expression.push(this.createUniqueColumns());
         expression.push(this.createForeignKeysExpression());
 
         const sql = `CREATE TABLE IF NOT EXISTS ${this.sqlizeName(tableName)} ( ${expression.join(", \n")} )`;
@@ -90,7 +90,7 @@ export default class SchemaToSqliteFactory {
     createDropTableStatment() {
         const schemaUtils = new SchemaUtils(this.schema);
         const sql = `DROP TABLE IF EXISTS ${this.sqlizeName(schemaUtils.getTableName())}`;
-        
+
         return {
             sql,
             values: []
@@ -100,7 +100,6 @@ export default class SchemaToSqliteFactory {
     createColumnExpression({
         name,
         type,
-        isUnique,
         isRequired,
         isIndexed,
         defaultValue
@@ -113,10 +112,6 @@ export default class SchemaToSqliteFactory {
 
         if (isRequired) {
             expression.push("NOT NULL");
-        }
-
-        if (isUnique) {
-            expression.push("UNIQUE");
         }
 
         if (isIndexed) {

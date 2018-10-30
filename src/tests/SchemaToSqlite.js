@@ -11,15 +11,13 @@ const testSchema = {
         {
             "type": "INTEGER",
             "name": "id",
-            "label":"Identifier",
-            "isPrimaryKey": true
+            "label": "Identifier"
         },
         {
             "type": "TEXT",
             "name": "text",
             "label": "Text",
-            "description":"Some Description.",
-            "isUnique": true
+            "description": "Some Description.",
         },
         {
             "type": "REAL",
@@ -31,34 +29,39 @@ const testSchema = {
             "type": "INTEGER",
             "name": "manyToOne",
             "label": "Many To One Identifier",
-            "isNullable": false,
-            "foreignKey": {
-                "label": "Source",
-                "source": {
-                    "name": "other_table",
-                    "version": "1.0.0",
-                    "label": "Many",
-                    "column": "id"
-                }
-            }
+            "isNullable": false
         },
         {
             "type": "INTEGER",
             "name": "oneToOne",
-            "label":"One to One Identifier",
-            "isUnique":true,
-            "isNullable": false,
-            "foreignKey": {
-                "label": "Source",
-                "source": {
-                    "name": "other_table",
-                    "version": "1.0.0",
-                    "label": "One",
-                    "column": "id"
-                }
+            "label": "One to One Identifier",
+            "isNullable": false
+        }
+    ],
+    primaryKeys: ["id"],
+    unique: [
+        ["oneToOne"]
+    ],
+    foreignKeys: {
+        "manyToOne": {
+            "label": "Source",
+            "source": {
+                "name": "other_table",
+                "version": "1.0.0",
+                "label": "Many",
+                "column": "id"
+            }
+        },
+        "oneToOne": {
+            "label": "Source",
+            "source": {
+                "name": "other_table",
+                "version": "1.0.0",
+                "label": "One",
+                "column": "id"
             }
         }
-    ]
+    }
 };
 
 exports["SchemaToSqlite: createRepositoryIfNotExistsAsync."] = () => {
@@ -80,7 +83,7 @@ exports["SchemaToSqlite: createRepositoryIfNotExistsAsync twice."] = () => {
     });
 
 
-    return schemaToSqlite.createRepositoryIfNotExistsAsync().then(()=>{
+    return schemaToSqlite.createRepositoryIfNotExistsAsync().then(() => {
         return schemaToSqlite.createRepositoryIfNotExistsAsync();
     });
 }
@@ -92,7 +95,7 @@ exports["SchemaToSqlite: createRepositoryIfNotExistsAsync then Drop"] = () => {
         database
     });
 
-    return schemaToSqlite.createRepositoryIfNotExistsAsync().then(()=>{
+    return schemaToSqlite.createRepositoryIfNotExistsAsync().then(() => {
         return schemaToSqlite.dropRepositoryIfExistsAsync();
     });
 }
