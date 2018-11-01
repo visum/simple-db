@@ -1,5 +1,5 @@
-import QueryableToSqlFactory from "./factory/QueryableToSqlFactory";
-import SqliteDatabaseWrapper from "./SqliteDatabaseWrapper";
+import QueryableToSqlFactory from "./factories/QueryableToSqlFactory";
+import Sqlite3Wrapper from "./Sqlite3Wrapper";
 
 export default class Provider {
     constructor({
@@ -10,7 +10,7 @@ export default class Provider {
         }
 
         this.database = database;
-        this.sqliteDatabaseWrapper = new SqliteDatabaseWrapper(this.database);
+        this.sqliteDatabaseWrapper = new Sqlite3Wrapper(this.database);
     }
 
     toArrayAsync(queryable) {

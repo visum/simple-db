@@ -1,11 +1,17 @@
 import jsonschema from "jsonschema";
 import repositoryJsonSchema from "../repositoryJsonSchema";
-import SchemaUtils from "../SchemaUtils";
+import SchemaUtils from "../utils/SchemaUtils";
 
 export default class SchemaToSqliteFactory {
     constructor(schema) {
         this.schema = schema;
         this.validator = new jsonschema.Validator();
+    }
+
+    removeNullOrEmptyStrings(expression) {
+        return expression.filter((part) => {
+            return typeof part === "string" && part.length > 0;
+        });
     }
 
     validateSchema() {
@@ -65,7 +71,7 @@ export default class SchemaToSqliteFactory {
             const sourceColumn = this.sqlizeName(column.source.column);
 
             return `FOREIGN KEY (${columnName}) REFERENCES ${source} (${sourceColumn})`;
-        }).join(", \n");
+        }).join(", ");
     }
 
     createTableStatement() {
@@ -79,7 +85,9 @@ export default class SchemaToSqliteFactory {
         expression.push(this.createUniqueColumns());
         expression.push(this.createForeignKeysExpression());
 
-        const sql = `CREATE TABLE IF NOT EXISTS ${this.sqlizeName(tableName)} ( ${expression.join(", \n")} )`;
+        const cleanedExpression = this.removeNullOrEmptyStrings(expression);
+
+        const sql = `CREATE TABLE IF NOT EXISTS ${this.sqlizeName(tableName)} (${cleanedExpression.join(", ")})`;
 
         return {
             sql,
@@ -128,6 +136,6 @@ export default class SchemaToSqliteFactory {
     createColumnsExpression() {
         return this.schema.columns.map((column) => {
             return this.createColumnExpression(column);
-        }).join(", \n");
+        }).join(", ");
     }
 }

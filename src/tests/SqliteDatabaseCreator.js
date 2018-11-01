@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import SchemaToSqlite from "../SchemaToSqlite"
+import SqliteDatabaseCreator from "../sqlite/SqliteDatabaseCreator"
 import sqlite3 from "sqlite3";
 
 const testSchema = {
@@ -64,9 +64,9 @@ const testSchema = {
     }
 };
 
-exports["SchemaToSqlite: createRepositoryIfNotExistsAsync."] = () => {
+exports["SqliteDatabaseCreator: createRepositoryIfNotExistsAsync."] = () => {
     const database = new sqlite3.Database(":memory:");
-    const schemaToSqlite = new SchemaToSqlite({
+    const schemaToSqlite = new SqliteDatabaseCreator({
         schema: testSchema,
         database
     });
@@ -75,9 +75,9 @@ exports["SchemaToSqlite: createRepositoryIfNotExistsAsync."] = () => {
     return schemaToSqlite.createRepositoryIfNotExistsAsync();
 }
 
-exports["SchemaToSqlite: createRepositoryIfNotExistsAsync twice."] = () => {
+exports["SqliteDatabaseCreator: createRepositoryIfNotExistsAsync twice."] = () => {
     const database = new sqlite3.Database(":memory:");
-    const schemaToSqlite = new SchemaToSqlite({
+    const schemaToSqlite = new SqliteDatabaseCreator({
         schema: testSchema,
         database
     });
@@ -88,9 +88,9 @@ exports["SchemaToSqlite: createRepositoryIfNotExistsAsync twice."] = () => {
     });
 }
 
-exports["SchemaToSqlite: createRepositoryIfNotExistsAsync then Drop"] = () => {
+exports["SqliteDatabaseCreator: createRepositoryIfNotExistsAsync then Drop"] = () => {
     const database = new sqlite3.Database(":memory:");
-    const schemaToSqlite = new SchemaToSqlite({
+    const schemaToSqlite = new SqliteDatabaseCreator({
         schema: testSchema,
         database
     });

@@ -1,14 +1,14 @@
-import SqliteDatabaseWrapper from "./SqliteDatabaseWrapper";
-import SchemaToSqliteFactory from "./factory/SchemaToSqliteFactory";
+import Sqlite3Wrapper from "./Sqlite3Wrapper";
+import SchemaToSqliteFactory from "./factories/SchemaToSqliteFactory";
 
-export default class SchemaToSqlite {
+export default class SqliteDatabaseCreator {
     constructor({
         database,
         schema
     }){
         this.database = database;
         this.schema = schema;
-        this.sqliteDatabaseWrapper = new SqliteDatabaseWrapper(database);
+        this.sqliteDatabaseWrapper = new Sqlite3Wrapper(database);
         this.schemaToSqliteFactory = new SchemaToSqliteFactory(schema);
     }
 

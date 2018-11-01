@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import sqlite from "sqlite3";
-import Repository from "../Repository";
+import Repository from "../sqlite/Repository";
 
 const createDatabaseAsync = (database) => {
     return new Promise((resolve, reject) => {

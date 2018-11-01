@@ -1,4 +1,4 @@
-import SqlVisitor from "../visitor/SqlVisitor";
+import SqlVisitor from "../visitors/SqlVisitor";
 
 export default class QueryableToSqlFactory {
     constructor({
@@ -10,6 +10,12 @@ export default class QueryableToSqlFactory {
         }
 
         this.queryable = queryable;
+    }
+
+    removeNullOrEmptyStrings(expression) {
+        return expression.filter((part) => {
+            return typeof part === "string" && part.length > 0;
+        });
     }
 
     createDeleteSql() {
@@ -86,23 +92,26 @@ export default class QueryableToSqlFactory {
         const whereSql = this.createWhereSql();
         const orderBySql = this.createOrderBySql();
         const limitAndOffsetSql = this.createLimitAndOffsetSql();
+        const expression = [];
 
-        let sql = selectSql;
+        expression.push(selectSql);
 
         if (whereSql != "") {
-            sql = `${sql} ${whereSql}`;
+            expression.push(whereSql);
         }
 
         if (orderBySql != "") {
-            sql = `${sql} ${orderBySql}`;
+            expression.push(orderBySql);
         }
 
         if (limitAndOffsetSql != "") {
-            sql = `${sql} ${limitAndOffsetSql}`;
+            expression.push(limitAndOffsetSql);
         }
 
+        const cleanedExpression = this.removeNullOrEmptyStrings(expression);
+
         return {
-            sql,
+            sql: cleanedExpression.join(" "),
             values: []
         }
     }
@@ -110,15 +119,18 @@ export default class QueryableToSqlFactory {
     createCountStatement() {
         const selectSql = this.createCountSelectSql();
         const whereSql = this.createWhereSql();
+        const expression = []
 
-        let sql = selectSql;
+        expression.push(selectSql);
 
         if (whereSql != "") {
-            sql = `${sql} ${whereSql}`;
+            expression.push(whereSql);
         }
 
+        const cleanedExpression = this.removeNullOrEmptyStrings(expression);
+
         return {
-            sql,
+            sql: cleanedExpression.join(" "),
             values: []
         }
     }

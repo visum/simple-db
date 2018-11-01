@@ -1,5 +1,5 @@
-import QueryFactory from "./factory/QueryFactory";
-import OperationBuilder from "./builder/OperationBuilder";
+import QueryFactory from "../sqlite/factories/QueryFactory";
+import OperationBuilder from "./OperationBuilder";
 
 export default class Queryable {
 

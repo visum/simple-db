@@ -1,6 +1,6 @@
-import ValueNode from "../composite/ValueNode";
-import CompositeNode from "../composite/CompositeNode";
-import Queryable from "../Queryable";
+import ValueNode from "../../queryable/abstractSyntaxTree/ValueNode";
+import CompositeNode from "../../queryable/abstractSyntaxTree/CompositeNode";
+import Queryable from "../../queryable/Queryable";
 
 export default class QueryFactory {
     constructor() { }

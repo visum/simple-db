@@ -1,116 +1,29 @@
 import * as assert from "assert";
-import SchemaToSqliteFactory from "../factory/SchemaToSqliteFactory"
-import sqlite3 from "sqlite3";
+import SchemaToSqliteFactory from "../sqlite/factories/SchemaToSqliteFactory"
+import personSchema from "../testSchemas/person";
+import addressSchema from "../testSchemas/address";
+import phoneNumberSchema from "../testSchemas/phoneNumber";
 
-const badSchema = {
-    "name": "repository",
-    "label": "Repository",
-    "description": "Some great description.",
-    "version": "1.0.1",
-    "columns": [
-        {
-            "type": "INTEGER",
-            "name": "manyToOne",
-            "label": "Many To One Identifier",
-            "isNullable": false
-        }
-    ],
-    "primaryKeys": ["id"],
-    "foreignKeys": {
-        "manyToOne": {
-            "label": "Source",
-            "source": {
-                "name": "other_table",
-                "column": "id"
-            }
-        }
-    }
-};
-
-const testSchema = {
-    "name": "repository",
-    "label": "Repository",
-    "description": "Some great description.",
-    "version": "1.0.1",
-    "columns": [
-        {
-            "type": "INTEGER",
-            "name": "id",
-            "label": "Identifier"
-        },
-        {
-            "type": "TEXT",
-            "name": "text",
-            "label": "Text",
-            "description": "Some Description.",
-        },
-        {
-            "type": "REAL",
-            "name": "real",
-            "label": "Float",
-            "isNullable": false
-        },
-        {
-            "type": "INTEGER",
-            "name": "manyToOne",
-            "label": "Many To One Identifier",
-            "isNullable": false
-        },
-        {
-            "type": "INTEGER",
-            "name": "oneToOne",
-            "label": "One to One Identifier",
-            "isNullable": false
-        }
-    ],
-    primaryKeys: ["id"],
-    unique: [
-        ["oneToOne"]
-    ],
-    foreignKeys: {
-        "manyToOne": {
-            "label": "Source",
-            "source": {
-                "name": "other_table",
-                "version": "1.0.0",
-                "label": "Many",
-                "column": "id"
-            }
-        },
-        "oneToOne": {
-            "label": "Source",
-            "source": {
-                "name": "other_table",
-                "version": "1.0.0",
-                "label": "One",
-                "column": "id"
-            }
-        }
-    }
-};
-
-exports["SchemaToSqliteFactory: "] = () => {
-    const schemaToSqliteFactory = new SchemaToSqliteFactory(testSchema);
+exports["SchemaToSqliteFactory: Person Schema."] = () => {
+    const schemaToSqliteFactory = new SchemaToSqliteFactory(personSchema);
     const createTableStatement = schemaToSqliteFactory.createTableStatement();
+    const expectedSql = `CREATE TABLE IF NOT EXISTS "person_0.0.1" ("id" INTEGER, "firstName" TEXT, "lastName" TEXT, "dateOfBirth" INTEGER, PRIMARY KEY("id"))`;
 
-    const database = new sqlite3.Database(":memory:");
+    assert.equal(createTableStatement.sql, expectedSql);
+};
 
-    return new Promise((resolve, reject) => {
-        database.run(createTableStatement.sql, createTableStatement.values, (error, results) => {
-            if (error != null) {
-                reject(error);
-            } else {
-                resolve(results);
-            }
-        });
-    });
+exports["SchemaToSqliteFactory: Address Schema."] = () => {
+    const schemaToSqliteFactory = new SchemaToSqliteFactory(addressSchema);
+    const createTableStatement = schemaToSqliteFactory.createTableStatement();
+    const expectedSql = `CREATE TABLE IF NOT EXISTS "address_0.0.1" ("id" INTEGER, "address" TEXT, "city" TEXT, "state" INTEGER, "zipCode" INTEGER, "personId" INTEGER, PRIMARY KEY("id"), FOREIGN KEY ("personId") REFERENCES "person_0.0.1" ("id"))`;
 
-}
+    assert.equal(createTableStatement.sql, expectedSql);
+};
 
-exports["SchemaToSqliteFactory: bad repository."] = () => {
-    assert.throws(()=>{
-        const schemaToSqliteFactory = new SchemaToSqliteFactory(badSchema);
-        schemaToSqliteFactory.createTableStatement();
-    });
+exports["SchemaToSqliteFactory: Phone Number Schema."] = () => {
+    const schemaToSqliteFactory = new SchemaToSqliteFactory(phoneNumberSchema);
+    const createTableStatement = schemaToSqliteFactory.createTableStatement();
+    const expectedSql = `CREATE TABLE IF NOT EXISTS "address_0.0.1" ("id" INTEGER, "type" TEXT, "personId" INTEGER, PRIMARY KEY("id"), UNIQUE ("personId","type"), FOREIGN KEY ("personId") REFERENCES "person_0.0.1" ("id"))`;
 
-}
+    assert.equal(createTableStatement.sql, expectedSql);
+};

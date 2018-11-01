@@ -1,5 +1,5 @@
 import Visitor from "./Visitor";
-import QueryableToSqlFactory from "../factory/QueryableToSqlFactory";
+import QueryableToSqlFactory from "../factories/QueryableToSqlFactory";
 
 class SqlString {
     constructor(value) {

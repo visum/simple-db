@@ -1,4 +1,4 @@
-export default class SqliteDatabaseWrapper {
+export default class Sqlite3Wrapper {
     constructor(database) {
         this.database = database;
     }

@@ -1,13 +1,13 @@
 import Provider from "./Provider";
-import Queryable from "./Queryable";
-import EntityToSqlFactory from "./factory/EntityToSqlFactory";
-import SqliteDatabaseWrapper from "./SqliteDatabaseWrapper";
+import Queryable from "../queryable/Queryable";
+import EntityToSqlFactory from "./factories/EntityToSqlFactory";
+import Sqlite3Wrapper from "./Sqlite3Wrapper";
 
 export default class Repository {
     constructor({ database, name, primaryKeys = ["id"] }) {
         this.name = name;
         this.database = database;
-        this.sqliteDatabaseWrapper = new SqliteDatabaseWrapper(this.database);
+        this.sqliteDatabaseWrapper = new Sqlite3Wrapper(this.database);
         this.primaryKeys = primaryKeys;
     }
 
