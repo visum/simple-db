@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/index.js"],"names":["SqliteDatabase"],"mappings":";;;;;;;AAAA;;;;;;QAGIA,c,GAAAA,wB","file":"index.js","sourcesContent":["import SqliteDatabase from \"./sqlite/SqliteDatabase\";\n\nexport {\n    SqliteDatabase\n}"]}
