@@ -1,4 +1,4 @@
-import SqliteDatabase from "./SqliteDatabase";
+import SqliteDatabase from "./sqlite/SqliteDatabase";
 
 export {
     SqliteDatabase
