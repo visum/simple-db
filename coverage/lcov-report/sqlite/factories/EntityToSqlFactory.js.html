@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for sqlite/factories/EntityToSqlFactory.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">sqlite/factories/</a> EntityToSqlFactory.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>34/68</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">34.62% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>9/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">50% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>8/16</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">38.46% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>20/52</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2100×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+&nbsp;
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+&nbsp;
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken" >E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="if path not taken" >I</span>if (staticProps) <span class="cstat-no" title="statement not covered" >defineProperties(Constructor, staticProps); </span>return Constructor; }; }();
+&nbsp;
+function _classCallCheck(instance, Constructor) { <span class="missing-if-branch" title="if path not taken" >I</span>if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered" >throw new TypeError("Cannot call a class as a function"); </span>} }
+&nbsp;
+var EntityToSqlFactory = function () {
+    function EntityToSqlFactory(_ref) {
+        var entity = _ref.entity,
+            tableName = _ref.tableName,
+            primaryKeys = _ref.primaryKeys;
+&nbsp;
+        _classCallCheck(this, EntityToSqlFactory);
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!Array.isArray(primaryKeys) || primaryKeys.length === 0) {
+<span class="cstat-no" title="statement not covered" >            throw new Error("Invalid Argument Exception:'primaryKeys' needs to be an array of length greater than 0. ");</span>
+        }
+&nbsp;
+        this.tableName = tableName;
+        this.entity = entity;
+        this.primaryKeys = primaryKeys;
+    }
+&nbsp;
+    _createClass(EntityToSqlFactory, [{
+        key: "validateEntityPrimaryKeys",
+        value: <span class="fstat-no" title="function not covered" >function validateEntityPrimaryKeys(entity) {</span>
+<span class="cstat-no" title="statement not covered" >            if (this.primaryKeys.length === 1) {</span>
+<span class="cstat-no" title="statement not covered" >                return entity[this.primaryKeys[0]] != null;</span>
+            } else <span class="cstat-no" title="statement not covered" >if (this.primaryKeys.length &gt; 1) {</span>
+<span class="cstat-no" title="statement not covered" >                return this.primaryKeys.every(<span class="fstat-no" title="function not covered" >function (key) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    return typeof entity[key] !== "undefined";</span>
+                });
+            } else {
+<span class="cstat-no" title="statement not covered" >                return false;</span>
+            }
+        }
+    }, {
+        key: "sqlizeValue",
+        value: <span class="fstat-no" title="function not covered" >function sqlizeValue(value) {</span>
+<span class="cstat-no" title="statement not covered" >            if (typeof value === "string") {</span>
+<span class="cstat-no" title="statement not covered" >                return "'" + value.replace(/\'/, "''") + "'";</span>
+            } else {
+<span class="cstat-no" title="statement not covered" >                return value.toString();</span>
+            }
+        }
+    }, {
+        key: "createWhereStatement",
+        value: <span class="fstat-no" title="function not covered" >function createWhereStatement(entity) {</span>
+<span class="cstat-no" title="statement not covered" >            var _this = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var columns = this.primaryKeys.map(<span class="fstat-no" title="function not covered" >function (key) {</span></span>
+<span class="cstat-no" title="statement not covered" >                return "\"" + key + "\" = " + _this.sqlizeValue(entity[key]);</span>
+            }).join(", ");
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return "WHERE " + columns;</span>
+        }
+    }, {
+        key: "createInsertStatement",
+        value: function createInsertStatement() {
+            var entity = this.entity;
+            var keys = Object.keys(entity);
+            var values = keys.map(function (key) {
+                return entity[key];
+            });
+&nbsp;
+            var placeHolderArray = new Array(keys.length).fill("?").join(", ");
+&nbsp;
+            return {
+                sql: "INSERT INTO " + this.tableName + " ( " + keys.join(", ") + " ) VALUES ( " + placeHolderArray + " )",
+                values: values
+            };
+        }
+    }, {
+        key: "createUpdateStatement",
+        value: <span class="fstat-no" title="function not covered" >function createUpdateStatement() {</span>
+<span class="cstat-no" title="statement not covered" >            var _this2 = this;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var entity = this.entity;</span>
+<span class="cstat-no" title="statement not covered" >            var keys = Object.keys(entity);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (!this.validateEntityPrimaryKeys(entity)) {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Cannot update entity: Invalid primary key(s).");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var sqliteData = keys.reduce(<span class="fstat-no" title="function not covered" >function (accumulator, key) {</span></span>
+<span class="cstat-no" title="statement not covered" >                if (_this2.primaryKeys.includes(key)) {</span>
+<span class="cstat-no" title="statement not covered" >                    return accumulator;</span>
+                }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                accumulator.placeHolderValues.push(key + " = ?");</span>
+<span class="cstat-no" title="statement not covered" >                accumulator.values.push(entity[key]);</span>
+<span class="cstat-no" title="statement not covered" >                return accumulator;</span>
+            }, { placeHolderValues: [], values: [] });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var whereStatement = this.createWhereStatement(entity);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return {</span>
+                sql: "UPDATE " + this.tableName + " SET " + sqliteData.placeHolderValues.join(", ") + " " + whereStatement,
+                values: sqliteData.values
+            };
+        }
+    }, {
+        key: "createDeleteStatement",
+        value: <span class="fstat-no" title="function not covered" >function createDeleteStatement() {</span>
+<span class="cstat-no" title="statement not covered" >            var entity = this.entity;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if (!this.validateEntityPrimaryKeys(entity)) {</span>
+<span class="cstat-no" title="statement not covered" >                throw new Error("Cannot delete entity: Invalid primary key(s).");</span>
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var whereStatement = this.createWhereStatement(entity);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return {</span>
+                sql: "DELETE FROM " + this.tableName + " " + whereStatement,
+                values: []
+            };
+        }
+    }]);
+&nbsp;
+    return EntityToSqlFactory;
+}();
+&nbsp;
+exports.default = EntityToSqlFactory;
+//# sourceMappingURL=EntityToSqlFactory.js.map</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Nov 02 2018 16:43:47 GMT-0600 (MDT)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
