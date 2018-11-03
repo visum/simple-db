@@ -1,20 +1,13 @@
 export default class SchemaUtils {
-    constructor(schema) {
-        this.schema = schema;
+    static getTableName(name, version) {
+        return `${name}_${version}`;
     }
 
-    getTableName() {
-        const schema = this.schema;
-        return `${schema.name}_${schema.version}`;
+    static getTableNameFromSchema(schema){
+        return SchemaUtils.getTableName(schema.name, schema.version);
     }
 
-    getPrimaryKeys() {
-        const schema = this.schema;
-
-        return schema.columns.filter((column) => {
-            return column.isPrimaryKey;
-        }).map((column) => {
-            return column.name;
-        });
+    static getPrimaryKeysFromSchema(schema) {
+        return schema.primaryKeys;
     }
 }

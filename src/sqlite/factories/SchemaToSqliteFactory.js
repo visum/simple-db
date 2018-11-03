@@ -1,11 +1,16 @@
 import jsonschema from "jsonschema";
 import repositoryJsonSchema from "../repositoryJsonSchema";
 import SchemaUtils from "../utils/SchemaUtils";
+import SqliteUtils from "../utils/SqliteUtils";
 
 export default class SchemaToSqliteFactory {
     constructor(schema) {
         this.schema = schema;
         this.validator = new jsonschema.Validator();
+    }
+
+    getTableName() {
+        return SqliteUtils.escapeName(SchemaUtils.getTableNameFromSchema(this.schema));
     }
 
     removeNullOrEmptyStrings(expression) {
@@ -24,23 +29,9 @@ export default class SchemaToSqliteFactory {
         }
     }
 
-    sqlizeValue(value) {
-        if (typeof value === "string") {
-            return `'${value.replace(/\'/, "''")}'`;
-        } if (typeof value === "boolean") {
-            return value ? 1 : 0;
-        } else {
-            return value.toString();
-        }
-    }
-
-    sqlizeName(value) {
-        return `"${value.replace(/\"/, "\"")}"`;
-    }
-
     createPrimaryKeysExpression() {
         const keys = this.schema.primaryKeys.map((column) => {
-            return this.sqlizeName(column);
+            return SqliteUtils.escapeName(column);
         }).join(", ");
 
         return `PRIMARY KEY(${keys})`;
@@ -53,7 +44,7 @@ export default class SchemaToSqliteFactory {
 
         const columns = this.schema.unique.map((columns) => {
             return columns.map((column) => {
-                return this.sqlizeName(column);
+                return SqliteUtils.escapeName(column);
             });
         }).join(", ");
 
@@ -65,10 +56,9 @@ export default class SchemaToSqliteFactory {
 
         return Object.keys(foreignKeys).map((name) => {
             const column = foreignKeys[name];
-            const schemaUtils = new SchemaUtils(column.source);
-            const columnName = this.sqlizeName(name);
-            const source = this.sqlizeName(schemaUtils.getTableName());
-            const sourceColumn = this.sqlizeName(column.source.column);
+            const columnName = SqliteUtils.escapeName(name);
+            const source = SqliteUtils.escapeName(SchemaUtils.getTableNameFromSchema(column.source));
+            const sourceColumn = SqliteUtils.escapeName(column.source.column);
 
             return `FOREIGN KEY (${columnName}) REFERENCES ${source} (${sourceColumn})`;
         }).join(", ");
@@ -77,8 +67,6 @@ export default class SchemaToSqliteFactory {
     createTableStatement() {
         this.validateSchema();
         const expression = [];
-        const schemaUtils = new SchemaUtils(this.schema);
-        const tableName = schemaUtils.getTableName();
 
         expression.push(this.createColumnsExpression());
         expression.push(this.createPrimaryKeysExpression());
@@ -87,7 +75,7 @@ export default class SchemaToSqliteFactory {
 
         const cleanedExpression = this.removeNullOrEmptyStrings(expression);
 
-        const sql = `CREATE TABLE IF NOT EXISTS ${this.sqlizeName(tableName)} (${cleanedExpression.join(", ")})`;
+        const sql = `CREATE TABLE IF NOT EXISTS ${this.getTableName()} (${cleanedExpression.join(", ")})`;
 
         return {
             sql,
@@ -96,8 +84,7 @@ export default class SchemaToSqliteFactory {
     }
 
     createDropTableStatment() {
-        const schemaUtils = new SchemaUtils(this.schema);
-        const sql = `DROP TABLE IF EXISTS ${this.sqlizeName(schemaUtils.getTableName())}`;
+        const sql = `DROP TABLE IF EXISTS ${this.getTableName()}`;
 
         return {
             sql,
@@ -114,7 +101,7 @@ export default class SchemaToSqliteFactory {
     }) {
 
         const expression = [];
-        expression.push(`${this.sqlizeName(name)}`);
+        expression.push(`${SqliteUtils.escapeName(name)}`);
 
         expression.push(type);
 

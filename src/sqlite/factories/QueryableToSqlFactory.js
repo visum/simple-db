@@ -1,4 +1,5 @@
 import SqlVisitor from "../visitors/SqlVisitor";
+import SqliteUtils from "../utils/SqliteUtils";
 
 export default class QueryableToSqlFactory {
     constructor({
@@ -12,6 +13,10 @@ export default class QueryableToSqlFactory {
         this.queryable = queryable;
     }
 
+    getEscapedTableName(){
+        return SqliteUtils.escapeName(this.queryable.type);
+    }
+
     removeNullOrEmptyStrings(expression) {
         return expression.filter((part) => {
             return typeof part === "string" && part.length > 0;
@@ -19,7 +24,7 @@ export default class QueryableToSqlFactory {
     }
 
     createDeleteSql() {
-        return `DELETE FROM ${this.queryable.type}`;
+        return `DELETE FROM ${this.getEscapedTableName()}`;
     }
 
     createWhereSql() {
@@ -37,7 +42,7 @@ export default class QueryableToSqlFactory {
             columns = ["*"];
         }
 
-        return `SELECT ${columns.join(", ")} FROM ${this.queryable.type}`;
+        return `SELECT ${columns.join(", ")} FROM ${this.getEscapedTableName()}`;
     }
 
     createOrderBySql() {
@@ -46,7 +51,7 @@ export default class QueryableToSqlFactory {
         }
 
         const series = this.queryable.query.orderBy.map((orderBy) => {
-            return `${orderBy.column} ${orderBy.type}`;
+            return `${SqliteUtils.escapeName(orderBy.column)} ${orderBy.type}`;
         }).join(", ");
 
         return `ORDER BY ${series}`;
@@ -60,20 +65,20 @@ export default class QueryableToSqlFactory {
                 return accumulator;
             }
 
-            accumulator.placeHolderValues.push(`${key} = ?`);
+            accumulator.placeHolderValues.push(`${SqliteUtils.escapeName(key)} = ?`);
             accumulator.values.push(entity[key]);
             return accumulator;
         }, { placeHolderValues: [], values: [] });
 
         return {
-            sql: `UPDATE ${this.queryable.type} SET ${statement.placeHolderValues.join(", ")}`,
+            sql: `UPDATE ${this.getEscapedTableName()} SET ${statement.placeHolderValues.join(", ")}`,
             values: statement.values
         }
 
     }
 
     createCountSelectSql() {
-        return `SELECT count(*) FROM ${this.queryable.type}`;
+        return `SELECT count(*) FROM ${this.getEscapedTableName()}`;
     }
 
     createLimitAndOffsetSql() {

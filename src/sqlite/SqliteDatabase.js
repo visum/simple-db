@@ -5,15 +5,16 @@ import SchemaUtils from "./utils/SchemaUtils";
 
 export default class SqliteDatabase {
     constructor({
-        database
+        database,
+        schemas
     }) {
         this.database = database;
         this.sqliteDatabaseWrapper = new Sqlite3Wrapper(database);
-        this.schemas = schemas;
+        this.schemas = Array.isArray(schemas) ? schemas : [];
     }
 
     hasSchema(schema) {
-        return this.findSchema(schema) != null;
+        return this.getSchema(schema) != null;
     }
 
     removeSchema(schema) {
@@ -28,11 +29,11 @@ export default class SqliteDatabase {
 
     getSchema(schema) {
         return this.schemas.find((innerSchema) => {
-            return schema.name == innerSchema && schema.version == innerSchema.version;
+            return schema.name == innerSchema.name && schema.version == innerSchema.version;
         });
     }
 
-    addRepositoryIfDoesNotExistsAsync(schema) {
+    addRepositoryAsync(schema) {
         const schemaToSqlite = new SchemaToSqlite({
             database: this.database,
             schema
@@ -45,7 +46,7 @@ export default class SqliteDatabase {
         });
     }
 
-    removeRepositoryIfExistsAsync(schema) {
+    removeRepositoryAsync(schema) {
         return schemaToSqlite.dropRepositoryIfExistsAsync().then(() => {
             this.removeSchema(schema)
         });
@@ -58,9 +59,8 @@ export default class SqliteDatabase {
             throw new Error("Unable to find repository.");
         }
 
-        const schemaUtils = new SchemaUtils(schema);
-        const tableName = schemaUtils.getTableName();
-        const primaryKeys = schemaUtils.getPrimaryKeys();
+        const tableName = SchemaUtils.getTableNameFromSchema(schema);
+        const primaryKeys = SchemaUtils.getPrimaryKeysFromSchema(schema);
         const database = this.database;
 
         return new Repository({

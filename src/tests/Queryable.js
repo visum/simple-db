@@ -50,7 +50,7 @@ exports["Queryable: toArrayAsync."] = function () {
             .endsWith("/1.xhtml")
             .or()
             .column("url")
-            .startsWith("//api/2.x")
+            .startsWith("/api/2.x")
             .or()
             .column("url")
             .contains("/3.xhtm")
@@ -68,8 +68,9 @@ exports["Queryable: toArrayAsync."] = function () {
     }).then((results) => {
         assert.equal(results.length, 0);
         database.close();
-    }).catch(() => {
+    }).catch((error) => {
         database.close();
+        throw error;
     });
 
 };
@@ -142,8 +143,9 @@ exports["Queryable: getFirstAsync"] = function () {
     }).then((result) => {
         assert.equal(result != null, true);
         database.close();
-    }).catch(() => {
+    }).catch((error) => {
         database.close();
+        throw error;
     });
 
 };
@@ -168,8 +170,9 @@ exports["Queryable: removeAsync"] = function () {
     }).then((results) => {
         assert.equal(results.length, 0);
         database.close();
-    }).catch(() => {
+    }).catch((error) => {
         database.close();
+        throw error;
     });
 
 };

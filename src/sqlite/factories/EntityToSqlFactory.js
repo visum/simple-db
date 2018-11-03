@@ -1,3 +1,5 @@
+import SqliteUtils from "../utils/SqliteUtils";
+
 export default class EntityToSqlFactory {
     constructor({
         entity,
@@ -25,17 +27,9 @@ export default class EntityToSqlFactory {
         }
     }
 
-    sqlizeValue(value) {
-        if (typeof value === "string") {
-            return `'${value.replace(/\'/, "''")}'`;
-        } else {
-            return value.toString();
-        }
-    }
-
     createWhereStatement(entity) {
         const columns = this.primaryKeys.map((key) => {
-            return `"${key}" = ${this.sqlizeValue(entity[key])}`;
+            return `${SqliteUtils.escapeName(key)} = ${SqliteUtils.escapeStringValue(entity[key])}`;
         }).join(", ");
 
         return `WHERE ${columns}`;
@@ -47,11 +41,14 @@ export default class EntityToSqlFactory {
         const values = keys.map((key) => {
             return entity[key];
         });
+        const escapedKeys = keys.map((key) => {
+            return SqliteUtils.escapeName(key);
+        });
 
         const placeHolderArray = new Array(keys.length).fill("?").join(", ");
 
         return {
-            sql: `INSERT INTO ${this.tableName} ( ${keys.join(", ")} ) VALUES ( ${placeHolderArray} )`,
+            sql: `INSERT INTO ${SqliteUtils.escapeName(this.tableName)} ( ${escapedKeys.join(", ")} ) VALUES ( ${placeHolderArray} )`,
             values: values
         }
 
@@ -70,7 +67,7 @@ export default class EntityToSqlFactory {
                 return accumulator;
             }
 
-            accumulator.placeHolderValues.push(`${key} = ?`);
+            accumulator.placeHolderValues.push(`${SqliteUtils.escapeName(key)} = ?`);
             accumulator.values.push(entity[key]);
             return accumulator;
         }, { placeHolderValues: [], values: [] });
@@ -78,7 +75,7 @@ export default class EntityToSqlFactory {
         const whereStatement = this.createWhereStatement(entity);
 
         return {
-            sql: `UPDATE ${this.tableName} SET ${sqliteData.placeHolderValues.join(", ")} ${whereStatement}`,
+            sql: `UPDATE ${SqliteUtils.escapeName(this.tableName)} SET ${sqliteData.placeHolderValues.join(", ")} ${whereStatement}`,
             values: sqliteData.values
         }
     }
@@ -93,7 +90,7 @@ export default class EntityToSqlFactory {
         const whereStatement = this.createWhereStatement(entity);
 
         return {
-            sql: `DELETE FROM ${this.tableName} ${whereStatement}`,
+            sql: `DELETE FROM ${SqliteUtils.escapeName(this.tableName)} ${whereStatement}`,
             values: []
         }
     }
