@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for sqlite/utils/SchemaUtils.js</title>
+    <title>Code coverage report for sqlite/utils/SqliteUtils.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">all files</a> / <a href="index.html">sqlite/utils/</a> SchemaUtils.js
+      <a href="../../index.html">all files</a> / <a href="index.html">sqlite/utils/</a> SqliteUtils.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.71% </span>
+        <span class="strong">80.65% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>24/28</span>
+        <span class='fraction'>25/31</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>5/10</span>
+        <span class='fraction'>7/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">77.78% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>7/9</span>
+        <span class='fraction'>6/8</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">91.67% </span>
+        <span class="strong">80% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>11/12</span>
+        <span class='fraction'>12/15</span>
       </div>
     </div>
   </div>
@@ -79,13 +79,15 @@
 34
 35
 36
-37</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+37
+38
+39</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -97,17 +99,19 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">25×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">25×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4347×</span>
+<span class="cline-any cline-yes">4347×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -125,33 +129,35 @@ var _createClass = function () { function defineProperties(target, props) { for 
 &nbsp;
 <span class="fstat-no" title="function not covered" >function _classCallCheck(instance, Constructor) {</span> <span class="cstat-no" title="statement not covered" >if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered" >throw new TypeError("Cannot call a class as a function"); </span>} </span>}
 &nbsp;
-var SchemaUtils = function () {
-<span class="fstat-no" title="function not covered" >    function SchemaUtils() {</span>
-<span class="cstat-no" title="statement not covered" >        _classCallCheck(this, SchemaUtils);</span>
+var SqliteUtils = function () {
+<span class="fstat-no" title="function not covered" >    function SqliteUtils() {</span>
+<span class="cstat-no" title="statement not covered" >        _classCallCheck(this, SqliteUtils);</span>
     }
 &nbsp;
-    _createClass(SchemaUtils, null, [{
-        key: "getTableName",
-        value: function getTableName(name, version) {
-            return name + "_" + version;
+    _createClass(SqliteUtils, null, [{
+        key: "escapeStringValue",
+        value: function escapeStringValue(value) {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof value === "string") {
+<span class="cstat-no" title="statement not covered" >                return "'" + value.replace(/\'/, "''") + "'";</span>
+            } else {
+                return value.toString();
+            }
         }
     }, {
-        key: "getTableNameFromSchema",
-        value: function getTableNameFromSchema(schema) {
-            return SchemaUtils.getTableName(schema.name, schema.version);
-        }
-    }, {
-        key: "getPrimaryKeysFromSchema",
-        value: function getPrimaryKeysFromSchema(schema) {
-            return schema.primaryKeys;
+        key: "escapeName",
+        value: function escapeName(name) {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (typeof name === "string") {
+                return "\"" + name.replace(/\"/, "\"") + "\"";
+            }
+<span class="cstat-no" title="statement not covered" >            return name;</span>
         }
     }]);
 &nbsp;
-    return SchemaUtils;
+    return SqliteUtils;
 }();
 &nbsp;
-exports.default = SchemaUtils;
-//# sourceMappingURL=SchemaUtils.js.map</pre></td></tr>
+exports.default = SqliteUtils;
+//# sourceMappingURL=SqliteUtils.js.map</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
