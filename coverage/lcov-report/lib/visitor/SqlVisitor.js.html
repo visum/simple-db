@@ -642,7 +642,7 @@ var SqlVisitor = function (_Visitor) {
         value: <span class="fstat-no" title="function not covered" >function queryable(value) {</span>
 <span class="cstat-no" title="statement not covered" >            var queryableToSqlFactory = new _QueryableToSqlFactory2.default({ queryable: value });</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            var _queryableToSqlFactor = queryableToSqlFactory.createWhereStatement(),</span>
+<span class="cstat-no" title="statement not covered" >            var _queryableToSqlFactor = queryableToSqlFactory.createWhereExpression(),</span>
                 sql = _queryableToSqlFactor.sql;
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            return "(" + sql + ")";</span>
@@ -699,8 +699,8 @@ var SqlVisitor = function (_Visitor) {
             return value;
         }
     }, {
-        key: "createWhereStatement",
-        value: function createWhereStatement(node) {
+        key: "createWhereExpression",
+        value: function createWhereExpression(node) {
             var where = this.visit(node);
 &nbsp;
             <span class="missing-if-branch" title="if path not taken" >I</span>if (where == null) {

@@ -256,7 +256,7 @@ var Provider = function () {
         value: function toArrayAsync(queryable) {
             var queryableToSqlFactory = new _QueryableToSqlFactory2.default({ queryable: queryable });
 &nbsp;
-            var _queryableToSqlFactor = queryableToSqlFactory.createWhereStatement(),
+            var _queryableToSqlFactor = queryableToSqlFactory.createWhereExpression(),
                 sql = _queryableToSqlFactor.sql;
 &nbsp;
             return this.sqliteDatabaseWrapper.allAsync(sql);

@@ -24,7 +24,10 @@ export default {
     ],
     "primaryKeys": ["id"],
     "unique": [
-        ["personId", "type"]
+        {
+            "columns": ["personId", "type"],
+            "conflictOptions": "REPLACE"
+        }
     ],
     "foreignKeys": {
         "personId": {

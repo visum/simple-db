@@ -1,4 +1,4 @@
-import QueryFactory from "../sqlite/factories/QueryFactory";
+import QueryFactory from "./NodeFactory";
 import OperationBuilder from "./OperationBuilder";
 
 export default class Queryable {
@@ -95,6 +95,10 @@ export default class Queryable {
     }
 
     take(take) {
+        if (typeof take !== "number"){
+            throw new Error("Illegal Argument: expected a number.");
+        }  
+
         const queryable = this.clone();
         queryable.query.limit = take;
 
@@ -102,6 +106,10 @@ export default class Queryable {
     }
 
     skip(skip) {
+        if (typeof skip !== "number"){
+            throw new Error("Illegal Argument: expected a number.");
+        } 
+
         const queryable = this.clone();
         queryable.query.offset = skip;
 

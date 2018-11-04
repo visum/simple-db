@@ -347,8 +347,8 @@ var EntityToSqlFactory = function () {
             }
         }
     }, {
-        key: "createWhereStatement",
-        value: function createWhereStatement(entity) {
+        key: "createWhereExpression",
+        value: function createWhereExpression(entity) {
             var _this = this;
 &nbsp;
             var columns = this.primaryKeys.map(function (key) {
@@ -395,7 +395,7 @@ var EntityToSqlFactory = function () {
                 return accumulator;
             }, { placeHolderValues: [], values: [] });
 &nbsp;
-            var whereStatement = this.createWhereStatement(entity);
+            var whereStatement = this.createWhereExpression(entity);
 &nbsp;
             return {
                 sql: "UPDATE " + this.tableName + " SET " + sqliteData.placeHolderValues.join(", ") + " " + whereStatement,
@@ -411,7 +411,7 @@ var EntityToSqlFactory = function () {
 <span class="cstat-no" title="statement not covered" >                throw new Error("Cannot delete entity: Invalid primary key(s).");</span>
             }
 &nbsp;
-            var whereStatement = this.createWhereStatement(entity);
+            var whereStatement = this.createWhereExpression(entity);
 &nbsp;
             return {
                 sql: "DELETE FROM " + this.tableName + " " + whereStatement,

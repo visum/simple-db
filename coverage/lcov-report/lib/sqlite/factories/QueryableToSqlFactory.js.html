@@ -493,7 +493,7 @@ var QueryableToSqlFactory = function () {
         key: "createWhereSql",
         value: function createWhereSql() {
             var visitor = new _SqlVisitor2.default();
-            return visitor.createWhereStatement(this.queryable.query.expression);
+            return visitor.createWhereExpression(this.queryable.query.expression);
         }
     }, {
         key: "createSelectSql",
@@ -560,8 +560,8 @@ var QueryableToSqlFactory = function () {
             return "LIMIT " + limit + " OFFSET " + offset;
         }
     }, {
-        key: "createWhereStatement",
-        value: function createWhereStatement() {
+        key: "createWhereExpression",
+        value: function createWhereExpression() {
             var selectSql = this.createSelectSql();
             var whereSql = this.createWhereSql();
             var orderBySql = this.createOrderBySql();

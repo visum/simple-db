@@ -347,8 +347,8 @@ var EntityToSqlFactory = function () {
             }
         }
     }, {
-        key: "createWhereStatement",
-        value: <span class="fstat-no" title="function not covered" >function createWhereStatement(entity) {</span>
+        key: "createWhereExpression",
+        value: <span class="fstat-no" title="function not covered" >function createWhereExpression(entity) {</span>
 <span class="cstat-no" title="statement not covered" >            var _this = this;</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            var columns = this.primaryKeys.map(<span class="fstat-no" title="function not covered" >function (key) {</span></span>
@@ -395,7 +395,7 @@ var EntityToSqlFactory = function () {
 <span class="cstat-no" title="statement not covered" >                return accumulator;</span>
             }, { placeHolderValues: [], values: [] });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            var whereStatement = this.createWhereStatement(entity);</span>
+<span class="cstat-no" title="statement not covered" >            var whereStatement = this.createWhereExpression(entity);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            return {</span>
                 sql: "UPDATE " + this.tableName + " SET " + sqliteData.placeHolderValues.join(", ") + " " + whereStatement,
@@ -411,7 +411,7 @@ var EntityToSqlFactory = function () {
 <span class="cstat-no" title="statement not covered" >                throw new Error("Cannot delete entity: Invalid primary key(s).");</span>
             }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            var whereStatement = this.createWhereStatement(entity);</span>
+<span class="cstat-no" title="statement not covered" >            var whereStatement = this.createWhereExpression(entity);</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            return {</span>
                 sql: "DELETE FROM " + this.tableName + " " + whereStatement,

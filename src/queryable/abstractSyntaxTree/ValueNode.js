@@ -4,10 +4,10 @@ export default class ValueNode extends Node {
     constructor(type, value) {
         super(type);
 
-        this.value = value || null;
+        this.value = value == null ? null : value;
     }
 
-    clone(){
+    clone() {
         const node = new ValueNode(this.type, this.value);
         return node;
     }

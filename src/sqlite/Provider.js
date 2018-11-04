@@ -1,5 +1,8 @@
-import QueryableToSqlFactory from "./factories/QueryableToSqlFactory";
+import SelectStatementCreator from "./statements/SelectStatementCreator";
 import Sqlite3Wrapper from "./Sqlite3Wrapper";
+import CountStatementCreator from "./statements/CountStatementCreator";
+import DeleteWhereStatementCreator from "./statements/DeleteWhereStatementCreator";
+import UpdateWhereStatementCreator from "./statements/UpdateWhereStatementCreator";
 
 export default class Provider {
     constructor({
@@ -14,8 +17,8 @@ export default class Provider {
     }
 
     toArrayAsync(queryable) {
-        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
-        const { sql } = queryableToSqlFactory.createWhereStatement();
+        const selectStatementCreator = new SelectStatementCreator(queryable);
+        const { sql } = selectStatementCreator.createStatement();
 
         return this.sqliteDatabaseWrapper.allAsync(sql);
     }
@@ -27,8 +30,8 @@ export default class Provider {
     }
 
     getCountAsync(queryable) {
-        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
-        const { sql } = queryableToSqlFactory.createCountStatement();
+        const countStatementCreator = new CountStatementCreator(queryable);
+        const { sql } = countStatementCreator.createStatement();
 
         return this.sqliteDatabaseWrapper.allAsync(sql).then((results) => {
             return results[0]["count(*)"];
@@ -37,15 +40,15 @@ export default class Provider {
     }
 
     removeAsync(queryable) {
-        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
-        const { sql } = queryableToSqlFactory.createDeleteStatement();
+        const deleteWhereStatementCreator = new DeleteWhereStatementCreator({ queryable });
+        const { sql } = deleteWhereStatementCreator.createStatement();
 
         return this.sqliteDatabaseWrapper.allAsync(sql);
     }
 
     updateAsync(queryable, entity) {
-        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable });
-        const statement = queryableToSqlFactory.createUpdateStatement(entity);
+        const updateWhereStatementCreator = new UpdateWhereStatementCreator({ queryable });
+        const statement = updateWhereStatementCreator.createStatement(entity);
 
         return this.sqliteDatabaseWrapper.runAsync(statement.sql, statement.values);
 

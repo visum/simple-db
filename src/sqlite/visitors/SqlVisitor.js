@@ -1,5 +1,6 @@
 import Visitor from "./Visitor";
-import QueryableToSqlFactory from "../factories/QueryableToSqlFactory";
+import SelectStatementCreator from "../statements/SelectStatementCreator";
+import SqliteUtils from "../utils/SqliteUtils";
 
 class SqlString {
     constructor(value) {
@@ -85,8 +86,8 @@ export default class SqlVisitor extends Visitor {
     }
 
     queryable(value) {
-        const queryableToSqlFactory = new QueryableToSqlFactory({ queryable: value });
-        const { sql } = queryableToSqlFactory.createWhereStatement();
+        const selectStatementCreator = new SelectStatementCreator(value);
+        const { sql } = selectStatementCreator.createStatement();
         return `(${sql})`;
     }
 
@@ -121,11 +122,11 @@ export default class SqlVisitor extends Visitor {
     }
 
     propertyName(name) {
-        return name;
+        return SqliteUtils.escapeName(name);
     }
 
     property(type, name) {
-        return `${name}`;
+        return name;
     }
 
     type(value) {
@@ -133,7 +134,7 @@ export default class SqlVisitor extends Visitor {
         return value;
     }
 
-    createWhereStatement(node) {
+    createWhereExpression(node) {
         const where = this.visit(node);
 
         if (where == null) {

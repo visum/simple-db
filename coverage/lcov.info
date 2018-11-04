@@ -193,7 +193,7 @@ FN:87,createUpdateSetStatement
 FN:90,(anonymous_18)
 FN:107,createCountSelectSql
 FN:112,createLimitAndOffsetSql
-FN:124,createWhereStatement
+FN:124,createWhereExpression
 FN:154,createCountStatement
 FN:174,createDeleteStatement
 FN:191,createUpdateStatement
@@ -219,7 +219,7 @@ FNDA:1,createUpdateSetStatement
 FNDA:1,(anonymous_18)
 FNDA:1,createCountSelectSql
 FNDA:10,createLimitAndOffsetSql
-FNDA:10,createWhereStatement
+FNDA:10,createWhereExpression
 FNDA:1,createCountStatement
 FNDA:2,createDeleteStatement
 FNDA:1,createUpdateStatement
@@ -390,7 +390,7 @@ FN:177,(anonymous_34)
 FN:194,propertyName
 FN:199,property
 FN:204,type
-FN:210,createWhereStatement
+FN:210,createWhereExpression
 FNF:38
 FNH:29
 FNDA:1,(anonymous_1)
@@ -430,7 +430,7 @@ FNDA:1,(anonymous_34)
 FNDA:13,propertyName
 FNDA:13,property
 FNDA:13,type
-FNDA:14,createWhereStatement
+FNDA:14,createWhereExpression
 DA:3,1
 DA:7,26
 DA:9,1
@@ -1504,7 +1504,7 @@ FN:17,(anonymous_6)
 FN:18,EntityToSqlFactory
 FN:36,validateEntityPrimaryKeys
 FN:40,(anonymous_9)
-FN:49,createWhereStatement
+FN:49,createWhereExpression
 FN:50,(anonymous_11)
 FN:58,createInsertStatement
 FN:61,(anonymous_13)
@@ -1523,7 +1523,7 @@ FNDA:1,(anonymous_6)
 FNDA:2106,EntityToSqlFactory
 FNDA:2,validateEntityPrimaryKeys
 FNDA:0,(anonymous_9)
-FNDA:2,createWhereStatement
+FNDA:2,createWhereExpression
 FNDA:2,(anonymous_11)
 FNDA:2104,createInsertStatement
 FNDA:2105,(anonymous_13)

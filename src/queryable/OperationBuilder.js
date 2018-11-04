@@ -1,4 +1,4 @@
-import QueryFactory from "../sqlite/factories/QueryFactory";
+import QueryFactory from "./NodeFactory";
 import Queryable from "./Queryable";
 
 export default class OperationBuilder {
@@ -38,13 +38,17 @@ export default class OperationBuilder {
     }
 
     isNotIn(value) {
-        if (!Array.isArray(value) && !(value instanceof Queryable)) {
+        let valueNode;
+        const node = this.factory.createIsNotInNode();
+        const propertyNode = this.factory.createPropertyNode(this.queryable.type, this.propertyName);
+
+        if (Array.isArray(value)) {
+            valueNode = this.factory.createValueNode(value);
+        } else if (value instanceof Queryable) {
+            valueNode = this.factory.createQueryableValueNode(value);
+        } else {
             throw new Error("Invalid Argument: value needs to be an array or a queryable.");
         }
-
-        const node = this.factory.createIsNotInNode();
-        const valueNode = this.factory.createQueryableValueNode(value);
-        const propertyNode = this.factory.createPropertyNode(this.queryable.type, this.propertyName);
 
         node.children.push(propertyNode, valueNode);
 

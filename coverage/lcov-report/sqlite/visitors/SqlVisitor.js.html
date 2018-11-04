@@ -642,7 +642,7 @@ var SqlVisitor = function (_Visitor) {
         value: function queryable(value) {
             var queryableToSqlFactory = new _QueryableToSqlFactory2.default({ queryable: value });
 &nbsp;
-            var _queryableToSqlFactor = queryableToSqlFactory.createWhereStatement(),
+            var _queryableToSqlFactor = queryableToSqlFactory.createWhereExpression(),
                 sql = _queryableToSqlFactor.sql;
 &nbsp;
             return "(" + sql + ")";
@@ -699,8 +699,8 @@ var SqlVisitor = function (_Visitor) {
             return value;
         }
     }, {
-        key: "createWhereStatement",
-        value: function createWhereStatement(node) {
+        key: "createWhereExpression",
+        value: function createWhereExpression(node) {
             var where = this.visit(node);
 &nbsp;
             if (where == null) {

@@ -1,7 +1,9 @@
 import Provider from "./Provider";
 import Queryable from "../queryable/Queryable";
-import EntityToSqlFactory from "./factories/EntityToSqlFactory";
 import Sqlite3Wrapper from "./Sqlite3Wrapper";
+import InsertStatementCreator from "./statements/InsertStatementCreator";
+import UpdateStatementCreator from "./statements/UpdateStatementCreator";
+import DeleteStatementCreator from "./statements/DeleteStatementCreator";
 
 export default class Repository {
     constructor({ database, name, primaryKeys = ["id"] }) {
@@ -13,39 +15,39 @@ export default class Repository {
 
     addAsync(entity) {
 
-        const entityToSqlFactory = new EntityToSqlFactory({
+        const insertStatementCreator = new InsertStatementCreator({
             tableName: this.name,
             entity,
             primaryKeys: this.primaryKeys
         });
 
-        const { sql, values } = entityToSqlFactory.createInsertStatement();
+        const { sql, values } = insertStatementCreator.createStatement();
 
         return this.sqliteDatabaseWrapper.runAsync(sql, values);
 
     }
 
     removeAsync(entity) {
-        const entityToSqlFactory = new EntityToSqlFactory({
+        const deleteStatementCreator = new DeleteStatementCreator({
             tableName: this.name,
             entity,
             primaryKeys: this.primaryKeys
         });
 
-        const { sql, values } = entityToSqlFactory.createDeleteStatement();
+        const { sql, values } = deleteStatementCreator.createStatement();
 
         return this.sqliteDatabaseWrapper.runAsync(sql, values);
     }
 
     updateAsync(entity) {
 
-        const entityToSqlFactory = new EntityToSqlFactory({
+        const updateStatementCreator = new UpdateStatementCreator({
             tableName: this.name,
             entity,
             primaryKeys: this.primaryKeys
         });
 
-        const { sql, values } = entityToSqlFactory.createUpdateStatement();
+        const { sql, values } = updateStatementCreator.createStatement();
 
         return this.sqliteDatabaseWrapper.runAsync(sql, values);
 

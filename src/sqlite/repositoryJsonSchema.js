@@ -37,16 +37,32 @@ export default {
             },
             "required": ["label", "source"]
         },
-        "unique": {
+        "uniqueItems": {
             "type": "array",
             "minItems": 1,
             "items": {
-                "type": "array",
+                "$ref": "#/definitions/unique",
                 "minItems": 1,
                 "items": {
                     "type": "string"
                 }
             }
+        },
+        "conflictOptions": {
+            "type": "string",
+            "enum": ["ROLLBACK", "ABORT", "FAIL", "IGNORE", "REPLACE"]
+        },
+        "unique": {
+            "type": "object",
+            "properties": {
+                "columns": {
+                    "type": "array"
+                },
+                "conflictOptions": {
+                    "$ref": "#/definitions/conflictOptions"
+                }
+            },
+            "require": ["keys"]
         },
         "column": {
             "type": "object",
@@ -103,8 +119,8 @@ export default {
                 "type": "string"
             }
         },
-        "unique": {
-            "$ref": "#/definitions/unique"
+        "uniqueItems": {
+            "$ref": "#/definitions/uniqueItems"
         },
         "foreignKeys": {
             "type": "object",
