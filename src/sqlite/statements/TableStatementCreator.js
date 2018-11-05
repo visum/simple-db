@@ -10,12 +10,12 @@ export default class TableStatementCreator {
         this.validator = new jsonschema.Validator();
     }
 
-    static createTableStatement(schema){
+    static createTableStatement(schema) {
         const tableStatementCreator = new TableStatementCreator(schema);
         return tableStatementCreator.createTableStatement();
     }
 
-    static createDropTableStatement(){
+    static createDropTableStatement() {
         const tableStatementCreator = new TableStatementCreator(schema);
         return tableStatementCreator.createDropTableStatement();
     }
@@ -48,13 +48,16 @@ export default class TableStatementCreator {
         return `PRIMARY KEY(${keys})`;
     }
 
-    createUniqueExpressions(){
-        return this.schema.unique.map((unique)=>{
+    createUniqueExpressions() {
+        if (Array.isArray(this.schema.unique)) {
+            return this.schema.unique.map((unique) => {
 
-            const uniqueExpression = new UniqueExpressionCreator(unique);
-            return uniqueExpression.createExpression();
+                const uniqueExpression = new UniqueExpressionCreator(unique);
+                return uniqueExpression.createExpression();
 
-        }).join(", ");
+            }).join(", ");
+        }
+        return "";
     }
 
     createForeignKeysExpression() {

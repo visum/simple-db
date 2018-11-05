@@ -39,9 +39,7 @@ const testSchema = {
         }
     ],
     primaryKeys: ["id"],
-    unique: [
-        ["oneToOne"]
-    ],
+    unique: {},
     foreignKeys: {
         "manyToOne": {
             "label": "Source",

@@ -160,10 +160,10 @@ export default class Queryable {
         return this.provider.removeAsync(this);
     }
 
-    updateAsync(entity) {
+    updateAsync(updates) {
         this.assertProvider();
 
-        return this.provider.updateAsync(this, entity);
+        return this.provider.updateAsync(this, updates);
     }
 
 }

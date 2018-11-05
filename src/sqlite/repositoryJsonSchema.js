@@ -48,7 +48,7 @@ export default {
                 }
             }
         },
-        "conflictOptions": {
+        "conflictOption": {
             "type": "string",
             "enum": ["ROLLBACK", "ABORT", "FAIL", "IGNORE", "REPLACE"]
         },
@@ -58,8 +58,8 @@ export default {
                 "columns": {
                     "type": "array"
                 },
-                "conflictOptions": {
-                    "$ref": "#/definitions/conflictOptions"
+                "conflictOption": {
+                    "$ref": "#/definitions/conflictOption"
                 }
             },
             "require": ["keys"]

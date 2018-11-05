@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import SchemaToSqliteFactory from "../sqlite/factories/TableStatementCreator"
+import SchemaToSqliteFactory from "../sqlite/statements/TableStatementCreator"
 import personSchema from "../testSchemas/person";
 import addressSchema from "../testSchemas/address";
 import phoneNumberSchema from "../testSchemas/phoneNumber";

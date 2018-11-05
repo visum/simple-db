@@ -135,6 +135,7 @@ export default class SqlVisitor extends Visitor {
     }
 
     createWhereExpression(node) {
+        
         const where = this.visit(node);
 
         if (where == null) {

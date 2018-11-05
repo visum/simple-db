@@ -18,8 +18,8 @@ export default class UpdateWhereStatementCreator {
     }
 
     static createStatement(queryable, updates){
-        const updateWhereStatementCreator = new UpdateWhereStatementCreator(queryable);
-        return updateWhereStatementCreator.createStatement(updates);
+        const updateWhereStatementCreator = new UpdateWhereStatementCreator(queryable, updates);
+        return updateWhereStatementCreator.createStatement();
     }
 
     getTableName(){
