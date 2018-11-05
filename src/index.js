@@ -1,5 +1,5 @@
-import Database from "./sqlite/Database";
+import SqliteDatabase from "./sqlite/Database";
 
 export {
-    Database
+    SqliteDatabase
 }
