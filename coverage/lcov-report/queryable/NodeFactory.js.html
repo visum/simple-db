@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for sqlite/Repository.js</title>
+    <title>Code coverage report for queryable/NodeFactory.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">all files</a> / <a href="index.html">sqlite/</a> Repository.js
+      <a href="../index.html">all files</a> / <a href="index.html">queryable/</a> NodeFactory.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">96.23% </span>
+        <span class="strong">87.69% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>51/53</span>
+        <span class='fraction'>57/65</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">68.75% </span>
+        <span class="strong">57.14% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>11/16</span>
+        <span class='fraction'>16/28</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">95.65% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>12/12</span>
+        <span class='fraction'>22/23</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">87.5% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>36/36</span>
+        <span class='fraction'>42/48</span>
       </div>
     </div>
   </div>
@@ -156,13 +156,45 @@
 111
 112
 113
-114</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">16×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -176,57 +208,44 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">11×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-yes">11×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2104×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2104×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -241,6 +260,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -249,18 +280,51 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">7×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -277,112 +341,144 @@ Object.defineProperty(exports, "__esModule", {
 &nbsp;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken" >E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="if path not taken" >I</span>if (staticProps) <span class="cstat-no" title="statement not covered" >defineProperties(Constructor, staticProps); </span>return Constructor; }; }();
 &nbsp;
-var _Provider = require("./Provider");
+var _ValueNode = require("./abstractSyntaxTree/ValueNode");
 &nbsp;
-var _Provider2 = _interopRequireDefault(_Provider);
+var _ValueNode2 = _interopRequireDefault(_ValueNode);
 &nbsp;
-var _Queryable = require("../queryable/Queryable");
+var _CompositeNode = require("./abstractSyntaxTree/CompositeNode");
+&nbsp;
+var _CompositeNode2 = _interopRequireDefault(_CompositeNode);
+&nbsp;
+var _Queryable = require("./Queryable");
 &nbsp;
 var _Queryable2 = _interopRequireDefault(_Queryable);
-&nbsp;
-var _Sqlite3Wrapper = require("./Sqlite3Wrapper");
-&nbsp;
-var _Sqlite3Wrapper2 = _interopRequireDefault(_Sqlite3Wrapper);
-&nbsp;
-var _InsertStatementCreator = require("./statements/InsertStatementCreator");
-&nbsp;
-var _InsertStatementCreator2 = _interopRequireDefault(_InsertStatementCreator);
-&nbsp;
-var _UpdateStatementCreator = require("./statements/UpdateStatementCreator");
-&nbsp;
-var _UpdateStatementCreator2 = _interopRequireDefault(_UpdateStatementCreator);
-&nbsp;
-var _DeleteStatementCreator = require("./statements/DeleteStatementCreator");
-&nbsp;
-var _DeleteStatementCreator2 = _interopRequireDefault(_DeleteStatementCreator);
 &nbsp;
 function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : <span class="branch-1 cbranch-no" title="branch not covered" >{ default: obj };</span> }
 &nbsp;
 function _classCallCheck(instance, Constructor) { <span class="missing-if-branch" title="if path not taken" >I</span>if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered" >throw new TypeError("Cannot call a class as a function"); </span>} }
 &nbsp;
-var Repository = function () {
-    function Repository(_ref) {
-        var database = _ref.database,
-            name = _ref.name,
-            _ref$primaryKeys = _ref.primaryKeys,
-            primaryKeys = _ref$primaryKeys === undefined ? ["id"] : _ref$primaryKeys;
-&nbsp;
-        _classCallCheck(this, Repository);
-&nbsp;
-        this.name = name;
-        this.database = database;
-        this.sqliteDatabaseWrapper = new _Sqlite3Wrapper2.default(this.database);
-        this.primaryKeys = primaryKeys;
+var NodeFactory = function () {
+    function NodeFactory() {
+        _classCallCheck(this, NodeFactory);
     }
 &nbsp;
-    _createClass(Repository, [{
-        key: "addAsync",
-        value: function addAsync(entity) {
-            var _InsertStatementCreat = _InsertStatementCreator2.default.createStatement({
-                tableName: this.name,
-                entity: entity,
-                primaryKeys: this.primaryKeys
-            }),
-                sql = _InsertStatementCreat.sql,
-                values = _InsertStatementCreat.values;
-&nbsp;
-            return this.sqliteDatabaseWrapper.runAsync(sql, values);
+    _createClass(NodeFactory, [{
+        key: "createAndNode",
+        value: <span class="fstat-no" title="function not covered" >function createAndNode() {</span>
+<span class="cstat-no" title="statement not covered" >            return new _CompositeNode2.default("and");</span>
         }
     }, {
-        key: "removeAsync",
-        value: function removeAsync(entity) {
-            var _DeleteStatementCreat = _DeleteStatementCreator2.default.createStatement({
-                tableName: this.name,
-                entity: entity,
-                primaryKeys: this.primaryKeys
-            }),
-                sql = _DeleteStatementCreat.sql,
-                values = _DeleteStatementCreat.values;
-&nbsp;
-            return this.sqliteDatabaseWrapper.runAsync(sql, values);
+        key: "createOrNode",
+        value: function createOrNode() {
+            return new _CompositeNode2.default("or");
         }
     }, {
-        key: "updateAsync",
-        value: function updateAsync(entity) {
-            var _UpdateStatementCreat = _UpdateStatementCreator2.default.createStatement({
-                tableName: this.name,
-                entity: entity,
-                primaryKeys: this.primaryKeys
-            }),
-                sql = _UpdateStatementCreat.sql,
-                values = _UpdateStatementCreat.values;
-&nbsp;
-            return this.sqliteDatabaseWrapper.runAsync(sql, values);
+        key: "createContainsNode",
+        value: function createContainsNode() {
+            return new _CompositeNode2.default("contains");
         }
     }, {
-        key: "getQueryProvider",
-        value: function getQueryProvider() {
-            return new _Provider2.default({
-                database: this.database
-            });
+        key: "createEndsWithNode",
+        value: function createEndsWithNode() {
+            return new _CompositeNode2.default("endsWith");
         }
     }, {
-        key: "where",
-        value: function where() {
-            var provider = this.getQueryProvider();
+        key: "createStartsWithNode",
+        value: function createStartsWithNode() {
+            return new _CompositeNode2.default("startsWith");
+        }
+    }, {
+        key: "createIsEqualToNode",
+        value: function createIsEqualToNode() {
+            return new _CompositeNode2.default("isEqualTo");
+        }
+    }, {
+        key: "createIsNotEqualToNode",
+        value: function createIsNotEqualToNode() {
+            return new _CompositeNode2.default("isNotEqualTo");
+        }
+    }, {
+        key: "createIsGreaterThanNode",
+        value: function createIsGreaterThanNode() {
+            return new _CompositeNode2.default("isGreaterThan");
+        }
+    }, {
+        key: "createIsLessThanNode",
+        value: function createIsLessThanNode() {
+            return new _CompositeNode2.default("isLessThan");
+        }
+    }, {
+        key: "createIsInNode",
+        value: function createIsInNode() {
+            return new _CompositeNode2.default("isIn");
+        }
+    }, {
+        key: "createIsNotInNode",
+        value: function createIsNotInNode() {
+            return new _CompositeNode2.default("isNotIn");
+        }
+    }, {
+        key: "createIsGreaterThanOrEqualToNode",
+        value: function createIsGreaterThanOrEqualToNode() {
+            return new _CompositeNode2.default("isGreaterThanOrEqualTo");
+        }
+    }, {
+        key: "createIsLessThanOrEqualToNode",
+        value: function createIsLessThanOrEqualToNode() {
+            return new _CompositeNode2.default("isLessThanOrEqualTo");
+        }
+    }, {
+        key: "createPropertyNode",
+        value: function createPropertyNode(type, name) {
+            var propertyNode = new _CompositeNode2.default("property");
 &nbsp;
-            return new _Queryable2.default({
-                type: this.name,
-                provider: provider
-            });
+            var typeNode = new _ValueNode2.default("type", type);
+            var nameNode = new _ValueNode2.default("propertyName", name);
+&nbsp;
+            propertyNode.children.push(typeNode, nameNode);
+&nbsp;
+            return propertyNode;
+        }
+    }, {
+        key: "createQueryableValueNode",
+        value: function createQueryableValueNode(value) {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!(value instanceof _Queryable2.default)) {
+<span class="cstat-no" title="statement not covered" >                throw new Error("Invalid Argument: expected a queryable.");</span>
+            }
+&nbsp;
+            return new _ValueNode2.default("queryable", value);
+        }
+    }, {
+        key: "createValueNode",
+        value: function createValueNode(value) {
+&nbsp;
+            if (typeof value === "string") {
+&nbsp;
+                return new _ValueNode2.default("string", value);
+            } else <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof value === "boolean") {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return new _ValueNode2.default("boolean", value);</span>
+            } else if (typeof value === "number") {
+&nbsp;
+                return new _ValueNode2.default("number", value);
+            } else <span class="missing-if-branch" title="else path not taken" >E</span>if (Array.isArray(value)) {
+&nbsp;
+                return new _ValueNode2.default("array", value);
+            } else <span class="cstat-no" title="statement not covered" >if (typeof value === "obejct" &amp;&amp; value !== null) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return new _ValueNode2.default("object", value);</span>
+            } else {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                throw new Error("Unknown value type.");</span>
+            }
         }
     }]);
 &nbsp;
-    return Repository;
+    return NodeFactory;
 }();
 &nbsp;
-exports.default = Repository;
-//# sourceMappingURL=Repository.js.map</pre></td></tr>
+exports.default = NodeFactory;
+//# sourceMappingURL=NodeFactory.js.map</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->

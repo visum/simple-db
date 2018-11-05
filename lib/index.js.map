@@ -1,1 +1,1 @@
-{"version":3,"sources":["../src/index.js"],"names":["Database"],"mappings":";;;;;;;AAAA;;;;;;QAGIA,Q,GAAAA,kB","file":"index.js","sourcesContent":["import Database from \"./sqlite/Database\";\n\nexport {\n    Database\n}"]}
+{"version":3,"sources":["../src/index.js"],"names":["SqliteDatabase"],"mappings":";;;;;;;AAAA;;;;;;QAGIA,c,GAAAA,kB","file":"index.js","sourcesContent":["import SqliteDatabase from \"./sqlite/Database\";\n\nexport {\n    SqliteDatabase\n}"]}

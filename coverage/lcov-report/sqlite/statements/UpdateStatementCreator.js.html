@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for queryable/abstractSyntaxTree/CompositeNode.js</title>
+    <title>Code coverage report for sqlite/statements/UpdateStatementCreator.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">all files</a> / <a href="index.html">queryable/abstractSyntaxTree/</a> CompositeNode.js
+      <a href="../../index.html">all files</a> / <a href="index.html">sqlite/statements/</a> UpdateStatementCreator.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">92% </span>
+        <span class="strong">93.1% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>46/50</span>
+        <span class='fraction'>54/58</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">57.58% </span>
+        <span class="strong">59.46% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>19/33</span>
+        <span class='fraction'>22/37</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>11/11</span>
+        <span class='fraction'>12/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">96.97% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>25/25</span>
+        <span class='fraction'>32/33</span>
       </div>
     </div>
   </div>
@@ -96,13 +96,34 @@
 51
 52
 53
-54</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -110,9 +131,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -120,28 +145,45 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">64×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">64×</span>
-<span class="cline-any cline-yes">64×</span>
-<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9×</span>
-<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9×</span>
-<span class="cline-any cline-yes">19×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -155,11 +197,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 &nbsp;
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken" >E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="if path not taken" >I</span>if (staticProps) <span class="cstat-no" title="statement not covered" >defineProperties(Constructor, staticProps); </span>return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken" >E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="else path not taken" >E</span>if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 &nbsp;
-var _Node2 = require("./Node");
+var _SqliteUtils = require("../utils/SqliteUtils");
 &nbsp;
-var _Node3 = _interopRequireDefault(_Node2);
+var _SqliteUtils2 = _interopRequireDefault(_SqliteUtils);
+&nbsp;
+var _AbstractStatementCreator = require("./AbstractStatementCreator");
+&nbsp;
+var _AbstractStatementCreator2 = _interopRequireDefault(_AbstractStatementCreator);
 &nbsp;
 function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : <span class="branch-1 cbranch-no" title="branch not covered" >{ default: obj };</span> }
 &nbsp;
@@ -169,40 +215,57 @@ function _possibleConstructorReturn(self, call) { <span class="missing-if-branch
 &nbsp;
 function _inherits(subClass, superClass) { <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof superClass !== "function" &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >superClass !== null)</span> { <span class="cstat-no" title="statement not covered" >throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); </span>} subClass.prototype = Object.create(superClass &amp;&amp; superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); <span class="missing-if-branch" title="else path not taken" >E</span>if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : <span class="branch-1 cbranch-no" title="branch not covered" >subClass.__proto__ = superClass;</span> }
 &nbsp;
-var CompositeNode = function (_Node) {
-    _inherits(CompositeNode, _Node);
+var UpdateStatementCreator = function (_AbstractStatementCre) {
+    _inherits(UpdateStatementCreator, _AbstractStatementCre);
 &nbsp;
-    function CompositeNode(type) {
-        _classCallCheck(this, CompositeNode);
+    function UpdateStatementCreator() {
+        _classCallCheck(this, UpdateStatementCreator);
 &nbsp;
-        var _this = _possibleConstructorReturn(this, (CompositeNode.__proto__ || <span class="branch-1 cbranch-no" title="branch not covered" >Object.getPrototypeOf(CompositeNode))</span>.call(this, type));
-&nbsp;
-        _this.isComposite = true;
-        _this.children = [];
-        return _this;
+        return _possibleConstructorReturn(this, (UpdateStatementCreator.__proto__ || <span class="branch-1 cbranch-no" title="branch not covered" >Object.getPrototypeOf(UpdateStatementCreator))</span>.apply(this, arguments));
     }
 &nbsp;
-    _createClass(CompositeNode, [{
-        key: "clone",
-        value: function clone() {
-            var node = new CompositeNode(this.type);
-            node.isComposite = this.isComposite;
+    _createClass(UpdateStatementCreator, [{
+        key: "createStatement",
+        value: function createStatement() {
+            var _this2 = this;
 &nbsp;
-            var children = this.children.map(function (child) {
-                return child.clone();
-            });
+            var entity = this.entity;
+            var keys = Object.keys(entity);
 &nbsp;
-            node.children = children;
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.validateEntityPrimaryKeys()) {
+<span class="cstat-no" title="statement not covered" >                throw new Error("Cannot update entity: Invalid primary key(s).");</span>
+            }
 &nbsp;
-            return node;
+            var sqliteData = keys.reduce(function (accumulator, key) {
+                if (_this2.primaryKeys.includes(key)) {
+                    return accumulator;
+                }
+&nbsp;
+                accumulator.placeHolderValues.push(_SqliteUtils2.default.escapeName(key) + " = ?");
+                accumulator.values.push(entity[key]);
+                return accumulator;
+            }, { placeHolderValues: [], values: [] });
+&nbsp;
+            var whereStatement = this.createWhereExpression();
+&nbsp;
+            return {
+                sql: "UPDATE " + _SqliteUtils2.default.escapeName(this.tableName) + " SET " + sqliteData.placeHolderValues.join(", ") + " " + whereStatement,
+                values: sqliteData.values
+            };
+        }
+    }], [{
+        key: "createStatement",
+        value: function createStatement(options) {
+            var updateStatementCreator = new UpdateStatementCreator(options);
+            return updateStatementCreator.createStatement();
         }
     }]);
 &nbsp;
-    return CompositeNode;
-}(_Node3.default);
+    return UpdateStatementCreator;
+}(_AbstractStatementCreator2.default);
 &nbsp;
-exports.default = CompositeNode;
-//# sourceMappingURL=CompositeNode.js.map</pre></td></tr>
+exports.default = UpdateStatementCreator;
+//# sourceMappingURL=UpdateStatementCreator.js.map</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->

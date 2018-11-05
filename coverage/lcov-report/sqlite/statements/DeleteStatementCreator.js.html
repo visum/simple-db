@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for queryable/abstractSyntaxTree/ValueNode.js</title>
+    <title>Code coverage report for sqlite/statements/DeleteStatementCreator.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">all files</a> / <a href="index.html">queryable/abstractSyntaxTree/</a> ValueNode.js
+      <a href="../../index.html">all files</a> / <a href="index.html">sqlite/statements/</a> DeleteStatementCreator.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">91.11% </span>
+        <span class="strong">92% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>41/45</span>
+        <span class='fraction'>46/50</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">57.14% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>10/10</span>
+        <span class='fraction'>11/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">96% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>20/20</span>
+        <span class='fraction'>24/25</span>
       </div>
     </div>
   </div>
@@ -87,13 +87,30 @@
 42
 43
 44
-45</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -101,9 +118,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">93×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">93×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -111,19 +132,32 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">93×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">93×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">93×</span>
-<span class="cline-any cline-yes">93×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12×</span>
-<span class="cline-any cline-yes">12×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -137,11 +171,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 &nbsp;
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken" >E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="if path not taken" >I</span>if (staticProps) <span class="cstat-no" title="statement not covered" >defineProperties(Constructor, staticProps); </span>return Constructor; }; }();
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken" >E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="else path not taken" >E</span>if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 &nbsp;
-var _Node2 = require("./Node");
+var _SqliteUtils = require("../utils/SqliteUtils");
 &nbsp;
-var _Node3 = _interopRequireDefault(_Node2);
+var _SqliteUtils2 = _interopRequireDefault(_SqliteUtils);
+&nbsp;
+var _AbstractStatementCreator = require("./AbstractStatementCreator");
+&nbsp;
+var _AbstractStatementCreator2 = _interopRequireDefault(_AbstractStatementCreator);
 &nbsp;
 function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : <span class="branch-1 cbranch-no" title="branch not covered" >{ default: obj };</span> }
 &nbsp;
@@ -151,31 +189,44 @@ function _possibleConstructorReturn(self, call) { <span class="missing-if-branch
 &nbsp;
 function _inherits(subClass, superClass) { <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof superClass !== "function" &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >superClass !== null)</span> { <span class="cstat-no" title="statement not covered" >throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); </span>} subClass.prototype = Object.create(superClass &amp;&amp; superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); <span class="missing-if-branch" title="else path not taken" >E</span>if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : <span class="branch-1 cbranch-no" title="branch not covered" >subClass.__proto__ = superClass;</span> }
 &nbsp;
-var ValueNode = function (_Node) {
-    _inherits(ValueNode, _Node);
+var DeleteStatementCreator = function (_AbstractStatementCre) {
+    _inherits(DeleteStatementCreator, _AbstractStatementCre);
 &nbsp;
-    function ValueNode(type, value) {
-        _classCallCheck(this, ValueNode);
+    function DeleteStatementCreator() {
+        _classCallCheck(this, DeleteStatementCreator);
 &nbsp;
-        var _this = _possibleConstructorReturn(this, (ValueNode.__proto__ || <span class="branch-1 cbranch-no" title="branch not covered" >Object.getPrototypeOf(ValueNode))</span>.call(this, type));
-&nbsp;
-        _this.value = value == null ? <span class="branch-0 cbranch-no" title="branch not covered" >null </span>: value;
-        return _this;
+        return _possibleConstructorReturn(this, (DeleteStatementCreator.__proto__ || <span class="branch-1 cbranch-no" title="branch not covered" >Object.getPrototypeOf(DeleteStatementCreator))</span>.apply(this, arguments));
     }
 &nbsp;
-    _createClass(ValueNode, [{
-        key: "clone",
-        value: function clone() {
-            var node = new ValueNode(this.type, this.value);
-            return node;
+    _createClass(DeleteStatementCreator, [{
+        key: "createStatement",
+        value: function createStatement() {
+            var entity = this.entity;
+&nbsp;
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.validateEntityPrimaryKeys(entity)) {
+<span class="cstat-no" title="statement not covered" >                throw new Error("Cannot delete entity: Invalid primary key(s).");</span>
+            }
+&nbsp;
+            var whereStatement = this.createWhereExpression(entity);
+&nbsp;
+            return {
+                sql: "DELETE FROM " + _SqliteUtils2.default.escapeName(this.tableName) + " " + whereStatement,
+                values: []
+            };
+        }
+    }], [{
+        key: "createStatement",
+        value: function createStatement(options) {
+            var deleteStatementCreator = new DeleteStatementCreator(options);
+            return deleteStatementCreator.createStatement();
         }
     }]);
 &nbsp;
-    return ValueNode;
-}(_Node3.default);
+    return DeleteStatementCreator;
+}(_AbstractStatementCreator2.default);
 &nbsp;
-exports.default = ValueNode;
-//# sourceMappingURL=ValueNode.js.map</pre></td></tr>
+exports.default = DeleteStatementCreator;
+//# sourceMappingURL=DeleteStatementCreator.js.map</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
