@@ -11,6 +11,11 @@ export default class InsertStatementCreator {
         this.primaryKeys = primaryKeys;
     }
 
+    static createStatement(options){
+        const insertStatementCreator = new InsertStatementCreator(options);
+        return insertStatementCreator.createStatement(); 
+    }
+
     createStatement() {
         const entity = this.entity;
         const keys = Object.keys(entity);

@@ -1,5 +1,5 @@
 export default class SqliteUtils {
-    static escapeStringValue(value) {
+    static escapeValue(value) {
         if (typeof value === "string") {
             return `'${value.replace(/\'/, "''")}'`;
         } else {

@@ -626,7 +626,7 @@ FN:7,(anonymous_3)
 FN:9,_classCallCheck
 FN:11,(anonymous_5)
 FN:12,SqliteUtils
-FN:18,escapeStringValue
+FN:18,escapeValue
 FN:27,escapeName
 FNF:8
 FNH:6
@@ -636,7 +636,7 @@ FNDA:1,(anonymous_3)
 FNDA:0,_classCallCheck
 FNDA:1,(anonymous_5)
 FNDA:0,SqliteUtils
-FNDA:2,escapeStringValue
+FNDA:2,escapeValue
 FNDA:4347,escapeName
 DA:3,1
 DA:7,2

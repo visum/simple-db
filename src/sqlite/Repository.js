@@ -14,40 +14,32 @@ export default class Repository {
     }
 
     addAsync(entity) {
-
-        const insertStatementCreator = new InsertStatementCreator({
+        const { sql, values } = InsertStatementCreator.createStatement({
             tableName: this.name,
             entity,
             primaryKeys: this.primaryKeys
         });
 
-        const { sql, values } = insertStatementCreator.createStatement();
-
         return this.sqliteDatabaseWrapper.runAsync(sql, values);
-
     }
 
     removeAsync(entity) {
-        const deleteStatementCreator = new DeleteStatementCreator({
+        const { sql, values } = DeleteStatementCreator.createStatement({
             tableName: this.name,
             entity,
             primaryKeys: this.primaryKeys
         });
-
-        const { sql, values } = deleteStatementCreator.createStatement();
 
         return this.sqliteDatabaseWrapper.runAsync(sql, values);
     }
 
     updateAsync(entity) {
-
-        const updateStatementCreator = new UpdateStatementCreator({
+        
+        const {sql, values} = UpdateStatementCreator.createStatement({
             tableName: this.name,
             entity,
             primaryKeys: this.primaryKeys
         });
-
-        const { sql, values } = updateStatementCreator.createStatement();
 
         return this.sqliteDatabaseWrapper.runAsync(sql, values);
 

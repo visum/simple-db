@@ -3,6 +3,11 @@ import AbstractStatementCreator from "./AbstractStatementCreator";
 
 export default class DeleteStatementCreator extends AbstractStatementCreator {
 
+    static createStatement(options){
+        const deleteStatementCreator = new DeleteStatementCreator(options);
+        return deleteStatementCreator.createStatement(); 
+    }
+
     createStatement() {
         const entity = this.entity;
 

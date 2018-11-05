@@ -343,7 +343,7 @@ var EntityToSqlFactory = function () {
         key: "createWhereExpression",
         value: function createWhereExpression(entity) {
             var columns = this.primaryKeys.map(function (key) {
-                return _SqliteUtils2.default.escapeName(key) + " = " + _SqliteUtils2.default.escapeStringValue(entity[key]);
+                return _SqliteUtils2.default.escapeName(key) + " = " + _SqliteUtils2.default.escapeValue(entity[key]);
             }).join(", ");
 &nbsp;
             return "WHERE " + columns;

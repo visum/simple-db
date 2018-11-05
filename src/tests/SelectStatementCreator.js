@@ -3,7 +3,7 @@ import SelectStatementCreator from "../sqlite/statements/SelectStatementCreator"
 import Queryable from "../queryable/Queryable";
 
 
-exports["SelectStatementCreator: isEqualTo"] = () => {
+exports["SelectStatementCreator: isEqualTo."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").isEqualTo("value");
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
@@ -12,7 +12,7 @@ exports["SelectStatementCreator: isEqualTo"] = () => {
     assert.equal(sql, expected);
 }
 
-exports["SelectStatementCreator: isNotEqualTo"] = () => {
+exports["SelectStatementCreator: isNotEqualTo."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").isNotEqualTo("value");
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
@@ -21,7 +21,7 @@ exports["SelectStatementCreator: isNotEqualTo"] = () => {
     assert.equal(sql, expected);
 }
 
-exports["SelectStatementCreator: contains"] = () => {
+exports["SelectStatementCreator: contains."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").contains("value");
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
@@ -30,7 +30,7 @@ exports["SelectStatementCreator: contains"] = () => {
     assert.equal(sql, expected);
 }
 
-exports["SelectStatementCreator: startsWith"] = () => {
+exports["SelectStatementCreator: startsWith."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").startsWith("value");
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
@@ -39,7 +39,7 @@ exports["SelectStatementCreator: startsWith"] = () => {
     assert.equal(sql, expected);
 }
 
-exports["SelectStatementCreator: endsWith"] = () => {
+exports["SelectStatementCreator: endsWith."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").endsWith("value");
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
@@ -48,7 +48,7 @@ exports["SelectStatementCreator: endsWith"] = () => {
     assert.equal(sql, expected);
 }
 
-exports["SelectStatementCreator: isGreaterThan"] = () => {
+exports["SelectStatementCreator: isGreaterThan."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").isGreaterThan(0);
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
@@ -57,7 +57,7 @@ exports["SelectStatementCreator: isGreaterThan"] = () => {
     assert.equal(sql, expected);
 }
 
-exports["SelectStatementCreator: isGreaterThanOrEqualTo"] = () => {
+exports["SelectStatementCreator: isGreaterThanOrEqualTo."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").isGreaterThanOrEqualTo(0);
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
@@ -66,7 +66,7 @@ exports["SelectStatementCreator: isGreaterThanOrEqualTo"] = () => {
     assert.equal(sql, expected);
 }
 
-exports["SelectStatementCreator: isLessThan"] = () => {
+exports["SelectStatementCreator: isLessThan."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").isLessThan(0);
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
@@ -75,7 +75,7 @@ exports["SelectStatementCreator: isLessThan"] = () => {
     assert.equal(sql, expected);
 }
 
-exports["SelectStatementCreator: isLessThanOrEqualTo"] = () => {
+exports["SelectStatementCreator: isLessThanOrEqualTo."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").isLessThanOrEqualTo(0);
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
@@ -113,7 +113,7 @@ exports["SelectStatementCreator: isIn with queryable."] = () => {
     assert.equal(sql, expected);
 }
 
-exports["SelectStatementCreator: isIn with queryable."] = () => {
+exports["SelectStatementCreator: isNotIn with queryable."] = () => {
     const queryable = new Queryable({ type: "other_table" }).select({id: "id"});
     const rootQueryable = new Queryable({type: "table"}).column("columnName").isNotIn(queryable);
     const selectStatementCreator = new SelectStatementCreator(rootQueryable);

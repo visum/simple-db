@@ -11,6 +11,11 @@ export default class CountStatementCreator {
         this.queryable = queryable;
     }
 
+    static createStatement(queryable){
+        const countStatementCreator = new CountStatementCreator(queryable);
+        return countStatementCreator.createStatement();
+    }
+
     getTableName(){
         return SqliteUtils.escapeName(this.queryable.type);
     }

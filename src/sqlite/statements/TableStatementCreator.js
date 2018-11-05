@@ -10,6 +10,16 @@ export default class TableStatementCreator {
         this.validator = new jsonschema.Validator();
     }
 
+    static createTableStatement(schema){
+        const tableStatementCreator = new TableStatementCreator(schema);
+        return tableStatementCreator.createTableStatement();
+    }
+
+    static createDropTableStatement(){
+        const tableStatementCreator = new TableStatementCreator(schema);
+        return tableStatementCreator.createDropTableStatement();
+    }
+
     getTableName() {
         return SqliteUtils.escapeName(SchemaUtils.getTableNameFromSchema(this.schema));
     }

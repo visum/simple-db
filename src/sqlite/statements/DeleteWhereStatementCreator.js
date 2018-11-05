@@ -11,6 +11,11 @@ export default class DeleteWhereStatementCreator {
         this.queryable = queryable;
     }
 
+    static createStatement(queryable){
+        const deleteWhereStatementCreator = new DeleteWhereStatementCreator(queryable);
+        return deleteWhereStatementCreator.createStatement();
+    }
+
     getTableName(){
         return SqliteUtils.escapeName(this.queryable.type);
     }

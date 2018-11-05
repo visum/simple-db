@@ -17,21 +17,18 @@ export default class Provider {
     }
 
     toArrayAsync(queryable) {
-        const selectStatementCreator = new SelectStatementCreator(queryable);
-        const { sql } = selectStatementCreator.createStatement();
-
+        const { sql } = SelectStatementCreator.createStatement(queryable);
         return this.sqliteDatabaseWrapper.allAsync(sql);
     }
 
-    getFirstAsync(queryable){
-        return this.toArrayAsync(queryable).then((results)=>{
+    getFirstAsync(queryable) {
+        return this.toArrayAsync(queryable).then((results) => {
             return results[0] || null
         });
     }
 
     getCountAsync(queryable) {
-        const countStatementCreator = new CountStatementCreator(queryable);
-        const { sql } = countStatementCreator.createStatement();
+        const { sql } = CountStatementCreator.createStatement(queryable);
 
         return this.sqliteDatabaseWrapper.allAsync(sql).then((results) => {
             return results[0]["count(*)"];
@@ -40,18 +37,15 @@ export default class Provider {
     }
 
     removeAsync(queryable) {
-        const deleteWhereStatementCreator = new DeleteWhereStatementCreator({ queryable });
-        const { sql } = deleteWhereStatementCreator.createStatement();
+        const { sql } = DeleteWhereStatementCreator.createStatement(queryable);
 
         return this.sqliteDatabaseWrapper.allAsync(sql);
     }
 
-    updateAsync(queryable, entity) {
-        const updateWhereStatementCreator = new UpdateWhereStatementCreator({ queryable });
-        const statement = updateWhereStatementCreator.createStatement(entity);
+    updateAsync(queryable, updates) {
+        const { sql, values } = UpdateWhereStatementCreator.createStatement(queryable, updates);
 
-        return this.sqliteDatabaseWrapper.runAsync(statement.sql, statement.values);
-
+        return this.sqliteDatabaseWrapper.runAsync(sql, values);
     }
 
 

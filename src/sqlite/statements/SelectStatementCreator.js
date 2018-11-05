@@ -11,6 +11,11 @@ export default class SelectStatementCreator {
         this.queryable = queryable;
     }
 
+    static createStatement(queryable){
+        const selectStatementCreator = new SelectStatementCreator(queryable);
+        return selectStatementCreator.createStatement();
+    }
+
     getTableName(){
         return SqliteUtils.escapeName(this.queryable.type);
     }

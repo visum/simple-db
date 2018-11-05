@@ -135,8 +135,8 @@ var SqliteUtils = function () {
     }
 &nbsp;
     _createClass(SqliteUtils, null, [{
-        key: "escapeStringValue",
-        value: function escapeStringValue(value) {
+        key: "escapeValue",
+        value: function escapeValue(value) {
             <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof value === "string") {
 <span class="cstat-no" title="statement not covered" >                return "'" + value.replace(/\'/, "''") + "'";</span>
             } else {

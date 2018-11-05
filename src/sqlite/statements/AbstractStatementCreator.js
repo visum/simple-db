@@ -14,8 +14,8 @@ export default class AbstractStatementCreator {
     createWhereExpression() {
         const entity = this.entity;
         const columns = this.primaryKeys.map((key) => {
-            return `${SqliteUtils.escapeName(key)} = ${SqliteUtils.escapeStringValue(entity[key])}`;
-        }).join(", ");
+            return `${SqliteUtils.escapeName(key)} = ${SqliteUtils.escapeValue(entity[key])}`;
+        }).join(" AND ");
 
         return `WHERE ${columns}`;
     }

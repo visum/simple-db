@@ -1,14 +1,25 @@
 import SqlVisitor from "../visitors/SqlVisitor";
 import SqliteUtils from "../utils/SqliteUtils";
+import { timingSafeEqual } from "crypto";
 
 export default class UpdateWhereStatementCreator {
-    constructor(queryable) {
+    constructor(queryable, updates) {
 
         if (queryable == null) {
-            throw new Error("Null Exception: A queryable is needed to create statement.");
+            throw new Error("Null Argument Exception: A queryable is needed to create statement.");
         }
 
+        if (updates == null){
+            throw new Error("Null Argument Exception: updates cannot be null.");
+        }
+
+        this.updates = updates;
         this.queryable = queryable;
+    }
+
+    static createStatement(queryable, updates){
+        const updateWhereStatementCreator = new UpdateWhereStatementCreator(queryable);
+        return updateWhereStatementCreator.createStatement(updates);
     }
 
     getTableName(){
@@ -20,7 +31,8 @@ export default class UpdateWhereStatementCreator {
         return visitor.createWhereExpression(this.queryable.query.expression);
     }
 
-    createSetExpression(updates) {
+    createSetExpression() {
+        const updates = this.updates;
         const keys = Object.keys(updates);
 
         const statement = keys.reduce((accumulator, key) => {
@@ -40,7 +52,8 @@ export default class UpdateWhereStatementCreator {
 
     }
 
-    createStatement(updates) {
+    createStatement() {
+        const updates = this.updates;
         const updateStatement = this.createSetExpression(updates);
         const whereStatement = this.createWhereExpression();
 
