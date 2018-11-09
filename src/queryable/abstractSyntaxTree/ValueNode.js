@@ -21,6 +21,8 @@ export default class ValueNode extends Node {
             return new ValueNode("number", value);
         } else if (Array.isArray(value)) {
             return new ValueNode("array", value);
+        } else if (value instanceof Date){
+            return new ValueNode("date", value);
         } else if (typeof value === "object" && value !== null) {
             return new ValueNode("object", value);
         } else {

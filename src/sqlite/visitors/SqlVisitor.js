@@ -1,28 +1,8 @@
 import Visitor from "./Visitor";
 import SelectStatementCreator from "../statements/SelectStatementCreator";
 import SqliteUtils from "../utils/SqliteUtils";
-
-class SqlString {
-    constructor(value) {
-        this.value = `${value.replace("'", "''")}`;
-    }
-
-    toString() {
-        return `'${this.value}'`;
-    }
-
-    toEndsWithString() {
-        return `'%${this.value}'`;
-    }
-
-    toContainsString() {
-        return `'%${this.value}%'`;
-    }
-
-    toStartsWithString() {
-        return `'${this.value}%'`;
-    }
-}
+import Queryable from "../../queryable/Queryable";
+import SqlString from "./SqlString";
 
 export default class SqlVisitor extends Visitor {
     and(...args) {
@@ -86,24 +66,52 @@ export default class SqlVisitor extends Visitor {
     }
 
     queryable(value) {
+        if (!(value instanceof Queryable)) {
+            throw new Error("Invalid queryable value.");
+        }
+
         const selectStatementCreator = new SelectStatementCreator(value);
         const { sql } = selectStatementCreator.createStatement();
         return `(${sql})`;
     }
 
     string(value) {
+        if (typeof value !== "string") {
+            throw new Error("Invalid string value.");
+        }
+
         return new SqlString(value);
     }
 
     boolean(value) {
+        if (typeof value !== "boolean") {
+            throw new Error("Invalid boolean value.");
+        }
+
         return value.toString();
     }
 
     number(value) {
+        if (typeof value !== "number") {
+            throw new Error("Invalid number value.");
+        }
+
         return value;
     }
 
+    date(value) {
+        if (!(value instanceof value)) {
+            throw new Error("Invalid date value.");
+        }
+
+        return value.getTime();
+    }
+
     array(value) {
+        if (!Array.isArray(value)) {
+            throw new Error("Invalid array value.");
+        }
+
         const series = value.map((item) => {
 
             if (typeof item === "string") {
@@ -112,6 +120,8 @@ export default class SqlVisitor extends Visitor {
                 return this.number(item);
             } else if (typeof item === "boolean") {
                 return this.boolean(item);
+            } else if (item instanceof Date) {
+                return this.date(item);
             } else {
                 throw new Error("Invalid Argument: Unknown primitive type.");
             }
@@ -135,7 +145,7 @@ export default class SqlVisitor extends Visitor {
     }
 
     createWhereExpression(node) {
-        
+
         const where = this.visit(node);
 
         if (where == null) {
