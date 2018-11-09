@@ -8,4 +8,5 @@ export default class Node {
         const node = new Node(this.type);
         node.isComposite = this.isComposite;
     }
+
 }

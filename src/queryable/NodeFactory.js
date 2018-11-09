@@ -13,54 +13,25 @@ export default class NodeFactory {
         return new CompositeNode("or");
     }
 
-    createContainsNode() {
-        return new CompositeNode("contains");
+    createOperatorNode(
+        itemType,
+        propertyName,
+        operation,
+        value
+    ) {
+        const node = new CompositeNode(operation);
+        const valueNode = this.createValueNode(value);
+        const propertyNode = this.createPropertyNode(itemType, propertyName);
+
+        node.children.push(propertyNode, valueNode);
+
+        return node;
     }
 
-    createEndsWithNode() {
-        return new CompositeNode("endsWith");
-    }
-
-    createStartsWithNode() {
-        return new CompositeNode("startsWith");
-    }
-
-    createIsEqualToNode() {
-        return new CompositeNode("isEqualTo");
-    }
-
-    createIsNotEqualToNode() {
-        return new CompositeNode("isNotEqualTo");
-    }
-
-    createIsGreaterThanNode() {
-        return new CompositeNode("isGreaterThan");
-    }
-
-    createIsLessThanNode() {
-        return new CompositeNode("isLessThan");
-    }
-
-    createIsInNode() {
-        return new CompositeNode("isIn");
-    }
-
-    createIsNotInNode() {
-        return new CompositeNode("isNotIn");
-    }
-
-    createIsGreaterThanOrEqualToNode() {
-        return new CompositeNode("isGreaterThanOrEqualTo");
-    }
-
-    createIsLessThanOrEqualToNode() {
-        return new CompositeNode("isLessThanOrEqualTo");
-    }
-
-    createPropertyNode(type, name) {
+    createPropertyNode(itemType, name) {
         const propertyNode = new CompositeNode("property");
 
-        const typeNode = new ValueNode("type", type);
+        const typeNode = new ValueNode("type", itemType);
         const nameNode = new ValueNode("propertyName", name);
 
         propertyNode.children.push(typeNode, nameNode);
@@ -68,41 +39,11 @@ export default class NodeFactory {
         return propertyNode;
     }
 
-    createQueryableValueNode(value) {
-        if (!(value instanceof Queryable)) {
-            throw new Error("Invalid Argument: expected a queryable.");
-        }
-
-        return new ValueNode("queryable", value);
-    }
-
     createValueNode(value) {
-
-        if (typeof value === "string") {
-
-            return new ValueNode("string", value);
-
-        } else if (typeof value === "boolean") {
-
-            return new ValueNode("boolean", value);
-
-        } else if (typeof value === "number") {
-
-            return new ValueNode("number", value);
-
-        } else if (Array.isArray(value)) {
-
-            return new ValueNode("array", value);
-
-        } else if (typeof value === "obejct" && value !== null) {
-
-            return new ValueNode("object", value);
-
+        if (value instanceof Queryable) {
+            return new ValueNode("queryable", value);
         } else {
-
-            throw new Error("Unknown value type.");
-
+            return ValueNode.fromValue(value);
         }
-
     }
 }
