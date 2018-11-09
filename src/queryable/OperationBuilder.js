@@ -1,10 +1,10 @@
-import QueryFactory from "./NodeFactory";
+import NodeFactory from "./NodeFactory";
 import Queryable from "./Queryable";
 
 export default class OperationBuilder {
 
     constructor(queryable, propertyName) {
-        this.factory = new QueryFactory();
+        this.factory = new NodeFactory();
         this.propertyName = propertyName;
         this.queryable = queryable;
     }

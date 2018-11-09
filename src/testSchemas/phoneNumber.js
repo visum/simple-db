@@ -19,7 +19,7 @@ export default {
             "type": "INTEGER",
             "name": "personId",
             "label": "Person Id",
-            "isNullable": false
+            "isRequired": true
         },
     ],
     "primaryKeys": ["id"],
