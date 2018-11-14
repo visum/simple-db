@@ -1,37 +1,29 @@
 import * as assert from "assert";
-import SqliteDatabase from "../sqlite/Database";
+import Database from "../sqlite/Database";
 import sqlite from "sqlite3";
 import personSchema from "../testSchemas/person";
 import addressSchema from "../testSchemas/address";
 import phoneNumberSchema from "../testSchemas/phoneNumber";
 
-exports["SqliteDatabase: Add Repositories."] = () => { 
+exports["Database: Add Schemas."] = () => {
+    const database = new Database({ database: new sqlite.Database(":memory:") });
 
-    const database = new sqlite.Database(":memory:");
-    const sqliteDatabase = new SqliteDatabase({database});
-
-    return sqliteDatabase.addRepositoryAsync(personSchema).then(()=>{
-        return  sqliteDatabase.addRepositoryAsync(addressSchema);
-    }).then(()=>{
-        return sqliteDatabase.addRepositoryAsync(phoneNumberSchema);
-    });
+    database.addSchema(personSchema);
+    database.addSchema(addressSchema);
+    database.addSchema(phoneNumberSchema);
 
 };
 
-exports["SqliteDatabase: Add Person."] = () => { 
-    
-    const database = new sqlite.Database(":memory:");
-    const sqliteDatabase = new SqliteDatabase({database});
+exports["Database: Add Person."] = () => {
+    const database = new Database({ database:new sqlite.Database(":memory:") });
 
-    return sqliteDatabase.addRepositoryAsync(personSchema).then(()=>{
-        return  sqliteDatabase.getRepository(personSchema.name, personSchema.version).addAsync({
+    database.addSchema(personSchema);
+
+    return database.createTablesFromSchemasAsync().then(() => {
+        return database.getRepository(personSchema.name, personSchema.version).addAsync({
             firstName: "John",
             lastName: "Doe"
         });
-    }).then((response)=>{
-
-    }).catch((error)=>{
-
     });
 
 };

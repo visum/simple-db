@@ -1,34 +1,21 @@
 import * as assert from "assert";
 import sqlite from "sqlite3";
 import Repository from "../sqlite/Repository";
-
-const createDatabaseAsync = (database) => {
-    return new Promise((resolve, reject) => {
-        database.run(
-            `CREATE TABLE IF NOT EXISTS test (
-                id integer PRIMARY KEY,
-                data text NOT NULL UNIQUE
-            )`,
-            (error) => {
-                if (error != null) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            }
-        );
-    });
-}
+import personSchema from "../testSchemas/person";
+import TableCreator from "../sqlite/TableCreator";
 
 exports["Repository: addAsync"] = function () {
     const database = new sqlite.Database(":memory:");
     const repository = new Repository({
         database,
-        name: "test"
+        schema: personSchema
     });
 
-    return createDatabaseAsync(database).then(() => {
-        return repository.addAsync({ data: "blah" });
+    return TableCreator.createTableIfNotExistsAsync({
+        database,
+        schema: personSchema
+    }).then(() => {
+        return repository.addAsync({ firstName: "John" });
     }).then(() => {
         database.close();
     }).catch((error) => {
@@ -41,18 +28,21 @@ exports["Repository: updateAsync"] = function () {
     const database = new sqlite.Database(":memory:");
     const repository = new Repository({
         database,
-        name: "test"
+        schema: personSchema
     });
 
-    return createDatabaseAsync(database).then(() => {
-        return repository.addAsync({ data: "blah" });
+    return TableCreator.createTableIfNotExistsAsync({
+        database,
+        schema: personSchema
+    }).then(() => {
+        return repository.addAsync({ firstName: "John" });
     }).then(({ lastID: id }) => {
         return repository.updateAsync({
             id: id,
-            data: "blah2"
+            firstName: "Jane"
         });
     }).then(() => {
-        return repository.where().column("data").isEqualTo("blah2").toArrayAsync();
+        return repository.where().column("firstName").isEqualTo("Jane").toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 1);
         database.close();
@@ -66,17 +56,20 @@ exports["Repository: removeAsync"] = function () {
     const database = new sqlite.Database(":memory:");
     const repository = new Repository({
         database,
-        name: "test"
+        schema: personSchema
     });
 
-    return createDatabaseAsync(database).then(() => {
-        return repository.addAsync({ data: "blah" });
+    return TableCreator.createTableIfNotExistsAsync({
+        database,
+        schema: personSchema
+    }).then(() => {
+        return repository.addAsync({ firstName: "John" });
     }).then(({ lastID: id }) => {
         return repository.removeAsync({
             id: id
         });
     }).then(() => {
-        return repository.where().column("data").isEqualTo("blah").toArrayAsync();
+        return repository.where().column("firstName").isEqualTo("John").toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 0);
         database.close();

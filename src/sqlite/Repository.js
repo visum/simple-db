@@ -4,13 +4,14 @@ import Sqlite3Wrapper from "./Sqlite3Wrapper";
 import InsertStatementCreator from "./statements/InsertStatementCreator";
 import UpdateStatementCreator from "./statements/UpdateStatementCreator";
 import DeleteStatementCreator from "./statements/DeleteStatementCreator";
+import SchemaUtils from "./utils/SchemaUtils";
 
 export default class Repository {
-    constructor({ database, name, primaryKeys = ["id"] }) {
-        this.name = name;
+    constructor({ database, schema }) {
+        this.name = SchemaUtils.getTableNameFromSchema(schema);
         this.database = database;
         this.sqliteDatabaseWrapper = new Sqlite3Wrapper(this.database);
-        this.primaryKeys = primaryKeys;
+        this.primaryKeys = schema.primaryKeys;
     }
 
     addAsync(entity) {
@@ -34,8 +35,8 @@ export default class Repository {
     }
 
     updateAsync(entity) {
-        
-        const {sql, values} = UpdateStatementCreator.createStatement({
+
+        const { sql, values } = UpdateStatementCreator.createStatement({
             tableName: this.name,
             entity,
             primaryKeys: this.primaryKeys

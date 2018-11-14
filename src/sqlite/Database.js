@@ -1,5 +1,5 @@
 import Sqlite3Wrapper from "./Sqlite3Wrapper";
-import SqliteTableCreator from "./TableCreator";
+import TableCreator from "./TableCreator";
 import Repository from "./Repository";
 import SchemaUtils from "./utils/SchemaUtils";
 
@@ -33,22 +33,33 @@ export default class Database {
         });
     }
 
-    addRepositoryAsync(schema) {
-        const tableCreator = new SqliteTableCreator({
+    addSchema(schema) {
+        this.schemas.push(schema);
+    }
+
+    removeAsync(schema) {
+        this.removeSchema(schema);
+    }
+
+    createTableFromSchemaAsync(schema) {
+        return TableCreator.createTableIfNotExistsAsync({
             database: this.database,
             schema
         });
-
-        return tableCreator.createRepositoryIfNotExistsAsync().then(() => {
-            if (!this.hasSchema(schema)) {
-                this.schemas.push(schema);
-            }
-        });
     }
 
-    removeRepositoryAsync(schema) {
-        return tableCreator.dropRepositoryIfExistsAsync().then(() => {
-            this.removeSchema(schema)
+    createTablesFromSchemasAsync() {
+        return this.schemas.reduce((promise, schema) => {
+            return promise.then(()=>{
+                return this.createTableFromSchemaAsync(schema);
+            })
+        }, Promise.resolve());
+    }
+
+    dropTableFromSchemaAsync(schema) {
+        return TableCreator.dropTableIfExistsAsync({
+            database: this.database,
+            schema
         });
     }
 
@@ -59,14 +70,11 @@ export default class Database {
             throw new Error("Unable to find repository.");
         }
 
-        const tableName = SchemaUtils.getTableNameFromSchema(schema);
-        const primaryKeys = SchemaUtils.getPrimaryKeysFromSchema(schema);
         const database = this.database;
 
         return new Repository({
             database: database,
-            name: tableName,
-            primaryKeys
+            schema
         });
 
     }

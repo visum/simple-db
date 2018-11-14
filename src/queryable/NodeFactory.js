@@ -1,6 +1,5 @@
 import ValueNode from "./abstractSyntaxTree/ValueNode";
 import CompositeNode from "./abstractSyntaxTree/CompositeNode";
-import Queryable from "./Queryable";
 
 export default class NodeFactory {
     constructor() { }
@@ -40,10 +39,6 @@ export default class NodeFactory {
     }
 
     createValueNode(value) {
-        if (value instanceof Queryable) {
-            return new ValueNode("queryable", value);
-        } else {
-            return ValueNode.fromValue(value);
-        }
+        return ValueNode.fromValue(value);
     }
 }

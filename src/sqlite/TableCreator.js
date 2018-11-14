@@ -12,7 +12,27 @@ export default class TableCreator {
         this.schemaToSqliteFactory = new TableStatementCreator(schema);
     }
 
-    createRepositoryIfNotExistsAsync(){
+    static createTableIfNotExistsAsync({database, schema}){
+        const tableCreator = new TableCreator({
+            database: database,
+            schema
+        });
+
+        return tableCreator.createTableIfNotExistsAsync();
+    }
+
+    static dropTableIfExistsAsync({database, schema}){
+        const tableCreator = new TableCreator({
+            database: database,
+            schema
+        });
+
+        return tableCreator.dropTableIfExistsAsync();
+    }
+
+
+
+    createTableIfNotExistsAsync(){
         const {
             sql,
             values
@@ -21,7 +41,7 @@ export default class TableCreator {
         return this.sqliteDatabaseWrapper.runAsync(sql, values);
     }
 
-    dropRepositoryIfExistsAsync(){
+    dropTableIfExistsAsync(){
         const {
             sql,
             values

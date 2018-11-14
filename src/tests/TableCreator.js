@@ -1,5 +1,5 @@
 import * as assert from "assert";
-import SqliteDatabaseCreator from "../sqlite/TableCreator"
+import TableCreator from "../sqlite/TableCreator"
 import sqlite3 from "sqlite3";
 
 const testSchema = {
@@ -62,38 +62,38 @@ const testSchema = {
     }
 };
 
-exports["SqliteDatabaseCreator: createRepositoryIfNotExistsAsync."] = () => {
+exports["TableCreator: createTableIfNotExistsAsync."] = () => {
     const database = new sqlite3.Database(":memory:");
-    const schemaToSqlite = new SqliteDatabaseCreator({
+    const tableCreator = new TableCreator({
         schema: testSchema,
         database
     });
 
 
-    return schemaToSqlite.createRepositoryIfNotExistsAsync();
+    return tableCreator.createTableIfNotExistsAsync();
 }
 
-exports["SqliteDatabaseCreator: createRepositoryIfNotExistsAsync twice."] = () => {
+exports["TableCreator: createTableIfNotExistsAsync twice."] = () => {
     const database = new sqlite3.Database(":memory:");
-    const schemaToSqlite = new SqliteDatabaseCreator({
+    const tableCreator = new TableCreator({
         schema: testSchema,
         database
     });
 
 
-    return schemaToSqlite.createRepositoryIfNotExistsAsync().then(() => {
-        return schemaToSqlite.createRepositoryIfNotExistsAsync();
+    return tableCreator.createTableIfNotExistsAsync().then(() => {
+        return tableCreator.createTableIfNotExistsAsync();
     });
 }
 
-exports["SqliteDatabaseCreator: createRepositoryIfNotExistsAsync then Drop"] = () => {
+exports["TableCreator: createTableIfNotExistsAsync then Drop"] = () => {
     const database = new sqlite3.Database(":memory:");
-    const schemaToSqlite = new SqliteDatabaseCreator({
+    const tableCreator = new TableCreator({
         schema: testSchema,
         database
     });
 
-    return schemaToSqlite.createRepositoryIfNotExistsAsync().then(() => {
-        return schemaToSqlite.dropRepositoryIfExistsAsync();
+    return tableCreator.createTableIfNotExistsAsync().then(() => {
+        return tableCreator.dropTableIfExistsAsync();
     });
 }

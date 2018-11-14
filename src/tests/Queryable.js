@@ -1,22 +1,13 @@
 import * as assert from "assert";
 import sqlite from "sqlite3";
 import Repository from "../sqlite/Repository";
+import testSchema from "../testSchemas/person";
+import TableCreator from "../sqlite/TableCreator";
 
 const createDatabaseAsync = (database) => {
-    return new Promise((resolve, reject) => {
-        database.run(
-            `CREATE TABLE IF NOT EXISTS test (
-                id integer PRIMARY KEY,
-                url text NOT NULL UNIQUE
-            )`,
-            (error) => {
-                if (error != null) {
-                    reject(error);
-                } else {
-                    resolve();
-                }
-            }
-        );
+    return TableCreator.createTableIfNotExistsAsync({
+        database, 
+        schema: testSchema
     });
 }
 
@@ -25,7 +16,7 @@ const fillDatabaseAsync = (table) => {
 
     for (let x = 0; x < 300; x++) {
         const testsPromise = table.addAsync({
-            url: `/api/${x}.xhtml`
+            firstName: `John${x}`
         });
         tests.push(testsPromise);
     }
@@ -39,29 +30,23 @@ exports["Queryable: toArrayAsync."] = function () {
     const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
         database,
-        name: "test"
+        schema: testSchema
     });
 
     return createDatabasePromise.then(() => {
         return fillDatabaseAsync(table);
     }).then(() => {
         return table.where()
-            .column("url")
-            .endsWith("/1.xhtml")
-            .or()
-            .column("url")
-            .startsWith("/api/2.x")
-            .or()
-            .column("url")
-            .contains("/3.xhtm")
+            .column("firstName")
+            .endsWith("ohn1")
             .orderByDesc("id")
             .toArrayAsync();
     }).then((results) => {
-        assert.equal(results.length, 3);
+        assert.equal(results.length, 1);
 
         return table.where()
-            .column("url")
-            .contains(".xhtml")
+            .column("firstName")
+            .contains("John")
             .removeAsync();
     }).then(() => {
         return table.where().toArrayAsync();
@@ -80,15 +65,15 @@ exports["Queryable: IsIn with Queryable."] = function () {
     const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
         database,
-        name: "test"
+        schema: testSchema
     });
 
     return createDatabasePromise.then(() => {
         return fillDatabaseAsync(table);
     }).then(() => {
         return table.where()
-            .column("url")
-            .isIn(table.where().select({"url": "url"}).take(1))
+            .column("firstName")
+            .isIn(table.where().select({"firstName": "firstName"}).take(1))
             .toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 1);
@@ -105,15 +90,15 @@ exports["Queryable: IsIn with Array."] = function () {
     const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
         database,
-        name: "test"
+        schema: testSchema
     });
 
     return createDatabasePromise.then(() => {
         return fillDatabaseAsync(table);
     }).then(() => {
         return table.where()
-            .column("url")
-            .isIn([`/api/1.xhtml`])
+            .column("firstName")
+            .isIn([`John1`])
             .toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 1);
@@ -130,15 +115,15 @@ exports["Queryable: getFirstAsync"] = function () {
     const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
         database,
-        name: "test"
+        schema: testSchema
     });
 
     return createDatabasePromise.then(() => {
         return fillDatabaseAsync(table);
     }).then(() => {
         return table.where()
-            .column("url")
-            .endsWith("/1.xhtml")
+            .column("firstName")
+            .endsWith("1")
             .getFirstAsync();
     }).then((result) => {
         assert.equal(result != null, true);
@@ -155,15 +140,15 @@ exports["Queryable: removeAsync"] = function () {
     const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
         database,
-        name: "test"
+        schema: testSchema
     });
 
     return createDatabasePromise.then(() => {
         return fillDatabaseAsync(table);
     }).then(() => {
         return table.where()
-            .column("url")
-            .contains(".xhtml")
+            .column("firstName")
+            .contains("John")
             .removeAsync();
     }).then(() => {
         return table.where().toArrayAsync();
@@ -182,25 +167,25 @@ exports["Queryable: updateAsync"] = function () {
     const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
         database,
-        name: "test"
+        schema: testSchema
     });
 
     return createDatabasePromise.then(() => {
         return fillDatabaseAsync(table);
     }).then(() => {
         return table.where()
-            .column("url")
-            .endsWith("/1.xhtml")
+            .column("firstName")
+            .endsWith("John1")
             .updateAsync({
-                url: "New Value"
+                firstName: "Jane"
             });
     }).then(() => {
         return table.where()
-            .column("url")
-            .endsWith("New Value")
+            .column("firstName")
+            .endsWith("Jane")
             .toArrayAsync();
     }).then((results) => {
-        assert.equal(results[0].url, "New Value");
+        assert.equal(results[0].firstName, "Jane");
         database.close();
     }).catch((error) => {
         database.close();
@@ -214,15 +199,15 @@ exports["Queryable: getCountAsync"] = function () {
     const createDatabasePromise = createDatabaseAsync(database);
     const table = new Repository({
         database,
-        name: "test"
+        schema: testSchema
     });
 
     return createDatabasePromise.then(() => {
         return fillDatabaseAsync(table);
     }).then(() => {
         return table.where()
-            .column("url")
-            .endsWith("xhtml")
+            .column("firstName")
+            .contains("John")
             .getCountAsync()
     }).then((count) => {
         assert.equal(count, 300);
