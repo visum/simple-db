@@ -25,7 +25,7 @@ exports["SelectStatementCreator: contains."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").contains("value");
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
-    const expected = `SELECT * FROM "table" WHERE "columnName" LIKE '%value%' LIMIT -1 OFFSET 0`;
+    const expected = `SELECT * FROM "table" WHERE "columnName" LIKE '%value%' ESCAPE '\\' LIMIT -1 OFFSET 0`;
 
     assert.equal(sql, expected);
 }
@@ -34,7 +34,7 @@ exports["SelectStatementCreator: startsWith."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").startsWith("value");
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
-    const expected = `SELECT * FROM "table" WHERE "columnName" LIKE 'value%' LIMIT -1 OFFSET 0`;
+    const expected = `SELECT * FROM "table" WHERE "columnName" LIKE 'value%' ESCAPE '\\' LIMIT -1 OFFSET 0`;
 
     assert.equal(sql, expected);
 }
@@ -43,7 +43,7 @@ exports["SelectStatementCreator: endsWith."] = () => {
     const queryable = new Queryable({ type: "table" }).column("columnName").endsWith("value");
     const selectStatementCreator = new SelectStatementCreator(queryable);
     const { sql } = selectStatementCreator.createStatement();
-    const expected = `SELECT * FROM "table" WHERE "columnName" LIKE '%value' LIMIT -1 OFFSET 0`;
+    const expected = `SELECT * FROM "table" WHERE "columnName" LIKE '%value' ESCAPE '\\' LIMIT -1 OFFSET 0`;
 
     assert.equal(sql, expected);
 }

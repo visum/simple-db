@@ -1,6 +1,7 @@
 export default class SqlString {
     constructor(value) {
         this.value = `${value.replace("'", "''")}`;
+        this.likeValue = this.value.replace(/\%/g, "\\%").replace(/\_/g, "\\_");
     }
 
     toString() {
@@ -8,14 +9,14 @@ export default class SqlString {
     }
 
     toEndsWithString() {
-        return `'%${this.value}'`;
+        return `'%${this.likeValue}' ESCAPE '\\'`;
     }
 
     toContainsString() {
-        return `'%${this.value}%'`;
+        return `'%${this.likeValue}%' ESCAPE '\\'`;
     }
 
     toStartsWithString() {
-        return `'${this.value}%'`;
+        return `'${this.likeValue}%' ESCAPE '\\'`;
     }
 }

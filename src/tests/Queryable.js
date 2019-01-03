@@ -16,7 +16,7 @@ const fillDatabaseAsync = (table) => {
 
     for (let x = 0; x < 300; x++) {
         const testsPromise = table.addAsync({
-            firstName: `John${x}`
+            firstName: `John_${x}_`
         });
         tests.push(testsPromise);
     }
@@ -38,11 +38,17 @@ exports["Queryable: toArrayAsync."] = function () {
     }).then(() => {
         return table.where()
             .column("firstName")
-            .endsWith("ohn1")
+            .endsWith("ohn_1_")
+            .or()
+            .column("firstName")
+            .startsWith("John_2_")
+            .and()
+            .column("firstName")
+            .contains("John")
             .orderByDesc("id")
             .toArrayAsync();
     }).then((results) => {
-        assert.equal(results.length, 1);
+        assert.equal(results.length, 2);
 
         return table.where()
             .column("firstName")
@@ -98,7 +104,7 @@ exports["Queryable: IsIn with Array."] = function () {
     }).then(() => {
         return table.where()
             .column("firstName")
-            .isIn([`John1`])
+            .isIn([`John_1_`])
             .toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 1);
@@ -123,7 +129,7 @@ exports["Queryable: getFirstAsync"] = function () {
     }).then(() => {
         return table.where()
             .column("firstName")
-            .endsWith("1")
+            .endsWith("_1_")
             .getFirstAsync();
     }).then((result) => {
         assert.equal(result != null, true);
@@ -175,7 +181,7 @@ exports["Queryable: updateAsync"] = function () {
     }).then(() => {
         return table.where()
             .column("firstName")
-            .endsWith("John1")
+            .endsWith("hn_1_")
             .updateAsync({
                 firstName: "Jane"
             });
