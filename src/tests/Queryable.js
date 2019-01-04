@@ -3,10 +3,11 @@ import sqlite from "sqlite3";
 import Repository from "../sqlite/Repository";
 import testSchema from "../testSchemas/person";
 import TableCreator from "../sqlite/TableCreator";
+import Queryable from "../../lib/queryable/Queryable";
 
 const createDatabaseAsync = (database) => {
     return TableCreator.createTableIfNotExistsAsync({
-        database, 
+        database,
         schema: testSchema
     });
 }
@@ -79,7 +80,7 @@ exports["Queryable: IsIn with Queryable."] = function () {
     }).then(() => {
         return table.where()
             .column("firstName")
-            .isIn(table.where().select({"firstName": "firstName"}).take(1))
+            .isIn(table.where().select({ "firstName": "firstName" }).take(1))
             .toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 1);
@@ -222,4 +223,23 @@ exports["Queryable: getCountAsync"] = function () {
         throw error;
     });
 
+};
+
+exports["Queryable: toJson"] = function () {
+    const queryable = new Queryable({ query: { type: "person" } });
+    const json = queryable.column("firstName").isEqualTo("Joe").toJson();
+
+    assert.equal(json, `{"type":"person","expression":{"type":"isEqualTo","isComposite":true,"children":[{"type":"property","isComposite":true,"children":[{"type":"type","isComposite":false,"value":"person"},{"type":"propertyName","isComposite":false,"value":"firstName"}]},{"type":"string","isComposite":false,"value":"Joe"}]},"select":{},"limit":-1,"offset":0,"orderBy":[]}`);
+};
+
+exports["Queryable: fromJson"] = function () {
+    const queryable = new Queryable({ query: { type: "person" } });
+    const roleQueryable = new Queryable({ query: { type: "role" } }).column("name").isEqualTo("admin").select({ id: "id" });
+
+    const json = queryable.column("firstName").isEqualTo("Joe").and().column("roleId").isIn(roleQueryable).toJson();
+
+    const queryable2 = Queryable.fromJson(json);
+    const json2 = queryable2.toJson();
+
+    assert.equal(json, json2);
 };

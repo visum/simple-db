@@ -11,13 +11,21 @@ export default class CompositeNode extends Node {
     static fromObject(object) {
         let node;
 
-        if (typeof object.isComposite === "boolean" && object.isComposite) {
+        if (object == null) {
+            return null;
+        }
+
+        if (
+            typeof object.isComposite === "boolean" &&
+            object.isComposite &&
+            Array.isArray(object.children)
+        ) {
             node = new CompositeNode(object.type);
-            node.children.forEach((child) => {
+            object.children.forEach((child) => {
                 return node.children.push(CompositeNode.fromObject(child));
             });
         } else {
-            node = ValueNode.fromValue(object.value);
+            node = new ValueNode(object.type, object.value);
         }
 
         return node;

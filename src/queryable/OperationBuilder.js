@@ -14,16 +14,27 @@ export default class OperationBuilder {
     }
 
     isIn(value) {
-        if (!(value instanceof Queryable) && !Array.isArray(value)){
+        if (!(value instanceof Queryable) && !Array.isArray(value)) {
             throw new Error("Invalid Argument: value needs to be an array or a queryable.");
         }
 
-        const node = this.factory.createOperatorNode(
-            this.queryable.type,
-            this.propertyName,
-            "isIn",
-            value
-        );
+        let node;
+
+        if (value instanceof Queryable) {
+            node = this.factory.createOperatorNode(
+                this.queryable.query.type,
+                this.propertyName,
+                "isIn",
+                value.query
+            );
+        } else {
+            node = this.factory.createOperatorNode(
+                this.queryable.query.type,
+                this.propertyName,
+                "isIn",
+                value
+            );
+        }
 
         if (this.queryable.query.expression && Array.isArray(this.queryable.query.expression.children)) {
             this.queryable.query.expression.children.push(node);
@@ -35,16 +46,27 @@ export default class OperationBuilder {
     }
 
     isNotIn(value) {
-        if (!(value instanceof Queryable) && !Array.isArray(value)){
+        if (!(value instanceof Queryable) && !Array.isArray(value)) {
             throw new Error("Invalid Argument: value needs to be an array or a queryable.");
         }
 
-        const node = this.factory.createOperatorNode(
-            this.queryable.type,
-            this.propertyName,
-            "isNotIn",
-            value
-        );
+        let node;
+
+        if (value instanceof Queryable) {
+            node = this.factory.createOperatorNode(
+                this.queryable.query.type,
+                this.propertyName,
+                "isNotIn",
+                value.query
+            );
+        } else {
+            node = this.factory.createOperatorNode(
+                this.queryable.query.type,
+                this.propertyName,
+                "isNotIn",
+                value
+            );
+        }
 
         if (this.queryable.query.expression && Array.isArray(this.queryable.query.expression.children)) {
             this.queryable.query.expression.children.push(node);
@@ -57,7 +79,7 @@ export default class OperationBuilder {
 
     endsWith(value) {
         const node = this.factory.createOperatorNode(
-            this.queryable.type,
+            this.queryable.query.type,
             this.propertyName,
             "endsWith",
             value
@@ -74,7 +96,7 @@ export default class OperationBuilder {
 
     startsWith(value) {
         const node = this.factory.createOperatorNode(
-            this.queryable.type,
+            this.queryable.query.type,
             this.propertyName,
             "startsWith",
             value
@@ -91,7 +113,7 @@ export default class OperationBuilder {
 
     contains(value) {
         const node = this.factory.createOperatorNode(
-            this.queryable.type,
+            this.queryable.query.type,
             this.propertyName,
             "contains",
             value
@@ -108,7 +130,7 @@ export default class OperationBuilder {
 
     isEqualTo(value) {
         const node = this.factory.createOperatorNode(
-            this.queryable.type,
+            this.queryable.query.type,
             this.propertyName,
             "isEqualTo",
             value
@@ -125,7 +147,7 @@ export default class OperationBuilder {
 
     isNotEqualTo(value) {
         const node = this.factory.createOperatorNode(
-            this.queryable.type,
+            this.queryable.query.type,
             this.propertyName,
             "isNotEqualTo",
             value
@@ -142,7 +164,7 @@ export default class OperationBuilder {
 
     isGreaterThan(value) {
         const node = this.factory.createOperatorNode(
-            this.queryable.type,
+            this.queryable.query.type,
             this.propertyName,
             "isGreaterThan",
             value
@@ -159,7 +181,7 @@ export default class OperationBuilder {
 
     isGreaterThanOrEqualTo(value) {
         const node = this.factory.createOperatorNode(
-            this.queryable.type,
+            this.queryable.query.type,
             this.propertyName,
             "isGreaterThanOrEqualTo",
             value
@@ -176,7 +198,7 @@ export default class OperationBuilder {
 
     isLessThan(value) {
         const node = this.factory.createOperatorNode(
-            this.queryable.type,
+            this.queryable.query.type,
             this.propertyName,
             "isLessThan",
             value
@@ -193,7 +215,7 @@ export default class OperationBuilder {
 
     isLessThanOrEqualTo(value) {
         const node = this.factory.createOperatorNode(
-            this.queryable.type,
+            this.queryable.query.type,
             this.propertyName,
             "isLessThanOrEqualTo",
             value

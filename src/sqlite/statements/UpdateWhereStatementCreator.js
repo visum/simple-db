@@ -23,7 +23,7 @@ export default class UpdateWhereStatementCreator {
     }
 
     getTableName(){
-        return SqliteUtils.escapeName(this.queryable.type);
+        return SqliteUtils.escapeName(this.queryable.query.type);
     }
 
     createWhereExpression() {

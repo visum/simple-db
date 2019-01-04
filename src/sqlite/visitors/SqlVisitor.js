@@ -66,11 +66,9 @@ export default class SqlVisitor extends Visitor {
     }
 
     queryable(value) {
-        if (!(value instanceof Queryable)) {
-            throw new Error("Invalid queryable value.");
-        }
+        const queryable = Queryable.fromObject(value);
 
-        const selectStatementCreator = new SelectStatementCreator(value);
+        const selectStatementCreator = new SelectStatementCreator(queryable);
         const { sql } = selectStatementCreator.createStatement();
         return `(${sql})`;
     }

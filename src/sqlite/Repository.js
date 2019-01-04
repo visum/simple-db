@@ -56,7 +56,14 @@ export default class Repository {
         const provider = this.getQueryProvider();
 
         return new Queryable({
-            type: this.name,
+            query: {
+                type: this.name,
+                expression: null,
+                select: {},
+                limit: -1,
+                offset: 0,
+                orderBy: []
+            },
             provider: provider
         });
     }

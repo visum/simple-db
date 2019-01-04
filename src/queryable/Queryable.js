@@ -1,26 +1,29 @@
 import QueryFactory from "./NodeFactory";
 import OperationBuilder from "./OperationBuilder";
+import CompositeNode from "../../lib/queryable/abstractSyntaxTree/CompositeNode";
+
+const defaultQuery = {
+    type: "any",
+    expression: null,
+    select: {},
+    limit: -1,
+    offset: 0,
+    orderBy: []
+};
 
 export default class Queryable {
 
     constructor({
-        type = "any",
-        query = {
-            expression: null,
-            select: {},
-            limit: Infinity,
-            offset: 0,
-            orderBy: []
-        },
+        query,
         provider = null
     }) {
-        this.type = type;
         this.factory = new QueryFactory();
-        this.query = query;
+        this.query = Object.assign({}, defaultQuery, query);
+        this.query.expression = query.expression || null;
         this.provider = provider;
     }
 
-    assertProvider(){
+    assertProvider() {
         if (this.provider == null) {
             throw new Error("Null Exception: Cannot retrieve results, the provider is null.");
         }
@@ -65,10 +68,10 @@ export default class Queryable {
     }
 
     clone() {
-        return new Queryable({
-            type: this.type,
+        const queryable = new Queryable({
             provider: this.provider,
             query: {
+                type: this.query.type,
                 expression: this.query.expression == null ? null : this.query.expression.clone(),
                 select: Object.assign({}, this.query.select),
                 limit: this.query.limit,
@@ -76,6 +79,7 @@ export default class Queryable {
                 orderBy: this.query.orderBy.slice()
             }
         });
+        return queryable;
     }
 
     column(column) {
@@ -95,9 +99,9 @@ export default class Queryable {
     }
 
     take(take) {
-        if (typeof take !== "number"){
+        if (typeof take !== "number") {
             throw new Error("Illegal Argument: expected a number.");
-        }  
+        }
 
         const queryable = this.clone();
         queryable.query.limit = take;
@@ -106,9 +110,9 @@ export default class Queryable {
     }
 
     skip(skip) {
-        if (typeof skip !== "number"){
+        if (typeof skip !== "number") {
             throw new Error("Illegal Argument: expected a number.");
-        } 
+        }
 
         const queryable = this.clone();
         queryable.query.offset = skip;
@@ -142,7 +146,7 @@ export default class Queryable {
         return this.provider.toArrayAsync(this);
     }
 
-    getFirstAsync(){
+    getFirstAsync() {
         this.assertProvider();
 
         return this.provider.getFirstAsync(this);
@@ -164,6 +168,26 @@ export default class Queryable {
         this.assertProvider();
 
         return this.provider.updateAsync(this, updates);
+    }
+
+    toJson(){
+        return JSON.stringify(this.query);
+    }
+
+    static fromObject(query) {
+        query.expression = CompositeNode.fromObject(query.expression);
+
+        const queryable = new Queryable({
+            provider: this.provider,
+            query: query
+        });
+
+        return queryable;
+    }
+
+    static fromJson(jsonQuery) {
+        const query = JSON.parse(jsonQuery);
+        return Queryable.fromObject(query);
     }
 
 }

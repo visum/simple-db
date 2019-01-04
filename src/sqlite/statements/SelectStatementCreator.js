@@ -17,7 +17,7 @@ export default class SelectStatementCreator {
     }
 
     getTableName(){
-        return SqliteUtils.escapeName(this.queryable.type);
+        return SqliteUtils.escapeName(this.queryable.query.type);
     }
 
     removeNullOrEmptyStrings(expression) {
@@ -59,10 +59,6 @@ export default class SelectStatementCreator {
     createLimitAndOffsetSql() {
         let limit = this.queryable.query.limit;
         let offset = this.queryable.query.offset;
-
-        if (limit === Infinity) {
-            limit = -1;
-        }
 
         return `LIMIT ${limit} OFFSET ${offset}`;
     }

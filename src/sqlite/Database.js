@@ -1,7 +1,6 @@
 import Sqlite3Wrapper from "./Sqlite3Wrapper";
 import TableCreator from "./TableCreator";
 import Repository from "./Repository";
-import SchemaUtils from "./utils/SchemaUtils";
 
 export default class Database {
     constructor({
@@ -31,6 +30,10 @@ export default class Database {
         return this.schemas.find((innerSchema) => {
             return schema.name == innerSchema.name && schema.version == innerSchema.version;
         });
+    }
+
+    getSchemas(){
+        return this.schemas.slice(0);
     }
 
     addSchema(schema) {
