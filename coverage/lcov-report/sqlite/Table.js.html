@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for sqlite/SqliteDatabase.js</title>
+    <title>Code coverage report for sqlite/Table.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">all files</a> / <a href="index.html">sqlite/</a> SqliteDatabase.js
+      <a href="../index.html">all files</a> / <a href="index.html">sqlite/</a> Table.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">83.61% </span>
+        <span class="strong">96.36% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>51/61</span>
+        <span class='fraction'>53/55</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">57.69% </span>
+        <span class="strong">64.29% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>15/26</span>
+        <span class='fraction'>9/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.47% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>13/17</span>
+        <span class='fraction'>12/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">81.82% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>36/44</span>
+        <span class='fraction'>38/38</span>
       </div>
     </div>
   </div>
@@ -156,92 +156,87 @@
 111
 112
 113
-114</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5×</span>
-<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-yes">11×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2104×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">2104×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -249,15 +244,38 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -277,17 +295,29 @@ Object.defineProperty(exports, "__esModule", {
 &nbsp;
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken" >E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="if path not taken" >I</span>if (staticProps) <span class="cstat-no" title="statement not covered" >defineProperties(Constructor, staticProps); </span>return Constructor; }; }();
 &nbsp;
+var _Provider = require("./Provider");
+&nbsp;
+var _Provider2 = _interopRequireDefault(_Provider);
+&nbsp;
+var _Queryable = require("../queryable/Queryable");
+&nbsp;
+var _Queryable2 = _interopRequireDefault(_Queryable);
+&nbsp;
 var _Sqlite3Wrapper = require("./Sqlite3Wrapper");
 &nbsp;
 var _Sqlite3Wrapper2 = _interopRequireDefault(_Sqlite3Wrapper);
 &nbsp;
-var _SqliteDatabaseCreator = require("./SqliteDatabaseCreator");
+var _InsertStatementCreator = require("./statements/InsertStatementCreator");
 &nbsp;
-var _SqliteDatabaseCreator2 = _interopRequireDefault(_SqliteDatabaseCreator);
+var _InsertStatementCreator2 = _interopRequireDefault(_InsertStatementCreator);
 &nbsp;
-var _Table = require("./Table");
+var _UpdateStatementCreator = require("./statements/UpdateStatementCreator");
 &nbsp;
-var _Table2 = _interopRequireDefault(_Table);
+var _UpdateStatementCreator2 = _interopRequireDefault(_UpdateStatementCreator);
+&nbsp;
+var _DeleteStatementCreator = require("./statements/DeleteStatementCreator");
+&nbsp;
+var _DeleteStatementCreator2 = _interopRequireDefault(_DeleteStatementCreator);
 &nbsp;
 var _SchemaUtils = require("./utils/SchemaUtils");
 &nbsp;
@@ -297,98 +327,95 @@ function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? ob
 &nbsp;
 function _classCallCheck(instance, Constructor) { <span class="missing-if-branch" title="if path not taken" >I</span>if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered" >throw new TypeError("Cannot call a class as a function"); </span>} }
 &nbsp;
-var SqliteDatabase = function () {
-    function SqliteDatabase(_ref) {
+var Table = function () {
+    function Table(_ref) {
         var database = _ref.database,
-            schemas = _ref.schemas;
+            schema = _ref.schema;
 &nbsp;
-        _classCallCheck(this, SqliteDatabase);
+        _classCallCheck(this, Table);
 &nbsp;
+        this.name = _SchemaUtils2.default.getTableNameFromSchema(schema);
         this.database = database;
-        this.sqliteDatabaseWrapper = new _Sqlite3Wrapper2.default(database);
-        this.schemas = Array.isArray(schemas) ? <span class="branch-0 cbranch-no" title="branch not covered" >schemas </span>: [];
+        this.sqliteDatabaseWrapper = new _Sqlite3Wrapper2.default(this.database);
+        this.primaryKeys = schema.primaryKeys;
     }
 &nbsp;
-    _createClass(SqliteDatabase, [{
-        key: "hasSchema",
-        value: function hasSchema(schema) {
-            return this.getSchema(schema) != null;
+    _createClass(Table, [{
+        key: "addAsync",
+        value: function addAsync(entity) {
+            var _InsertStatementCreat = _InsertStatementCreator2.default.createStatement({
+                tableName: this.name,
+                entity: entity,
+                primaryKeys: this.primaryKeys
+            }),
+                sql = _InsertStatementCreat.sql,
+                values = _InsertStatementCreat.values;
+&nbsp;
+            return this.sqliteDatabaseWrapper.runAsync(sql, values);
         }
     }, {
-        key: "removeSchema",
-        value: <span class="fstat-no" title="function not covered" >function removeSchema(schema) {</span>
-<span class="cstat-no" title="statement not covered" >            var index = this.schemas.findIndex(<span class="fstat-no" title="function not covered" >function () {</span></span>
-<span class="cstat-no" title="statement not covered" >                return schema.name == innerSchema &amp;&amp; schema.version == innerSchema.version;</span>
-            });
+        key: "removeAsync",
+        value: function removeAsync(entity) {
+            var _DeleteStatementCreat = _DeleteStatementCreator2.default.createStatement({
+                tableName: this.name,
+                entity: entity,
+                primaryKeys: this.primaryKeys
+            }),
+                sql = _DeleteStatementCreat.sql,
+                values = _DeleteStatementCreat.values;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            if (index &gt; -1) {</span>
-<span class="cstat-no" title="statement not covered" >                this.schemas.splice(index, 1);</span>
-            }
+            return this.sqliteDatabaseWrapper.runAsync(sql, values);
         }
     }, {
-        key: "getSchema",
-        value: function getSchema(schema) {
-            return this.schemas.find(function (innerSchema) {
-                return schema.name == innerSchema.name &amp;&amp; schema.version == innerSchema.version;
-            });
+        key: "updateAsync",
+        value: function updateAsync(entity) {
+            var _UpdateStatementCreat = _UpdateStatementCreator2.default.createStatement({
+                tableName: this.name,
+                entity: entity,
+                primaryKeys: this.primaryKeys
+            }),
+                sql = _UpdateStatementCreat.sql,
+                values = _UpdateStatementCreat.values;
+&nbsp;
+            return this.sqliteDatabaseWrapper.runAsync(sql, values);
         }
     }, {
-        key: "addSchema",
-        value: function addSchema(schema) {
-            var _this = this;
-&nbsp;
-            var schemaToSqlite = new _SqliteDatabaseCreator2.default({
-                database: this.database,
-                schema: schema
-            });
-&nbsp;
-            return schemaToSqlite.createTableIfNotExistsAsync().then(function () {
-                if (!_this.hasSchema(schema)) {
-                    _this.schemas.push(schema);
-                }
-            });
-        }
-    }, {
-        key: "addSchema",
-        value: <span class="fstat-no" title="function not covered" >function addSchema(schema) {</span>
-<span class="cstat-no" title="statement not covered" >            var _this2 = this;</span>
-&nbsp;
-<span class="cstat-no" title="statement not covered" >            return schemaToSqlite.dropTableIfExistsAsync().then(<span class="fstat-no" title="function not covered" >function () {</span></span>
-<span class="cstat-no" title="statement not covered" >                _this2.removeSchema(schema);</span>
+        key: "getQueryProvider",
+        value: function getQueryProvider() {
+            return new _Provider2.default({
+                database: this.database
             });
         }
     }, {
-        key: "getTable",
-        value: function getTable(name, version) {
-            var schema = this.getSchema({ name: name, version: version });
+        key: "where",
+        value: function where() {
+            var provider = this.getQueryProvider();
 &nbsp;
-            <span class="missing-if-branch" title="if path not taken" >I</span>if (schema == null) {
-<span class="cstat-no" title="statement not covered" >                throw new Error("Unable to find table.");</span>
-            }
-&nbsp;
-            var tableName = _SchemaUtils2.default.getTableNameFromSchema(schema);
-            var primaryKeys = _SchemaUtils2.default.getPrimaryKeysFromSchema(schema);
-            var database = this.database;
-&nbsp;
-            return new _Table2.default({
-                database: database,
-                name: tableName,
-                primaryKeys: primaryKeys
+            return new _Queryable2.default({
+                query: {
+                    type: this.name,
+                    expression: null,
+                    select: {},
+                    limit: -1,
+                    offset: 0,
+                    orderBy: []
+                },
+                provider: provider
             });
         }
     }]);
 &nbsp;
-    return SqliteDatabase;
+    return Table;
 }();
 &nbsp;
-exports.default = SqliteDatabase;
-//# sourceMappingURL=SqliteDatabase.js.map</pre></td></tr>
+exports.default = Table;
+//# sourceMappingURL=Table.js.map</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sat Nov 03 2018 10:21:45 GMT-0600 (MDT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jan 27 2019 19:56:41 GMT-0700 (Mountain Standard Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

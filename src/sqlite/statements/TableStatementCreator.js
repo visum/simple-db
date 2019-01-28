@@ -1,5 +1,5 @@
 import jsonschema from "jsonschema";
-import repositoryJsonSchema from "../repositoryJsonSchema";
+import tableJsonSchema from "../tableJsonSchema";
 import SchemaUtils from "../utils/SchemaUtils";
 import SqliteUtils from "../utils/SqliteUtils";
 import UniqueExpressionCreator from "./UniqueExpressionCreator";
@@ -31,7 +31,7 @@ export default class TableStatementCreator {
     }
 
     validateSchema() {
-        const validationResults = this.validator.validate(this.schema, repositoryJsonSchema);
+        const validationResults = this.validator.validate(this.schema, tableJsonSchema);
 
         if (validationResults.errors.length > 0) {
             const error = new Error("Schema Error");

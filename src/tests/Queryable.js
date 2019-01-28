@@ -1,6 +1,6 @@
 import * as assert from "assert";
 import sqlite from "sqlite3";
-import Repository from "../sqlite/Repository";
+import Table from "../sqlite/Table";
 import testSchema from "../testSchemas/person";
 import TableCreator from "../sqlite/TableCreator";
 import Queryable from "../../lib/queryable/Queryable";
@@ -29,7 +29,7 @@ const fillDatabaseAsync = (table) => {
 exports["Queryable: toArrayAsync."] = function () {
     const database = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Repository({
+    const table = new Table({
         database,
         schema: testSchema
     });
@@ -70,7 +70,7 @@ exports["Queryable: toArrayAsync."] = function () {
 exports["Queryable: IsIn with Queryable."] = function () {
     const database = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Repository({
+    const table = new Table({
         database,
         schema: testSchema
     });
@@ -95,7 +95,7 @@ exports["Queryable: IsIn with Queryable."] = function () {
 exports["Queryable: IsIn with Array."] = function () {
     const database = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Repository({
+    const table = new Table({
         database,
         schema: testSchema
     });
@@ -120,7 +120,7 @@ exports["Queryable: IsIn with Array."] = function () {
 exports["Queryable: getFirstAsync"] = function () {
     const database = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Repository({
+    const table = new Table({
         database,
         schema: testSchema
     });
@@ -145,7 +145,7 @@ exports["Queryable: getFirstAsync"] = function () {
 exports["Queryable: removeAsync"] = function () {
     const database = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Repository({
+    const table = new Table({
         database,
         schema: testSchema
     });
@@ -172,7 +172,7 @@ exports["Queryable: removeAsync"] = function () {
 exports["Queryable: updateAsync"] = function () {
     const database = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Repository({
+    const table = new Table({
         database,
         schema: testSchema
     });
@@ -204,7 +204,7 @@ exports["Queryable: updateAsync"] = function () {
 exports["Queryable: getCountAsync"] = function () {
     const database = new sqlite.Database(":memory:");
     const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Repository({
+    const table = new Table({
         database,
         schema: testSchema
     });

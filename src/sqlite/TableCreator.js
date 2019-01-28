@@ -5,14 +5,14 @@ export default class TableCreator {
     constructor({
         database,
         schema
-    }){
+    }) {
         this.database = database;
         this.schema = schema;
         this.sqliteDatabaseWrapper = new Sqlite3Wrapper(database);
         this.schemaToSqliteFactory = new TableStatementCreator(schema);
     }
 
-    static createTableIfNotExistsAsync({database, schema}){
+    static createTableIfNotExistsAsync({ database, schema }) {
         const tableCreator = new TableCreator({
             database: database,
             schema
@@ -21,7 +21,20 @@ export default class TableCreator {
         return tableCreator.createTableIfNotExistsAsync();
     }
 
-    static dropTableIfExistsAsync({database, schema}){
+    static createTablesIfNotExistsAsync({ database, schemas }) {
+        const promises = schemas.map((schema) => {
+            const tableCreator = new TableCreator({
+                database: database,
+                schema
+            });
+
+            return tableCreator.createTableIfNotExistsAsync();
+        });
+
+        return Promise.all(promises);
+    }
+
+    static dropTableIfExistsAsync({ database, schema }) {
         const tableCreator = new TableCreator({
             database: database,
             schema
@@ -30,9 +43,22 @@ export default class TableCreator {
         return tableCreator.dropTableIfExistsAsync();
     }
 
+    static dropTableIfExistsAsync({ database, schemas }) {
 
+        const promises = schemas.map((schema) => {
+            const tableCreator = new TableCreator({
+                database: database,
+                schema
+            });
 
-    createTableIfNotExistsAsync(){
+            return tableCreator.dropTableIfExistsAsync();
+        });
+
+        return Promise.all(promises);
+
+    }
+
+    createTableIfNotExistsAsync() {
         const {
             sql,
             values
@@ -41,13 +67,13 @@ export default class TableCreator {
         return this.sqliteDatabaseWrapper.runAsync(sql, values);
     }
 
-    dropTableIfExistsAsync(){
+    dropTableIfExistsAsync() {
         const {
             sql,
             values
         } = this.schemaToSqliteFactory.createDropTableStatment();
 
         return this.sqliteDatabaseWrapper.runAsync(sql, values);
-    
+
     }
 }

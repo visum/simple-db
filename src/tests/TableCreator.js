@@ -3,8 +3,8 @@ import TableCreator from "../sqlite/TableCreator"
 import sqlite3 from "sqlite3";
 
 const testSchema = {
-    "name": "repository",
-    "label": "Repository",
+    "name": "table",
+    "label": "Table",
     "description": "Some great description.",
     "version": "1.0.1",
     "columns": [

@@ -6,7 +6,7 @@ import UpdateStatementCreator from "./statements/UpdateStatementCreator";
 import DeleteStatementCreator from "./statements/DeleteStatementCreator";
 import SchemaUtils from "./utils/SchemaUtils";
 
-export default class Repository {
+export default class Table {
     constructor({ database, schema }) {
         this.name = SchemaUtils.getTableNameFromSchema(schema);
         this.database = database;

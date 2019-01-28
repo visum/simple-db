@@ -1,12 +1,13 @@
+
 import * as assert from "assert";
 import sqlite from "sqlite3";
-import Repository from "../sqlite/Repository";
+import Table from "../sqlite/Table";
 import personSchema from "../testSchemas/person";
 import TableCreator from "../sqlite/TableCreator";
 
-exports["Repository: addAsync"] = function () {
+exports["Table: addAsync"] = function () {
     const database = new sqlite.Database(":memory:");
-    const repository = new Repository({
+    const table = new Table({
         database,
         schema: personSchema
     });
@@ -15,7 +16,7 @@ exports["Repository: addAsync"] = function () {
         database,
         schema: personSchema
     }).then(() => {
-        return repository.addAsync({ firstName: "John" });
+        return table.addAsync({ firstName: "John" });
     }).then(() => {
         database.close();
     }).catch((error) => {
@@ -24,9 +25,9 @@ exports["Repository: addAsync"] = function () {
     })
 };
 
-exports["Repository: updateAsync"] = function () {
+exports["Table: updateAsync"] = function () {
     const database = new sqlite.Database(":memory:");
-    const repository = new Repository({
+    const table = new Table({
         database,
         schema: personSchema
     });
@@ -35,14 +36,14 @@ exports["Repository: updateAsync"] = function () {
         database,
         schema: personSchema
     }).then(() => {
-        return repository.addAsync({ firstName: "John" });
+        return table.addAsync({ firstName: "John" });
     }).then(({ lastID: id }) => {
-        return repository.updateAsync({
+        return table.updateAsync({
             id: id,
             firstName: "Jane"
         });
     }).then(() => {
-        return repository.where().column("firstName").isEqualTo("Jane").toArrayAsync();
+        return table.where().column("firstName").isEqualTo("Jane").toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 1);
         database.close();
@@ -52,9 +53,9 @@ exports["Repository: updateAsync"] = function () {
     })
 };
 
-exports["Repository: removeAsync"] = function () {
+exports["Table: removeAsync"] = function () {
     const database = new sqlite.Database(":memory:");
-    const repository = new Repository({
+    const table = new Table({
         database,
         schema: personSchema
     });
@@ -63,13 +64,13 @@ exports["Repository: removeAsync"] = function () {
         database,
         schema: personSchema
     }).then(() => {
-        return repository.addAsync({ firstName: "John" });
+        return table.addAsync({ firstName: "John" });
     }).then(({ lastID: id }) => {
-        return repository.removeAsync({
+        return table.removeAsync({
             id: id
         });
     }).then(() => {
-        return repository.where().column("firstName").isEqualTo("John").toArrayAsync();
+        return table.where().column("firstName").isEqualTo("John").toArrayAsync();
     }).then((results) => {
         assert.equal(results.length, 0);
         database.close();

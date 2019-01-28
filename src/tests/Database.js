@@ -20,7 +20,7 @@ exports["Database: Add Person."] = () => {
     database.addSchema(personSchema);
 
     return database.createTablesFromSchemasAsync().then(() => {
-        return database.getRepository(personSchema.name, personSchema.version).addAsync({
+        return database.getTable(personSchema.name, personSchema.version).addAsync({
             firstName: "John",
             lastName: "Doe"
         });

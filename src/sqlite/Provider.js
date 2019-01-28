@@ -36,6 +36,10 @@ export default class Provider {
 
     }
 
+    getSqlAndValues(queryable) {
+        return CountStatementCreator.createStatement(queryable);
+    }
+
     removeAsync(queryable) {
         const { sql } = DeleteWhereStatementCreator.createStatement(queryable);
 

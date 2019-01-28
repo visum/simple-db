@@ -18,13 +18,13 @@ class JsonSchemaValidation {
     approveEntityToBeUpdatedAsync(entity) { }
     approveEntityToBeRemovedAsync(entity) { }
 
-    prepareRepositoryToBeAddedAsync(schema) { }
-    prepareRepositoryToBeUpdatedAsync(oldSchema, newSchema) { }
-    prepareRepositoryToBeRemovedAsync(schema) { }
+    prepareTableToBeAddedAsync(schema) { }
+    prepareTableToBeUpdatedAsync(oldSchema, newSchema) { }
+    prepareTableToBeRemovedAsync(schema) { }
 
-    approveRepositoryToBeAddedAsync(schema) { }
-    approveRepositoryToBeUpdatedAsync(oldSchema, newSchema) { }
-    approveRepositoryToBeRemovedAsync(schema) { }
+    approveTableToBeAddedAsync(schema) { }
+    approveTableToBeUpdatedAsync(oldSchema, newSchema) { }
+    approveTableToBeRemovedAsync(schema) { }
 
     refineQueryableAsync(queryable) { }
 }
@@ -37,9 +37,9 @@ jsonSchemaValidationFactory = {
 }
 
 database.addDataControlFactoryAsync(JsonSchemaValidation);
-database.addRepositoryIfNotExistsAsync(jsonSchema);
-database.updateRepositoryIfExistsAsync(jsonSchema);
+database.addTableIfNotExistsAsync(jsonSchema);
+database.updateTableIfExistsAsync(jsonSchema);
 database.removeRespositoryIfExistsAsync(jsonSchema);
-database.getRepositoryAsync(name, context);
+database.getTableAsync(name, context);
 
 

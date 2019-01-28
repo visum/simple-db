@@ -1,11 +1,6 @@
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = {
-    "$id": "/Repository",
-    "title": "Description of Repository",
+export default {
+    "$id": "/Table",
+    "title": "Description of Table",
     "type": "object",
     "definitions": {
         "primitiveTypes": {
@@ -135,5 +130,4 @@ exports.default = {
         }
     },
     "required": ["name", "label", "version", "columns", "primaryKeys"]
-};
-//# sourceMappingURL=repositoryJsonSchema.js.map
+}

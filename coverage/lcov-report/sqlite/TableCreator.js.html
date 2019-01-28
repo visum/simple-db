@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">91.3% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>42/46</span>
+        <span class='fraction'>42/56</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">64.29% </span>
@@ -30,18 +30,18 @@
         <span class='fraction'>9/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">90.91% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>10/11</span>
+        <span class='fraction'>10/15</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">89.66% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>26/29</span>
+        <span class='fraction'>26/39</span>
       </div>
     </div>
   </div>
-  <div class='status-line high'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -126,13 +126,48 @@
 81
 82
 83
-84</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">6×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -197,8 +232,43 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -274,10 +344,27 @@ var TableCreator = function () {
             return tableCreator.createTableIfNotExistsAsync();
         }
     }, {
-        key: "dropTableIfExistsAsync",
-        value: <span class="fstat-no" title="function not covered" >function dropTableIfExistsAsync(_ref3) {</span>
+        key: "createTablesIfNotExistsAsync",
+        value: <span class="fstat-no" title="function not covered" >function createTablesIfNotExistsAsync(_ref3) {</span>
 <span class="cstat-no" title="statement not covered" >            var database = _ref3.database,</span>
-                schema = _ref3.schema;
+                schemas = _ref3.schemas;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var promises = schemas.map(<span class="fstat-no" title="function not covered" >function (schema) {</span></span>
+<span class="cstat-no" title="statement not covered" >                var tableCreator = new TableCreator({</span>
+                    database: database,
+                    schema: schema
+                });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return tableCreator.createTableIfNotExistsAsync();</span>
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return Promise.all(promises);</span>
+        }
+    }, {
+        key: "dropTableIfExistsAsync",
+        value: <span class="fstat-no" title="function not covered" >function dropTableIfExistsAsync(_ref4) {</span>
+<span class="cstat-no" title="statement not covered" >            var database = _ref4.database,</span>
+                schema = _ref4.schema;
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            var tableCreator = new TableCreator({</span>
                 database: database,
@@ -285,6 +372,24 @@ var TableCreator = function () {
             });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >            return tableCreator.dropTableIfExistsAsync();</span>
+        }
+    }, {
+        key: "dropTableIfExistsAsync",
+        value: <span class="fstat-no" title="function not covered" >function dropTableIfExistsAsync(_ref5) {</span>
+<span class="cstat-no" title="statement not covered" >            var database = _ref5.database,</span>
+                schemas = _ref5.schemas;
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var promises = schemas.map(<span class="fstat-no" title="function not covered" >function (schema) {</span></span>
+<span class="cstat-no" title="statement not covered" >                var tableCreator = new TableCreator({</span>
+                    database: database,
+                    schema: schema
+                });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                return tableCreator.dropTableIfExistsAsync();</span>
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return Promise.all(promises);</span>
         }
     }]);
 &nbsp;
@@ -298,7 +403,7 @@ exports.default = TableCreator;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Jan 04 2019 16:15:21 GMT-0700 (Mountain Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jan 27 2019 19:56:41 GMT-0700 (Mountain Standard Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

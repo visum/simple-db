@@ -191,8 +191,8 @@ var SchemaToSqlite = function () {
     }
 &nbsp;
     _createClass(SchemaToSqlite, [{
-        key: "createRepositoryIfNotExistsAsync",
-        value: function createRepositoryIfNotExistsAsync() {
+        key: "createTableIfNotExistsAsync",
+        value: function createTableIfNotExistsAsync() {
             var _schemaToSqliteFactor = this.schemaToSqliteFactory.createTableStatement(),
                 sql = _schemaToSqliteFactor.sql,
                 values = _schemaToSqliteFactor.values;
@@ -200,8 +200,8 @@ var SchemaToSqlite = function () {
             return this.sqliteDatabaseWrapper.runAsync(sql, values);
         }
     }, {
-        key: "dropRepositoryIfExistsAsync",
-        value: function dropRepositoryIfExistsAsync() {
+        key: "dropTableIfExistsAsync",
+        value: function dropTableIfExistsAsync() {
             var _schemaToSqliteFactor2 = this.schemaToSqliteFactory.createDropTableStatment(),
                 sql = _schemaToSqliteFactor2.sql,
                 values = _schemaToSqliteFactor2.values;

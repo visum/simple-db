@@ -1,6 +1,6 @@
 import Sqlite3Wrapper from "./Sqlite3Wrapper";
 import TableCreator from "./TableCreator";
-import Repository from "./Repository";
+import Table from "./Table";
 
 export default class Database {
     constructor({
@@ -66,16 +66,16 @@ export default class Database {
         });
     }
 
-    getRepository(name, version) {
+    getTable(name, version) {
         const schema = this.getSchema({ name, version });
 
         if (schema == null) {
-            throw new Error("Unable to find repository.");
+            throw new Error("Unable to find table.");
         }
 
         const database = this.database;
 
-        return new Repository({
+        return new Table({
             database: database,
             schema
         });

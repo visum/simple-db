@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for lib/sqlite/Repository.js</title>
+    <title>Code coverage report for lib/sqlite/Table.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,7 +16,7 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">all files</a> / <a href="index.html">lib/sqlite/</a> Repository.js
+      <a href="../../index.html">all files</a> / <a href="index.html">lib/sqlite/</a> Table.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
@@ -297,14 +297,14 @@ function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? ob
 &nbsp;
 function _classCallCheck(instance, Constructor) { <span class="missing-if-branch" title="if path not taken" >I</span>if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered" >throw new TypeError("Cannot call a class as a function"); </span>} }
 &nbsp;
-var Repository = function () {
-    function Repository(_ref) {
+var Table = function () {
+    function Table(_ref) {
         var database = _ref.database,
             name = _ref.name,
             _ref$primaryKeys = _ref.primaryKeys,
             primaryKeys = _ref$primaryKeys === undefined ? ["id"] : <span class="branch-1 cbranch-no" title="branch not covered" >_ref$primaryKeys;</span>
 &nbsp;
-        _classCallCheck(this, Repository);
+        _classCallCheck(this, Table);
 &nbsp;
         this.name = name;
         this.database = database;
@@ -312,7 +312,7 @@ var Repository = function () {
         this.primaryKeys = primaryKeys;
     }
 &nbsp;
-    _createClass(Repository, [{
+    _createClass(Table, [{
         key: "addAsync",
         value: function addAsync(entity) {
 &nbsp;
@@ -378,11 +378,11 @@ var Repository = function () {
         }
     }]);
 &nbsp;
-    return Repository;
+    return Table;
 }();
 &nbsp;
-exports.default = Repository;
-//# sourceMappingURL=Repository.js.map</pre></td></tr>
+exports.default = Table;
+//# sourceMappingURL=Table.js.map</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
