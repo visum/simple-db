@@ -104,7 +104,7 @@ export default class Table {
 
         const { sql, values } = UpdateStatementCreator.createStatement({
             tableName: this.name,
-            entity,
+            entity: alteredEntity,
             primaryKeys: this.primaryKeys
         });
 
@@ -113,7 +113,7 @@ export default class Table {
         return await invokeMethodAsync(
             this.lifeCycleDelegate,
             "entityUpdatedAsync",
-            [entity, result],
+            [alteredEntity, result],
             result
         );
 
