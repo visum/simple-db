@@ -5,7 +5,7 @@ import personSchema from "../testSchemas/person";
 import addressSchema from "../testSchemas/address";
 import phoneNumberSchema from "../testSchemas/phoneNumber";
 
-exports["Database: Add Schemas."] = () => {
+exports["Database: Add Schemas."] = async () => {
     const database = new Database({ database: new sqlite.Database(":memory:") });
 
     database.addSchema(personSchema);
@@ -14,16 +14,16 @@ exports["Database: Add Schemas."] = () => {
 
 };
 
-exports["Database: Add Person."] = () => {
-    const database = new Database({ database:new sqlite.Database(":memory:") });
+exports["Database: Add Person."] = async () => {
+    const database = new Database({ database: new sqlite.Database(":memory:") });
 
     database.addSchema(personSchema);
 
-    return database.createTablesFromSchemasAsync().then(() => {
-        return database.getTable(personSchema.name, personSchema.version).addAsync({
-            firstName: "John",
-            lastName: "Doe"
-        });
+    await database.createTablesFromSchemasAsync();
+
+    return await database.getTable(personSchema.name, personSchema.version).addAsync({
+        firstName: "John",
+        lastName: "Doe"
     });
 
 };

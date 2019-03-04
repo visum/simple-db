@@ -10,7 +10,7 @@ import invokeMethodAsync from "./utils/invokeMethodAsync";
 export default class Table {
     constructor({ database, schema, lifeCycleDelegate }) {
 
-        if (lifeCycleDelegate == null || typeof lifeCycleDelegate !== "object"){
+        if (lifeCycleDelegate == null || typeof lifeCycleDelegate !== "object") {
             lifeCycleDelegate = {};
         }
 
@@ -21,123 +21,101 @@ export default class Table {
         this.lifeCycleDelegate = lifeCycleDelegate;
     }
 
-    addAsync(entity) {
-        let response;
+    async addAsync(entity) {
 
-        return invokeMethodAsync(
+        await invokeMethodAsync(
             this.lifeCycleDelegate,
             "canEntityBeAddedAsync",
             [entity],
             true
-        ).then(() => {
-            return invokeMethodAsync(
-                this.lifeCycleDelegate,
-                "prepareEntityToBeAddedAsync",
-                [entity],
-                entity
-            );
-        }).then((entity) => {
-            const { sql, values } = InsertStatementCreator.createStatement({
-                tableName: this.name,
-                entity,
-                primaryKeys: this.primaryKeys
-            });
+        );
 
-            return this.sqliteDatabaseWrapper.runAsync(sql, values);
-        }).then((result) => {
-            response = result;
+        const alteredEntity = await invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "prepareEntityToBeAddedAsync",
+            [entity],
+            entity
+        );
 
-            return invokeMethodAsync(
-                this.lifeCycleDelegate,
-                "entityAddedAsync",
-                [entity, result],
-                result
-            ).catch((error)=>{
-                // Swallow errors.
-            }); 
-        }).then(() => {
-            return response;
+        const { sql, values } = InsertStatementCreator.createStatement({
+            tableName: this.name,
+            entity: alteredEntity,
+            primaryKeys: this.primaryKeys
         });
+
+        const result = await this.sqliteDatabaseWrapper.runAsync(sql, values);
+
+        return await invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "entityAddedAsync",
+            [alteredEntity, result],
+            result
+        );
 
     }
 
-    removeAsync(entity) {
-        let response;
+    async removeAsync(entity) {
 
-        return invokeMethodAsync(
+        await invokeMethodAsync(
             this.lifeCycleDelegate,
             "canEntityBeRemovedAsync",
             [entity],
             true
-        ).then(() => {
-            return invokeMethodAsync(
-                this.lifeCycleDelegate,
-                "prepareEntityToBeRemovedAsync",
-                [entity],
-                entity
-            );
-        }).then((entity) => {
-            const { sql, values } = DeleteStatementCreator.createStatement({
-                tableName: this.name,
-                entity,
-                primaryKeys: this.primaryKeys
-            });
+        );
 
-            return this.sqliteDatabaseWrapper.runAsync(sql, values);
-        }).then((result) => {
-            response = result;
+        const alteredEntity = await invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "prepareEntityToBeRemovedAsync",
+            [entity],
+            entity
+        );
 
-            return invokeMethodAsync(
-                this.lifeCycleDelegate,
-                "entityRemovedAsync",
-                [entity, result],
-                result
-            ).catch((error)=>{
-                // Swallow errors.
-            }); 
-        }).then(() => {
-            return response;
+        const { sql, values } = DeleteStatementCreator.createStatement({
+            tableName: this.name,
+            entity,
+            primaryKeys: this.primaryKeys
         });
+
+        const result = await this.sqliteDatabaseWrapper.runAsync(sql, values);
+
+        return invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "entityRemovedAsync",
+            [entity, result],
+            result
+        );
 
     }
 
-    updateAsync(entity) {
-        let response;
-
-        return invokeMethodAsync(
+    async updateAsync(entity) {
+        await invokeMethodAsync(
             this.lifeCycleDelegate,
             "canEntityBeUpdatedAsync",
             [entity],
             true
-        ).then(() => {
-            return invokeMethodAsync(
-                this.lifeCycleDelegate,
-                "prepareEntityToBeUpdatedAsync",
-                [entity],
-                entity
-            );
-        }).then((entity) => {
-            const { sql, values } = UpdateStatementCreator.createStatement({
-                tableName: this.name,
-                entity,
-                primaryKeys: this.primaryKeys
-            });
+        );
 
-            return this.sqliteDatabaseWrapper.runAsync(sql, values);
-        }).then((result) => {
-            response = result;
+        const alteredEntity = await invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "prepareEntityToBeUpdatedAsync",
+            [entity],
+            entity
+        );
 
-            return invokeMethodAsync(
-                this.lifeCycleDelegate,
-                "entityUpdatedAsync",
-                [entity, result],
-                result
-            ).catch((error)=>{
-                // Swallow errors.
-            }); 
-        }).then(() => {
-            return response;
+        const { sql, values } = UpdateStatementCreator.createStatement({
+            tableName: this.name,
+            entity,
+            primaryKeys: this.primaryKeys
         });
+
+        const result = await this.sqliteDatabaseWrapper.runAsync(sql, values);
+
+        return await invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "entityUpdatedAsync",
+            [entity, result],
+            result
+        );
 
     }
 

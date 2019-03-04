@@ -5,298 +5,373 @@ import Table from "../sqlite/Table";
 import personSchema from "../testSchemas/person";
 import TableCreator from "../sqlite/TableCreator";
 
-exports["Table: addAsync"] = function () {
+exports["Table: addAsync"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John" });
-    }).then(() => {
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+        await table.addAsync({ firstName: "John" });
+
+        const john = await table.where()
+            .column("firstName")
+            .isEqualTo("John")
+            .getFirstAsync();
+
+        assert.equal(john.firstName, "John");
+    } finally {
         database.close();
-    }).catch((error) => {
-        database.close();
-        throw error;
-    })
+    }
 };
 
-exports["Table: updateAsync"] = function () {
+exports["Table: updateAsync"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John" });
-    }).then(({ lastID: id }) => {
-        return table.updateAsync({
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+        const { lastID: id } = await table.addAsync({ firstName: "John" });
+
+        await table.updateAsync({
             id: id,
             firstName: "Jane"
         });
-    }).then(() => {
-        return table.where().column("firstName").isEqualTo("Jane").toArrayAsync();
-    }).then((results) => {
-        assert.equal(results.length, 1);
+
+        const jane = await table.where()
+            .column("firstName")
+            .isEqualTo("Jane")
+            .getFirstAsync();
+
+        assert.equal(jane.firstName, "Jane");
+    } finally {
         database.close();
-    }).catch((error) => {
-        database.close();
-        throw error;
-    })
+    }
+
 };
 
-exports["Table: removeAsync"] = function () {
+exports["Table: removeAsync"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John" });
-    }).then(({ lastID: id }) => {
-        return table.removeAsync({
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+        const { lastID: id } = await table.addAsync({ firstName: "John" });
+
+        await table.removeAsync({
             id: id
         });
-    }).then(() => {
-        return table.where().column("firstName").isEqualTo("John").toArrayAsync();
-    }).then((results) => {
-        assert.equal(results.length, 0);
+
+        const john = await table.where()
+            .column("firstName")
+            .isEqualTo("John")
+            .getFirstAsync();
+
+        assert.equal(john, null);
+    } finally {
         database.close();
-    }).catch((error) => {
-        database.close();
-        throw error;
-    })
+    }
 };
 
-exports["Table: prepareEntityToBeAddedAsync"] = function () {
+exports["Table: prepareEntityToBeAddedAsync"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema,
-        lifeCycleDelegate: {
-            prepareEntityToBeAddedAsync: (entity) => {
-                return {
-                    firstName: entity.firstName,
-                    lastName: "Doe"
-                };
-            }
-        }
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John" });
-    }).then(() => {
-        return table.where().column("lastName").isEqualTo("Doe").toArrayAsync();
-    }).then((results) => {
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema,
+            lifeCycleDelegate: {
+                prepareEntityToBeAddedAsync: (entity) => {
+                    return {
+                        firstName: entity.firstName,
+                        lastName: "Doe"
+                    };
+                }
+            }
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+        await table.addAsync({ firstName: "John" });
+        const results = await table.where().column("lastName").isEqualTo("Doe").toArrayAsync();
+
         assert.equal(results.length, 1);
+    } finally {
         database.close();
-    }).catch((error) => {
-        database.close();
-        throw error;
-    })
+    }
 };
 
-exports["Table: prepareEntityToBeAddedAsync:failed"] = function () {
+exports["Table: prepareEntityToBeAddedAsync:failed"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema,
-        lifeCycleDelegate: {
-            prepareEntityToBeAddedAsync: (entity) => {
-                throw new Error("Can't access database.");
-            }
-        }
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John" });
-    }).catch((error) => {
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema,
+            lifeCycleDelegate: {
+                prepareEntityToBeAddedAsync: () => {
+                    throw new Error("Can't access database.");
+                }
+            }
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+        await table.addAsync({ firstName: "John" });
+
+    } catch (error) {
         assert.equal(error.message, "Can't access database.");
+    } finally {
         database.close();
-    })
+
+    }
 };
 
-exports["Table: canEntityBeAddedAsync"] = function () {
+exports["Table: canEntityBeAddedAsync"] = async () => {
     let called = false;
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema,
-        lifeCycleDelegate: {
-            canEntityBeAddedAsync: (entity) => {
-                called = true;
-                return true;
-            }
-        }
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John" });
-    }).then(() => {
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema,
+            lifeCycleDelegate: {
+                canEntityBeAddedAsync: (entity) => {
+                    called = true;
+                    return true;
+                }
+            }
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+        await table.addAsync({ firstName: "John" });
+
         assert.equal(called, true);
-    }).catch((error) => {
-        database.close();
+
+    } catch (error) {
         throw error;
-    })
+    } finally {
+        database.close();
+    }
 };
 
-exports["Table: canEntityBeAddedAsync: failed"] = function () {
+exports["Table: canEntityBeAddedAsync: failed"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema,
-        lifeCycleDelegate: {
-            canEntityBeAddedAsync: (entity) => {
-                let called = false;
-                throw new Error("John is already in database.");
-            }
-        }
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John" });
-    }).catch((error) => {
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema,
+            lifeCycleDelegate: {
+                canEntityBeAddedAsync: () => {
+                    throw new Error("John is already in database.");
+                }
+            }
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+        await table.addAsync({ firstName: "John" });
+
+    } catch (error) {
         assert.equal(error.message, "John is already in database.");
+    } finally {
         database.close();
-    })
+    }
 };
 
-exports["Table: entityAddedAsync"] = function () {
+exports["Table: entityAddedAsync"] = async () => {
     let called = false;
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema,
-        lifeCycleDelegate: {
-            entityAddedAsync: (entity) => {
-                called = true;
-                assert.equal(entity.firstName, "John");
-            }
-        }
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John" });
-    }).then(() => {
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema,
+            lifeCycleDelegate: {
+                entityAddedAsync: (entity) => {
+                    called = true;
+                    assert.equal(entity.firstName, "John");
+                }
+            }
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+        await table.addAsync({ firstName: "John" });
+
         assert.equal(called, true);
-    }).catch((error) => {
+    } finally {
         database.close();
-        throw error;
-    })
+    }
 };
 
-exports["Table: entityAddedAsync: failed"] = function () {
+exports["Table: entityAddedAsync: failed"] = async () => {
     let called = false;
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema,
-        lifeCycleDelegate: {
-            entityAddedAsync: (entity) => {
-                called = true;
-                throw new Error("Didn't complete task.");
-            }
-        }
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John" });
-    }).then(() => {
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema,
+            lifeCycleDelegate: {
+                entityAddedAsync: () => {
+                    called = true;
+                    throw new Error("Didn't complete task.");
+                }
+            }
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+        await table.addAsync({ firstName: "John" });
+
+    } catch (error) {
         assert.equal(called, true);
-    }).catch((error) => {
+        assert.equal(error.message, "Didn't complete task.");
+    } finally {
         database.close();
-        throw error;
-    })
+    }
+
 };
 
-exports["Table: prepareEntityToBeUpdatedAsync"] = function () {
+exports["Table: prepareEntityToBeUpdatedAsync"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema,
-        lifeCycleDelegate: {
-            prepareEntityToBeUpdatedAsync: (entity) => {
-                entity.lastName = "Doe";
-                return entity;
-            }
-        }
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John" });
-    }).then(({ lastID }) => {
-        return table.updateAsync({
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema,
+            lifeCycleDelegate: {
+                prepareEntityToBeUpdatedAsync: (entity) => {
+                    // Override last name.
+                    entity.lastName = "Doe";
+                    return entity;
+                }
+            }
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+        const { lastID } = await table.addAsync({ firstName: "John" });
+
+        await table.updateAsync({
             id: lastID,
             lastName: "Smith"
         });
-    }).then(() => {
-        return table.where().column("lastName").isEqualTo("Doe").toArrayAsync();
-    }).then((results) => {
+
+        const results = await table.where().column("lastName").isEqualTo("Doe").toArrayAsync();
         assert.equal(results.length, 1);
+
+    } finally {
         database.close();
-    }).catch((error) => {
-        database.close();
-        throw error;
-    })
+    }
 };
 
-exports["Table: refineQueryable"] = function () {
+exports["Table: prepareEntityToBeUpdatedAsync: failed"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const table = new Table({
-        database,
-        schema: personSchema,
-        lifeCycleDelegate: {
-            refineQueryable: (queryable) => {
-                return queryable.or().column("lastName").isEqualTo("Doe");
-            }
-        }
-    });
 
-    return TableCreator.createTableIfNotExistsAsync({
-        database,
-        schema: personSchema
-    }).then(() => {
-        return table.addAsync({ firstName: "John", lastName: "Doe" });
-    }).then(() => {
-        return table.where().column("firstName").isEqualTo("Jane").toArrayAsync();
-    }).then((results) => {
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema,
+            lifeCycleDelegate: {
+                prepareEntityToBeUpdatedAsync: () => {
+                    throw new Error("Couldn't prepare entity.");
+                }
+            }
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+
+        const { lastID } = await table.addAsync({ firstName: "John" });
+
+        await table.updateAsync({
+            id: lastID,
+            lastName: "Smith"
+        });
+
+        assert.fail("Expected to throw on prepareEntityToBeUpdatedAsync.");
+    } catch (error) {
+        assert.equal(error.message, "Couldn't prepare entity.");
+    } finally {
+        database.close();
+    }
+};
+
+exports["Table: refineQueryable"] = async () => {
+    const database = new sqlite.Database(":memory:");
+    try {
+        const table = new Table({
+            database,
+            schema: personSchema,
+            lifeCycleDelegate: {
+                refineQueryable: (queryable) => {
+                    return queryable.or().column("lastName").isEqualTo("Doe");
+                }
+            }
+        });
+
+        await TableCreator.createTableIfNotExistsAsync({
+            database,
+            schema: personSchema
+        });
+
+        await table.addAsync({ firstName: "John", lastName: "Doe" });
+        
+        const results = await table.where().column("firstName").isEqualTo("Jane").toArrayAsync();
+        
         assert.equal(results.length, 1);
+
+    } finally {
         database.close();
-    }).catch((error) => {
-        database.close();
-        throw error;
-    })
+    }
 };

@@ -82,6 +82,7 @@ fs.readdir(testDirectory).then((files) => {
                         console.log("FAILED: " + testName);
                         console.log(seperator);
                         console.log(error);
+                        console.log(error.stack);
                         console.log(seperator);
                     }).then(() => {
                         return clean();

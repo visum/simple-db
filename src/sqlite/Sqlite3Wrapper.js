@@ -3,8 +3,8 @@ export default class Sqlite3Wrapper {
         this.database = database;
     }
 
-    runAsync(sql, values = []) {
-        return new Promise((resolve, reject) => {
+   async runAsync(sql, values = []) {
+        return await new Promise((resolve, reject) => {
             return this.database.run(sql, values, function (error) {
                 if (error != null) {
                     reject(error);
@@ -15,8 +15,8 @@ export default class Sqlite3Wrapper {
         });
     }
 
-    allAsync(sql, values = []) {
-        return new Promise((resolve, reject) => {
+    async allAsync(sql, values = []) {
+        return await new Promise((resolve, reject) => {
             return this.database.all(sql, values, (error, result) => {
                 if (error != null) {
                     reject(error);

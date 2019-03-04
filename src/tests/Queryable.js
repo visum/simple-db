@@ -26,18 +26,20 @@ const fillDatabaseAsync = (table) => {
 
 }
 
-exports["Queryable: toArrayAsync."] = function () {
+exports["Queryable: toArrayAsync."] = async () => {
     const database = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Table({
-        database,
-        schema: testSchema
-    });
 
-    return createDatabasePromise.then(() => {
-        return fillDatabaseAsync(table);
-    }).then(() => {
-        return table.where()
+    try {
+        await createDatabaseAsync(database);
+
+        const table = new Table({
+            database,
+            schema: testSchema
+        });
+
+        await fillDatabaseAsync(table);
+
+        let results = await table.where()
             .column("firstName")
             .endsWith("ohn_1_")
             .or()
@@ -48,181 +50,192 @@ exports["Queryable: toArrayAsync."] = function () {
             .contains("John")
             .orderByDesc("id")
             .toArrayAsync();
-    }).then((results) => {
+
         assert.equal(results.length, 2);
 
-        return table.where()
+        await table.where()
             .column("firstName")
             .contains("John")
             .removeAsync();
-    }).then(() => {
-        return table.where().toArrayAsync();
-    }).then((results) => {
+
+        results = await table.where().toArrayAsync();
         assert.equal(results.length, 0);
-        database.close();
-    }).catch((error) => {
-        database.close();
+    } catch (error) {
         throw error;
-    });
+    } finally {
+        database.close();
+    }
 
 };
 
-exports["Queryable: IsIn with Queryable."] = function () {
+exports["Queryable: IsIn with Queryable."] = async () => {
     const database = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Table({
-        database,
-        schema: testSchema
-    });
 
-    return createDatabasePromise.then(() => {
-        return fillDatabaseAsync(table);
-    }).then(() => {
-        return table.where()
+    try {
+        await createDatabaseAsync(database);
+
+        const table = new Table({
+            database,
+            schema: testSchema
+        });
+
+        await fillDatabaseAsync(table);
+        
+        const results = await table.where()
             .column("firstName")
             .isIn(table.where().select({ "firstName": "firstName" }).take(1))
             .toArrayAsync();
-    }).then((results) => {
+
         assert.equal(results.length, 1);
-        database.close();
-    }).catch((error) => {
-        database.close();
+
+    } catch (error) {
         throw error;
-    });
+    } finally {
+        database.close();
+    }
 
 };
 
-exports["Queryable: IsIn with Array."] = function () {
+exports["Queryable: IsIn with Array."] = async () => {
     const database = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Table({
-        database,
-        schema: testSchema
-    });
 
-    return createDatabasePromise.then(() => {
-        return fillDatabaseAsync(table);
-    }).then(() => {
-        return table.where()
+    try {
+        await createDatabaseAsync(database);
+
+        const table = new Table({
+            database,
+            schema: testSchema
+        });
+
+        await fillDatabaseAsync(table);
+
+        const results = await table.where()
             .column("firstName")
             .isIn([`John_1_`])
             .toArrayAsync();
-    }).then((results) => {
+
         assert.equal(results.length, 1);
-        database.close();
-    }).catch((error) => {
-        database.close();
+
+    } catch (error) {
         throw error;
-    });
+    } finally {
+        database.close();
+    }
 
 };
 
-exports["Queryable: getFirstAsync"] = function () {
+exports["Queryable: getFirstAsync"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Table({
-        database,
-        schema: testSchema
-    });
 
-    return createDatabasePromise.then(() => {
-        return fillDatabaseAsync(table);
-    }).then(() => {
-        return table.where()
+    try {
+        await createDatabaseAsync(database);
+
+        const table = new Table({
+            database,
+            schema: testSchema
+        });
+
+        await fillDatabaseAsync(table);
+
+        const result = await table.where()
             .column("firstName")
             .endsWith("_1_")
             .getFirstAsync();
-    }).then((result) => {
+
         assert.equal(result != null, true);
-        database.close();
-    }).catch((error) => {
-        database.close();
+
+    } catch (error) {
         throw error;
-    });
+    } finally {
+        database.close();
+    }
 
 };
 
-exports["Queryable: removeAsync"] = function () {
+exports["Queryable: removeAsync"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Table({
-        database,
-        schema: testSchema
-    });
+    try {
+        await createDatabaseAsync(database);
 
-    return createDatabasePromise.then(() => {
-        return fillDatabaseAsync(table);
-    }).then(() => {
-        return table.where()
+        const table = new Table({
+            database,
+            schema: testSchema
+        });
+
+        await fillDatabaseAsync(table);
+
+        await table.where()
             .column("firstName")
             .contains("John")
             .removeAsync();
-    }).then(() => {
-        return table.where().toArrayAsync();
-    }).then((results) => {
-        assert.equal(results.length, 0);
-        database.close();
-    }).catch((error) => {
-        database.close();
-        throw error;
-    });
+        const results = await table.where().toArrayAsync();
 
+        assert.equal(results.length, 0);
+
+    } catch (error) {
+        throw error;
+    } finally {
+        database.close();
+    }
 };
 
-exports["Queryable: updateAsync"] = function () {
+exports["Queryable: updateAsync"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Table({
-        database,
-        schema: testSchema
-    });
+    try {
+        await createDatabaseAsync(database);
 
-    return createDatabasePromise.then(() => {
-        return fillDatabaseAsync(table);
-    }).then(() => {
-        return table.where()
+        const table = new Table({
+            database,
+            schema: testSchema
+        });
+
+        await fillDatabaseAsync(table);
+        await table.where()
             .column("firstName")
             .endsWith("hn_1_")
             .updateAsync({
                 firstName: "Jane"
             });
-    }).then(() => {
-        return table.where()
+
+        const results = await table.where()
             .column("firstName")
             .endsWith("Jane")
             .toArrayAsync();
-    }).then((results) => {
-        assert.equal(results[0].firstName, "Jane");
-        database.close();
-    }).catch((error) => {
-        database.close();
-        throw error;
-    });
 
+        assert.equal(results[0].firstName, "Jane");
+
+    } catch (error) {
+        throw error;
+    } finally {
+        database.close();
+    }
 };
 
-exports["Queryable: getCountAsync"] = function () {
+exports["Queryable: getCountAsync"] = async () => {
     const database = new sqlite.Database(":memory:");
-    const createDatabasePromise = createDatabaseAsync(database);
-    const table = new Table({
-        database,
-        schema: testSchema
-    });
 
-    return createDatabasePromise.then(() => {
-        return fillDatabaseAsync(table);
-    }).then(() => {
-        return table.where()
+    try {
+        await createDatabaseAsync(database);
+
+        const table = new Table({
+            database,
+            schema: testSchema
+        });
+
+        await fillDatabaseAsync(table);
+
+        const count = await table.where()
             .column("firstName")
             .contains("John")
-            .getCountAsync()
-    }).then((count) => {
-        assert.equal(count, 300);
-    }).catch((error) => {
-        database.close();
-        throw error;
-    });
+            .getCountAsync();
 
+        assert.equal(count, 300);
+
+    } catch (error) {
+        throw error;
+    } finally {
+        database.close();
+    }
 };
 
 exports["Queryable: toJson"] = function () {

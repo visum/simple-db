@@ -140,34 +140,34 @@ export default class Queryable {
         return queryable;
     }
 
-    toArrayAsync() {
+    async toArrayAsync() {
         this.assertProvider();
 
-        return this.provider.toArrayAsync(this);
+        return await this.provider.toArrayAsync(this);
     }
 
-    getFirstAsync() {
+    async getFirstAsync() {
         this.assertProvider();
 
-        return this.provider.getFirstAsync(this);
+        return await this.provider.getFirstAsync(this);
     }
 
-    getCountAsync() {
+    async getCountAsync() {
         this.assertProvider();
 
-        return this.provider.getCountAsync(this);
+        return await this.provider.getCountAsync(this);
     }
 
-    removeAsync() {
+    async removeAsync() {
         this.assertProvider();
 
-        return this.provider.removeAsync(this);
+        return await this.provider.removeAsync(this);
     }
 
-    updateAsync(updates) {
+    async updateAsync(updates) {
         this.assertProvider();
 
-        return this.provider.updateAsync(this, updates);
+        return await this.provider.updateAsync(this, updates);
     }
 
     toJson(){

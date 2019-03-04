@@ -62,28 +62,25 @@ const testSchema = {
     }
 };
 
-exports["TableCreator: createTableIfNotExistsAsync."] = () => {
+exports["TableCreator: createTableIfNotExistsAsync."] = async () => {
     const database = new sqlite3.Database(":memory:");
     const tableCreator = new TableCreator({
         schema: testSchema,
         database
     });
 
-
-    return tableCreator.createTableIfNotExistsAsync();
+    return await tableCreator.createTableIfNotExistsAsync();
 }
 
-exports["TableCreator: createTableIfNotExistsAsync twice."] = () => {
+exports["TableCreator: createTableIfNotExistsAsync twice."] = async () => {
     const database = new sqlite3.Database(":memory:");
     const tableCreator = new TableCreator({
         schema: testSchema,
         database
     });
 
-
-    return tableCreator.createTableIfNotExistsAsync().then(() => {
-        return tableCreator.createTableIfNotExistsAsync();
-    });
+    await tableCreator.createTableIfNotExistsAsync();
+    return await tableCreator.createTableIfNotExistsAsync();
 }
 
 exports["TableCreator: createTableIfNotExistsAsync then Drop"] = () => {
@@ -93,7 +90,6 @@ exports["TableCreator: createTableIfNotExistsAsync then Drop"] = () => {
         database
     });
 
-    return tableCreator.createTableIfNotExistsAsync().then(() => {
-        return tableCreator.dropTableIfExistsAsync();
-    });
+    await tableCreator.createTableIfNotExistsAsync();
+    return await tableCreator.dropTableIfExistsAsync();
 }

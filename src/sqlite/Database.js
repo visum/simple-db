@@ -32,7 +32,7 @@ export default class Database {
         });
     }
 
-    getSchemas(){
+    getSchemas() {
         return this.schemas.slice(0);
     }
 
@@ -44,23 +44,23 @@ export default class Database {
         this.removeSchema(schema);
     }
 
-    createTableFromSchemaAsync(schema) {
-        return TableCreator.createTableIfNotExistsAsync({
+    async createTableFromSchemaAsync(schema) {
+        return await TableCreator.createTableIfNotExistsAsync({
             database: this.database,
             schema
         });
     }
 
-    createTablesFromSchemasAsync() {
-        return this.schemas.reduce((promise, schema) => {
-            return promise.then(()=>{
+    async createTablesFromSchemasAsync() {
+        return await this.schemas.reduce((promise, schema) => {
+            return promise.then(() => {
                 return this.createTableFromSchemaAsync(schema);
             })
         }, Promise.resolve());
     }
 
-    dropTableFromSchemaAsync(schema) {
-        return TableCreator.dropTableIfExistsAsync({
+    async dropTableFromSchemaAsync(schema) {
+        return await TableCreator.dropTableIfExistsAsync({
             database: this.database,
             schema
         });

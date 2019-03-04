@@ -3,6 +3,7 @@ import Sqlite3Wrapper from "./Sqlite3Wrapper";
 import CountStatementCreator from "./statements/CountStatementCreator";
 import DeleteWhereStatementCreator from "./statements/DeleteWhereStatementCreator";
 import UpdateWhereStatementCreator from "./statements/UpdateWhereStatementCreator";
+import Queryable from "../../lib/queryable/Queryable";
 
 const defaultRefineQueryable = queryable => queryable;
 
@@ -26,33 +27,36 @@ export default class Provider {
 
     _safelyRefineQueryable(queryable) {
         try {
-            return queryable = this.refineQueryable(queryable);
+            const alteredQueryable = this.refineQueryable(queryable);
+
+            if (!(alteredQueryable instanceof Queryable)) {
+                throw new Error("Expected to have a queryable returned on refine Queryable.");
+            }
+
+            return alteredQueryable;
         } catch (error) {
-            //Swallow Error
+            throw error;
         }
-        return queryable;
     }
 
-    toArrayAsync(queryable) {
+    async toArrayAsync(queryable) {
         queryable = this._safelyRefineQueryable(queryable);
         const { sql } = SelectStatementCreator.createStatement(queryable);
-        return this.sqliteDatabaseWrapper.allAsync(sql);
+        return await this.sqliteDatabaseWrapper.allAsync(sql);
     }
 
-    getFirstAsync(queryable) {
-        return this.toArrayAsync(queryable).then((results) => {
-            return results[0] || null
-        });
+    async getFirstAsync(queryable) {
+        const results = await this.toArrayAsync(queryable);
+        return results[0] || null
     }
 
-    getCountAsync(queryable) {
+    async getCountAsync(queryable) {
         queryable = this._safelyRefineQueryable(queryable);
 
         const { sql } = CountStatementCreator.createStatement(queryable);
+        const results = await this.sqliteDatabaseWrapper.allAsync(sql);
 
-        return this.sqliteDatabaseWrapper.allAsync(sql).then((results) => {
-            return results[0]["count(*)"];
-        });
+        return results[0]["count(*)"];
     }
 
     getSqlAndValues(queryable) {
@@ -61,20 +65,20 @@ export default class Provider {
         return SelectStatementCreator.createStatement(queryable);
     }
 
-    removeAsync(queryable) {
+    async removeAsync(queryable) {
         queryable = this._safelyRefineQueryable(queryable);
 
         const { sql } = DeleteWhereStatementCreator.createStatement(queryable);
 
-        return this.sqliteDatabaseWrapper.allAsync(sql);
+        return await this.sqliteDatabaseWrapper.allAsync(sql);
     }
 
-    updateAsync(queryable, updates) {
+    async updateAsync(queryable, updates) {
         queryable = this._safelyRefineQueryable(queryable);
 
         const { sql, values } = UpdateWhereStatementCreator.createStatement(queryable, updates);
 
-        return this.sqliteDatabaseWrapper.runAsync(sql, values);
+        return await this.sqliteDatabaseWrapper.runAsync(sql, values);
     }
 
 

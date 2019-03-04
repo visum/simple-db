@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">92% </span>
+        <span class="strong">92.86% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>46/50</span>
+        <span class='fraction'>13/14</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">57.14% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>20/35</span>
+        <span class='fraction'>4/6</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>11/11</span>
+        <span class='fraction'>3/3</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">96% </span>
+        <span class="strong">92.31% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>24/25</span>
+        <span class='fraction'>12/13</span>
       </div>
     </div>
   </div>
@@ -79,40 +79,10 @@
 34
 35
 36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59
-60
-61
-62</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+37</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -122,22 +92,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -147,83 +106,49 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
 &nbsp;
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
+exports.default = void 0;
 &nbsp;
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i &lt; props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; <span class="missing-if-branch" title="else path not taken" >E</span>if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { <span class="missing-if-branch" title="else path not taken" >E</span>if (protoProps) defineProperties(Constructor.prototype, protoProps); <span class="missing-if-branch" title="else path not taken" >E</span>if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _SqliteUtils = _interopRequireDefault(require("../utils/SqliteUtils"));
 &nbsp;
-var _SqliteUtils = require("../utils/SqliteUtils");
-&nbsp;
-var _SqliteUtils2 = _interopRequireDefault(_SqliteUtils);
-&nbsp;
-var _AbstractStatementCreator = require("./AbstractStatementCreator");
-&nbsp;
-var _AbstractStatementCreator2 = _interopRequireDefault(_AbstractStatementCreator);
+var _AbstractStatementCreator = _interopRequireDefault(require("./AbstractStatementCreator"));
 &nbsp;
 function _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : <span class="branch-1 cbranch-no" title="branch not covered" >{ default: obj };</span> }
 &nbsp;
-function _classCallCheck(instance, Constructor) { <span class="missing-if-branch" title="if path not taken" >I</span>if (!(instance instanceof Constructor)) { <span class="cstat-no" title="statement not covered" >throw new TypeError("Cannot call a class as a function"); </span>} }
+class DeleteStatementCreator extends _AbstractStatementCreator.default {
+  static createStatement(options) {
+    const deleteStatementCreator = new DeleteStatementCreator(options);
+    return deleteStatementCreator.createStatement();
+  }
 &nbsp;
-function _possibleConstructorReturn(self, call) { <span class="missing-if-branch" title="if path not taken" >I</span>if (!self) { <span class="cstat-no" title="statement not covered" >throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); </span>} return call &amp;&amp; (<span class="branch-1 cbranch-no" title="branch not covered" >typeof call === "object" </span>|| <span class="branch-2 cbranch-no" title="branch not covered" >typeof call === "function")</span> ? <span class="branch-0 cbranch-no" title="branch not covered" >call </span>: self; }
+  createStatement() {
+    const entity = this.entity;
 &nbsp;
-function _inherits(subClass, superClass) { <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof superClass !== "function" &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >superClass !== null)</span> { <span class="cstat-no" title="statement not covered" >throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); </span>} subClass.prototype = Object.create(superClass &amp;&amp; superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); <span class="missing-if-branch" title="else path not taken" >E</span>if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : <span class="branch-1 cbranch-no" title="branch not covered" >subClass.__proto__ = superClass;</span> }
-&nbsp;
-var DeleteStatementCreator = function (_AbstractStatementCre) {
-    _inherits(DeleteStatementCreator, _AbstractStatementCre);
-&nbsp;
-    function DeleteStatementCreator() {
-        _classCallCheck(this, DeleteStatementCreator);
-&nbsp;
-        return _possibleConstructorReturn(this, (DeleteStatementCreator.__proto__ || <span class="branch-1 cbranch-no" title="branch not covered" >Object.getPrototypeOf(DeleteStatementCreator))</span>.apply(this, arguments));
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.validateEntityPrimaryKeys(entity)) {
+<span class="cstat-no" title="statement not covered" >      throw new Error("Cannot delete entity: Invalid primary key(s).");</span>
     }
 &nbsp;
-    _createClass(DeleteStatementCreator, [{
-        key: "createStatement",
-        value: function createStatement() {
-            var entity = this.entity;
+    const whereStatement = this.createWhereExpression(entity);
+    return {
+      sql: `DELETE FROM ${_SqliteUtils.default.escapeName(this.tableName)} ${whereStatement}`,
+      values: []
+    };
+  }
 &nbsp;
-            <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.validateEntityPrimaryKeys(entity)) {
-<span class="cstat-no" title="statement not covered" >                throw new Error("Cannot delete entity: Invalid primary key(s).");</span>
-            }
-&nbsp;
-            var whereStatement = this.createWhereExpression(entity);
-&nbsp;
-            return {
-                sql: "DELETE FROM " + _SqliteUtils2.default.escapeName(this.tableName) + " " + whereStatement,
-                values: []
-            };
-        }
-    }], [{
-        key: "createStatement",
-        value: function createStatement(options) {
-            var deleteStatementCreator = new DeleteStatementCreator(options);
-            return deleteStatementCreator.createStatement();
-        }
-    }]);
-&nbsp;
-    return DeleteStatementCreator;
-}(_AbstractStatementCreator2.default);
+}
 &nbsp;
 exports.default = DeleteStatementCreator;
 //# sourceMappingURL=DeleteStatementCreator.js.map</pre></td></tr>
@@ -232,7 +157,7 @@ exports.default = DeleteStatementCreator;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Jan 27 2019 19:56:41 GMT-0700 (Mountain Standard Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Mar 03 2019 20:53:12 GMT-0700 (Mountain Standard Time)
 </div>
 </div>
 <script src="../../prettify.js"></script>

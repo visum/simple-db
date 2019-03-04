@@ -20,7 +20,7 @@
             "isBuildCommand": true,
             "isTestCommand": true,
             "args": [
-                "${workspaceRoot}/node_modules/babel-cli/bin/babel.js",
+                "${workspaceRoot}/node_modules/.bin/babel",
                 "src",
                 "--out-dir",
                 "lib",
