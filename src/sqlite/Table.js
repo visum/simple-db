@@ -72,7 +72,7 @@ export default class Table {
 
         const { sql, values } = DeleteStatementCreator.createStatement({
             tableName: this.name,
-            entity,
+            entity: alteredEntity,
             primaryKeys: this.primaryKeys
         });
 
@@ -81,7 +81,7 @@ export default class Table {
         return invokeMethodAsync(
             this.lifeCycleDelegate,
             "entityRemovedAsync",
-            [entity, result],
+            [alteredEntity, result],
             result
         );
 

@@ -83,7 +83,7 @@ exports["TableCreator: createTableIfNotExistsAsync twice."] = async () => {
     return await tableCreator.createTableIfNotExistsAsync();
 }
 
-exports["TableCreator: createTableIfNotExistsAsync then Drop"] = () => {
+exports["TableCreator: createTableIfNotExistsAsync then Drop"] = async () => {
     const database = new sqlite3.Database(":memory:");
     const tableCreator = new TableCreator({
         schema: testSchema,
