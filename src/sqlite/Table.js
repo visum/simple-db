@@ -122,7 +122,7 @@ export default class Table {
     getQueryProvider() {
         return new Provider({
             database: this.database,
-            refineQueryable: this.lifeCycleDelegate.refineQueryable
+            lifeCycleDelegate: this.lifeCycleDelegate
         });
     }
 

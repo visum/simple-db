@@ -4,30 +4,41 @@ import CountStatementCreator from "./statements/CountStatementCreator";
 import DeleteWhereStatementCreator from "./statements/DeleteWhereStatementCreator";
 import UpdateWhereStatementCreator from "./statements/UpdateWhereStatementCreator";
 import Queryable from "../../lib/queryable/Queryable";
-
-const defaultRefineQueryable = queryable => queryable;
+import invokeMethodAsync from "./utils/invokeMethodAsync";
+import invokeMethod from "./utils/invokeMethod";
 
 export default class Provider {
     constructor({
         database,
-        refineQueryable
+        lifeCycleDelegate
     }) {
         if (database == null) {
             throw new Error("Null Exception: database cannot be null.");
         }
 
-        if (typeof refineQueryable !== "function") {
-            refineQueryable = defaultRefineQueryable;
-        }
-
         this.database = database;
         this.sqliteDatabaseWrapper = new Sqlite3Wrapper(this.database);
-        this.refineQueryable = refineQueryable;
+        this.lifeCycleDelegate = lifeCycleDelegate;
+    }
+
+    async _prepareQueryable(queryable) {
+        await invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "canQueryAsync",
+            [queryable]
+        );
+
+        return this._safelyRefineQueryable(queryable);
     }
 
     _safelyRefineQueryable(queryable) {
         try {
-            const alteredQueryable = this.refineQueryable(queryable);
+            const alteredQueryable = invokeMethod(
+                this.lifeCycleDelegate,
+                "refineQueryable",
+                [queryable],
+                queryable
+            );
 
             if (!(alteredQueryable instanceof Queryable)) {
                 throw new Error("Expected to have a queryable returned on refine Queryable.");
@@ -40,7 +51,7 @@ export default class Provider {
     }
 
     async toArrayAsync(queryable) {
-        queryable = this._safelyRefineQueryable(queryable);
+        queryable = await this._prepareQueryable(queryable);
         const { sql } = SelectStatementCreator.createStatement(queryable);
         return await this.sqliteDatabaseWrapper.allAsync(sql);
     }
@@ -51,7 +62,7 @@ export default class Provider {
     }
 
     async getCountAsync(queryable) {
-        queryable = this._safelyRefineQueryable(queryable);
+        queryable = await this._prepareQueryable(queryable);
 
         const { sql } = CountStatementCreator.createStatement(queryable);
         const results = await this.sqliteDatabaseWrapper.allAsync(sql);
@@ -66,20 +77,45 @@ export default class Provider {
     }
 
     async removeAsync(queryable) {
-        queryable = this._safelyRefineQueryable(queryable);
+        await invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "canEntitiesBeRemovedAsync",
+            [queryable]
+        );
+
+        queryable = await this._prepareQueryable(queryable);
 
         const { sql } = DeleteWhereStatementCreator.createStatement(queryable);
+        const result = await this.sqliteDatabaseWrapper.allAsync(sql);
 
-        return await this.sqliteDatabaseWrapper.allAsync(sql);
+        await invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "entitiesRemovedAsync",
+            [queryable, result]
+        );
+
+        return result;
     }
 
     async updateAsync(queryable, updates) {
-        queryable = this._safelyRefineQueryable(queryable);
+        await invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "canEntitiesBeUpdatedAsync",
+            [queryable]
+        );
+
+        queryable = await this._prepareQueryable(queryable);
 
         const { sql, values } = UpdateWhereStatementCreator.createStatement(queryable, updates);
+        const result = await this.sqliteDatabaseWrapper.runAsync(sql, values);
 
-        return await this.sqliteDatabaseWrapper.runAsync(sql, values);
+        await invokeMethodAsync(
+            this.lifeCycleDelegate,
+            "entitiesUpdatedAsync",
+            [queryable, result]
+        );
+
+        return result;
     }
-
 
 }
