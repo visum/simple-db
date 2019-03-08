@@ -8,7 +8,6 @@ export default class Database {
         schemas
     }) {
         this.database = database;
-        this.sqliteDatabaseWrapper = new Sqlite3Wrapper(database);
         this.schemas = Array.isArray(schemas) ? schemas : [];
     }
 
@@ -66,7 +65,7 @@ export default class Database {
         });
     }
 
-    getTable(name, version) {
+    getTable({ name, version, lifeCycleDelegate }) {
         const schema = this.getSchema({ name, version });
 
         if (schema == null) {
@@ -77,7 +76,8 @@ export default class Database {
 
         return new Table({
             database: database,
-            schema
+            schema,
+            lifeCycleDelegate
         });
 
     }

@@ -21,7 +21,10 @@ exports["Database: Add Person."] = async () => {
 
     await database.createTablesFromSchemasAsync();
 
-    return await database.getTable(personSchema.name, personSchema.version).addAsync({
+    return await database.getTable({
+        name: personSchema.name,
+        version: personSchema.version
+    }).addAsync({
         firstName: "John",
         lastName: "Doe"
     });
