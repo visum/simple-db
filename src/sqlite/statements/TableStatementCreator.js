@@ -1,13 +1,11 @@
-import jsonschema from "jsonschema";
-import tableJsonSchema from "../tableJsonSchema";
 import SchemaUtils from "../utils/SchemaUtils";
 import SqliteUtils from "../utils/SqliteUtils";
 import UniqueExpressionCreator from "./UniqueExpressionCreator";
+import SchemaValidator from "../SchemaValidator";
 
 export default class TableStatementCreator {
     constructor(schema) {
         this.schema = schema;
-        this.validator = new jsonschema.Validator();
     }
 
     static createTableStatement(schema) {
@@ -31,13 +29,7 @@ export default class TableStatementCreator {
     }
 
     validateSchema() {
-        const validationResults = this.validator.validate(this.schema, tableJsonSchema);
-
-        if (validationResults.errors.length > 0) {
-            const error = new Error("Schema Error");
-            error.validationErrors = validationResults.errors;
-            throw error;
-        }
+        return SchemaValidator.validate(this.schema);
     }
 
     createPrimaryKeysExpression() {

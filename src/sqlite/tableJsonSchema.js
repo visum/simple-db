@@ -5,7 +5,7 @@ export default {
     "definitions": {
         "primitiveTypes": {
             "type": "string",
-            "enum": ["INTEGER", "TEXT", "REAL", "INTEGER"]
+            "enum": ["INTEGER", "TEXT", "REAL", "BLOB"]
         },
         "source": {
             "type": "object",
@@ -86,7 +86,11 @@ export default {
                     "type": "boolean"
                 },
                 "defaultValue": {
-                    "type": ["string", "number", "boolean", "null"]
+                    "type": ["string", "number", "boolean", "integer", "null"]
+                },
+                "enum": {
+                    "type": "array",
+                    "items": ["string", "number", "boolean", "integer", "null"]
                 }
             },
             "required": ["type", "name", "label"]
