@@ -87,10 +87,6 @@ export default {
                 },
                 "defaultValue": {
                     "type": ["string", "number", "boolean", "integer", "null"]
-                },
-                "enum": {
-                    "type": "array",
-                    "items": ["string", "number", "boolean", "integer", "null"]
                 }
             },
             "required": ["type", "name", "label"]
