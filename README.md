@@ -1,3 +1,6 @@
+# Simple DB Repository
+Deal with sqlite and postgresql tables using schemas you define in JSON.
+
 ### Introduction
 Here are the features for this node module.
 * Create
@@ -93,10 +96,4 @@ const = {
 };
 ```
 
-### Create
-```javascript
-    import { Database } from "sqlite-repository";
-    
-    
-```
 

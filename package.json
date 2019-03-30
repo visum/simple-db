@@ -1,6 +1,6 @@
 {
-  "name": "simple-db-repository",
-  "version": "0.0.19",
+  "name": "@visum/simple-db-repository",
+  "version": "0.0.1",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
