@@ -1,11 +1,15 @@
 import SqliteDatabase from "./sqlite/Database";
 import Queryable from "./queryable/Queryable";
 import SqliteTable from "./sqlite/Table";
-import SchemaValidator from "./sqlite/SchemaValidator";
+import SqliteSchemaValidator from "./sqlite/SchemaValidator";
+import PostgreSQLTable from "./postgresql/Table";
+import PostgresSchemaValidator from "./postgresql/SchemaValidator";
 
 export {
     SqliteDatabase,
     Queryable,
     SqliteTable,
-    SchemaValidator
+    SqliteSchemaValidator,
+    PostgreSQLTable,
+    PostgresSchemaValidator
 }
